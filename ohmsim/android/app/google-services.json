@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "550939487517",
+    "project_id": "ohmsim-c02b8",
+    "storage_bucket": "ohmsim-c02b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550939487517:android:eccf11cedddff715a7c5f4",
+        "android_client_info": {
+          "package_name": "com.example.ohmsim"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "550939487517-aq10n97710lmcsv74g707co9htu7oclu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwwrQQTEE1jkVIGcyHGbXoStDok2qzqUA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "550939487517-aq10n97710lmcsv74g707co9htu7oclu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
