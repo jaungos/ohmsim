@@ -19,22 +19,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => EntriesProvider()),
       ],
       child: MaterialApp(
-        title: 'Exercise 5',
+        title: 'OHMSIM',
         routes: {
-          '/': (context) => const FirstRoute(),
-          '/second': (context) => SecondRoute(),
+          //TODO: Put routes here
         },
-        initialRoute: '/second',
+        initialRoute: '',
         onGenerateRoute: (settings) {
-          if (settings.name == ThirdRoute.routename) {
-            final args = settings.arguments as ScreenArguments;
-            return MaterialPageRoute(builder: (context) {
-              return ThirdRoute(fullname: args.fullname);
-            });
-          }
+          //TODO: Edit according to the planned routes
           return null;
         },
       ),
