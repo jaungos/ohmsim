@@ -3,34 +3,93 @@ import 'package:flutter/material.dart';
 import 'package:ohmsim/models/samplemodel.dart';
 
 class AdminProvider with ChangeNotifier {
-  List entitiesToElevate = [];
-  List listOfAllStudents = [];
-  List listOfQuarantinedStudents = [];
-  List listOfMonitoredStudents = [];
-  String studentToQuarantine = "";
-  String userMode = "";
+  List _listOfAllUsers = [];
+  List _listOfQuarantinedUsers = [];
+  List _listOfMonitoredUsers = [];
+  String _userToQuarantine = "";
+  String _userToMonitor = "";
+  String _userToElevate = "";
+  String _userToClear = "";
 
-  // String _type = "";
-  // String _signupType = "";
+  List get listOfAllUsers => _listOfAllUsers;
+  List get listOfQuarantinedUsers => _listOfQuarantinedUsers;
+  List get listOfMonitoredUsers => _listOfMonitoredUsers;
+  String get userToMonitor => _userToMonitor;
+  String get userToQuarantine => _userToQuarantine;
+  String get userToElevate => _userToElevate;
+  String get userToClear => _userToClear;
 
-  // String get id => _id;
-  // String get signupType => _signupType;
+  List<List<String>> data = [
+    ["Juan Makasalanan", "123456", "User"]
+  ];
 
-  // List<List<String>> data = [
-  //   ["Juan Makasalanan", "123456", "User"]
-  // ];
-
-  Future<Map> viewAllUsers(username, password) {
-    // for (int i = 0; i < data.length; i++) {
-    //   if (data[i][0] == username && data[i][1] == password) {
-    //     _id = i.toString();
-    //     _type = data[i][2];
-    //     return Future.value({"isLoggedIn": true, "message": "Logged in!"});
-    //   }
-    // }
-
-    // return Future.value(
-    //     {"isLoggedIn": false, "message": "User does not exist"});
+  Future<Map> viewAllUsers() async {
+    await cleanValues();
+    _listOfAllUsers = data;
     return Future.value({});
+  }
+
+  Future<Map> viewSpecificUsers() async {
+    await cleanValues();
+    _listOfAllUsers = data;
+    return Future.value({});
+  }
+
+  Future<Map> viewQuarantinedUsers() async {
+    await cleanValues();
+    _listOfAllUsers = data;
+    return Future.value({});
+  }
+
+  Future<Map> viewMonitoredUsers() async {
+    await cleanValues();
+    _listOfMonitoredUsers = data;
+    return Future.value({});
+  }
+
+  Future<Map> quarantineUser(id) async {
+    await cleanValues();
+    _userToQuarantine = "0";
+    return Future.value({});
+  }
+
+  Future<Map> monitorUser(id) async {
+    await cleanValues();
+    _userToMonitor = "0";
+    return Future.value({});
+  }
+
+  Future<Map> moveStudentToQuarantine(id) async {
+    await cleanValues();
+    _userToMonitor = "0";
+    return Future.value({});
+  }
+
+  Future<Map> moveStudentOutOfQuarantine(id) async {
+    await cleanValues();
+    _userToQuarantine = "0";
+    return Future.value({});
+  }
+
+  Future<Map> moveStudentOutOfMonitoring(id) async {
+    await cleanValues();
+    _userToMonitor = "0";
+    return Future.value({});
+  }
+
+  Future<Map> elevateUser(id) async {
+    await cleanValues();
+    _userToElevate = "0";
+    return Future.value({});
+  }
+
+  Future cleanValues() async {
+    _listOfAllUsers = [];
+    _listOfQuarantinedUsers = [];
+    _listOfMonitoredUsers = [];
+    _userToQuarantine = "";
+    _userToMonitor = "";
+    _userToElevate = "";
+    return Future.value();
   }
 }
