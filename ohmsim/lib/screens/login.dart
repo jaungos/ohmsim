@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:ohmsim/providers/adminProvider.dart';
+import 'package:ohmsim/providers/authProvider.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
+  static String routeName = '/';
   LoginPage({Key? key}) : super(key: key);
 
   @override
@@ -12,6 +15,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  String email = "";
+  String password = "";
+  Map authReturnValue = {};
   bool _isLoading = false;
 
   @override
@@ -21,15 +27,29 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  Future cleanData() {
+    email = _emailController.text.trim();
+    password = _passwordController.text.trim();
+    return Future.value();
+  }
+
   void _login() {
     setState(() {
       _isLoading = true;
-    });
 
-    // Simulate login request delay
-    Future.delayed(Duration(seconds: 2), () {
-      setState(() {
-        _isLoading = false;
+      // Simulate login request delay
+      Future.delayed(Duration(milliseconds: 500), () async {
+        await cleanData();
+        authReturnValue = await context
+            .read<AuthProvider>()
+            .authenticateUser(email, password);
+        if (authReturnValue["isLoggedIn"]) {
+          Navigator.pop(context);
+          Navigator.pushNamed(context, '/admin');
+        }
+        setState(() {
+          _isLoading = false;
+        });
       });
     });
   }
