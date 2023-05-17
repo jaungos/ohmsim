@@ -58,41 +58,82 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login Page'),
-      ),
+      // appBar: AppBar(
+      //   title: Text('Login Page'),
+      // ),
       body: _isLoading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : Container(
-              padding: EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(20.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'Welcome to MyApp',
-                    style: TextStyle(
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        'OHMSIM',
+                        style: TextStyle(
+                          fontSize: 24.0,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      Text(
+                        'obile.',
+                        style: TextStyle(
+                          fontSize: 24.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: 0.5,
+                      width: 400.0,
+                      color: const Color(0xFFd3d3d3),
                     ),
                   ),
-                  SizedBox(height: 20.0),
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      labelText: 'Email',
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      'Sign in to start your session',
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.w300,
+                      ),
                     ),
                   ),
-                  SizedBox(height: 20.0),
-                  TextFormField(
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
+                  const SizedBox(height: 20.0),
+                  SizedBox(
+                    width: 400,
+                    height: 45,
+                    child: TextFormField(
+                      controller: _emailController,
+                      decoration: const InputDecoration(
+                        labelText: 'Email',
+                        prefixIcon: Icon(Icons.person),
+                        border: OutlineInputBorder(),
+                      ),
                     ),
-                    obscureText: true,
                   ),
-                  SizedBox(height: 20.0),
+                  const SizedBox(height: 20.0),
+                  SizedBox(
+                    width: 400,
+                    height: 45,
+                    child: TextFormField(
+                      controller: _passwordController,
+                      decoration: const InputDecoration(
+                        labelText: 'Password',
+                        prefixIcon: Icon(Icons.lock),
+                        border: OutlineInputBorder(),
+                      ),
+                      obscureText: true,
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -100,7 +141,13 @@ class _LoginPageState extends State<LoginPage> {
                         padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                         child: ElevatedButton(
                           onPressed: _login,
-                          child: Text('Login'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF00A65A),
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.fromLTRB(6, 12, 6, 12),
+                            child: Text('Login'),
+                          ),
                         ),
                       ),
                       Padding(
@@ -109,7 +156,13 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed: () {
                             Navigator.pushNamed(context, SignupPage.routeName);
                           },
-                          child: Text('Signup'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF00A65A),
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.fromLTRB(6, 12, 6, 12),
+                            child: Text('Signup'),
+                          ),
                         ),
                       ),
                     ],

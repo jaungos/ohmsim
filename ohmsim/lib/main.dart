@@ -38,6 +38,9 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'OHMSIM',
+        theme: ThemeData(
+          fontFamily: 'CircularStd',
+        ),
         initialRoute: '/',
         routes: {
           //TODO: Put routes here
