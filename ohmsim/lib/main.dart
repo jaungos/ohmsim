@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<ServiceProvider>(
             create: (_) => ServiceProvider()),
         ChangeNotifierProvider(create: (_) => AuthProvider()),
-        ChangeNotifierProvider(create: (_) => AdminProvider())
+        ChangeNotifierProvider(create: (_) => adminProvider())
       ],
       child: MaterialApp(
         title: 'OHMSIM',

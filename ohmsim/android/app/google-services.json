@@ -29,6 +29,13 @@
             {
               "client_id": "550939487517-aq10n97710lmcsv74g707co9htu7oclu.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "550939487517-jg7lituurap2d70ffo2c1nhq9j9df8o6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ohmsim.RunnerTests"
+              }
             }
           ]
         }

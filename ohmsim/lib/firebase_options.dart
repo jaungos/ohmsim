@@ -67,8 +67,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '550939487517',
     projectId: 'ohmsim-c02b8',
     storageBucket: 'ohmsim-c02b8.appspot.com',
-    iosClientId:
-        '550939487517-qdp637kt589u9lgjo35ul5iukilsm5b8.apps.googleusercontent.com',
+    iosClientId: '550939487517-qdp637kt589u9lgjo35ul5iukilsm5b8.apps.googleusercontent.com',
     iosBundleId: 'com.example.ohmsim',
   );
 
@@ -78,8 +77,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '550939487517',
     projectId: 'ohmsim-c02b8',
     storageBucket: 'ohmsim-c02b8.appspot.com',
-    iosClientId:
-        '550939487517-jg7lituurap2d70ffo2c1nhq9j9df8o6.apps.googleusercontent.com',
+    iosClientId: '550939487517-jg7lituurap2d70ffo2c1nhq9j9df8o6.apps.googleusercontent.com',
     iosBundleId: 'com.example.ohmsim.RunnerTests',
   );
 }

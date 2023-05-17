@@ -1,95 +1,29 @@
-// Define a provider class
 import 'package:flutter/material.dart';
-import 'package:ohmsim/models/samplemodel.dart';
+import 'package:ohmsim/models/adminMonitor.dart';
+import '../models/adminMonitor.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../api/firebase_adminMonitor_api.dart';
 
-class AdminProvider with ChangeNotifier {
-  List _listOfAllUsers = [];
-  List _listOfQuarantinedUsers = [];
-  List _listOfMonitoredUsers = [];
-  String _userToQuarantine = "";
-  String _userToMonitor = "";
-  String _userToElevate = "";
-  String _userToClear = "";
+class adminProvider with ChangeNotifier {
+  late FirebaseAdminMonitorAPI firebaseService;
+  late Stream<QuerySnapshot> _adminStream;
 
-  List get listOfAllUsers => _listOfAllUsers;
-  List get listOfQuarantinedUsers => _listOfQuarantinedUsers;
-  List get listOfMonitoredUsers => _listOfMonitoredUsers;
-  String get userToMonitor => _userToMonitor;
-  String get userToQuarantine => _userToQuarantine;
-  String get userToElevate => _userToElevate;
-  String get userToClear => _userToClear;
-
-  List<List<String>> data = [
-    ["Juan Makasalanan", "123456", "User"]
-  ];
-
-  Future<Map> viewAllUsers() async {
-    await cleanValues();
-    _listOfAllUsers = data;
-    return Future.value({});
+  studentUserProvider() {
+    firebaseService = FirebaseAdminMonitorAPI();
+    fetchAdminMonitors();
   }
 
-  Future<Map> viewSpecificUsers() async {
-    await cleanValues();
-    _listOfAllUsers = data;
-    return Future.value({});
+  Stream<QuerySnapshot> get users => _adminStream;
+
+  fetchAdminMonitors() {
+    _adminStream = firebaseService.getAdminMonitors();
+    notifyListeners();
   }
 
-  Future<Map> viewQuarantinedUsers() async {
-    await cleanValues();
-    _listOfAllUsers = data;
-    return Future.value({});
-  }
+  void elevateUser(adminMonitor user) async {
+    String message = await firebaseService.elevateUser(user.toJson(user));
+    print(message);
 
-  Future<Map> viewMonitoredUsers() async {
-    await cleanValues();
-    _listOfMonitoredUsers = data;
-    return Future.value({});
-  }
-
-  Future<Map> quarantineUser(id) async {
-    await cleanValues();
-    _userToQuarantine = "0";
-    return Future.value({});
-  }
-
-  Future<Map> monitorUser(id) async {
-    await cleanValues();
-    _userToMonitor = "0";
-    return Future.value({});
-  }
-
-  Future<Map> moveStudentToQuarantine(id) async {
-    await cleanValues();
-    _userToMonitor = "0";
-    return Future.value({});
-  }
-
-  Future<Map> moveStudentOutOfQuarantine(id) async {
-    await cleanValues();
-    _userToQuarantine = "0";
-    return Future.value({});
-  }
-
-  Future<Map> moveStudentOutOfMonitoring(id) async {
-    await cleanValues();
-    _userToMonitor = "0";
-    return Future.value({});
-  }
-
-  Future<Map> elevateUser(id) async {
-    await cleanValues();
-    _userToElevate = "0";
-    return Future.value({});
-  }
-
-  Future cleanValues() async {
-    _listOfAllUsers = [];
-    _listOfQuarantinedUsers = [];
-    _listOfMonitoredUsers = [];
-    _userToQuarantine = "";
-    _userToMonitor = "";
-    _userToElevate = "";
-    return Future.value();
+    notifyListeners();
   }
 }
