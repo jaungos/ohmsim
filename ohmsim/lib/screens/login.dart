@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:ohmsim/providers/adminProvider.dart';
 import 'package:ohmsim/providers/authProvider.dart';
+import 'package:ohmsim/screens/signup.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   static String routeName = '/';
-  LoginPage({Key? key}) : super(key: key);
+  LoginPage({super.key});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -92,9 +93,26 @@ class _LoginPageState extends State<LoginPage> {
                     obscureText: true,
                   ),
                   SizedBox(height: 20.0),
-                  ElevatedButton(
-                    onPressed: _login,
-                    child: Text('Login'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                        child: ElevatedButton(
+                          onPressed: _login,
+                          child: Text('Login'),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, SignupPage.routeName);
+                          },
+                          child: Text('Signup'),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

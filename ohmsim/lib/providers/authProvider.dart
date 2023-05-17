@@ -35,4 +35,10 @@ class AuthProvider with ChangeNotifier {
     return Future.value(
         {"isLoggedIn": false, "message": "User does not exist", data: []});
   }
+
+  Future<void> switchSignUpPrivilege(String newPrivilege) {
+    _privilege = newPrivilege;
+    notifyListeners();
+    return Future.value();
+  }
 }
