@@ -19,11 +19,38 @@
 ### Milestone 1 <a name="milestone-1"></a> 
 <p>The features created for this milestone are:</p>
 
-    a. Log In Screen
+- Created 3 different screens
 
-    b. Sign Up Screen
+    - a. Log In Screen
+        
+        <p align="center"> 
+            <img src="screenshots/LogIn.png" height="500px"> 
+        </p>
+        <p align="center" style="font-size: 13px"><i>Figure 1. Log In screen for all user types.</i></p>
 
-    c. Homepage for Admin View
+    - b. Sign Up Screen
+
+        <p align="center">
+            <img src="screenshots/SignUp_Student.png" height="500px">
+        </p>
+        <p align="center" style="font-size: 13px"><i>Figure 2a. Sign Up screen for all student users.</i></p>
+
+        <p align="center">
+            <img src="screenshots/SignUp_Admin.png" height="500px">
+        </p>
+        <p align="center" style="font-size: 13px"><i>Figure 2b. Sign Up screen for all admin and entrance monitor users.</i></p>
+
+    - c. Homepage for Admin View
+
+        <p align="center">
+            <img src="screenshots/HomePage_Admin.png" height="500px">
+        </p>
+        <p align="center" style="font-size: 13px"><i>Figure 3a. Homepage of admin users.</i></p>
+
+        <p align="center">
+            <img src="screenshots/HomePage_Drawer.png" height="500px">
+        </p>
+        <p align="center" style="font-size: 13px"><i>Figure 3b. Drawer for the homepage of admin users with tabs of their features.</i></p>
     
 
 ## Authors: <a name="authors"></a> 
