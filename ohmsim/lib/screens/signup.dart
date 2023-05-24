@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ohmsim/providers/authProvider.dart';
+import 'package:ohmsim/providers/studentUser_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:ohmsim/models/studentUserModel.dart';
+import 'package:ohmsim/models/adminMonitor.dart';
 
 class SignupPage extends StatefulWidget {
   static String routeName = '/signup';
@@ -290,7 +293,21 @@ class _SignupFormState extends State<SignupForm> {
         onPressed: () async {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState?.save();
-
+            studentUser student = studentUser(
+              email: emailController.text.trim(),
+              fname: fNameController.text.trim(),
+              mname: mNameController.text.trim(),
+              lname: lNameController.text.trim(),
+              username: userNameController.text.trim(),
+              college: collegeController.text.trim(),
+              course: courseController.text.trim(),
+              studentNo: studentNoController.text.trim(),
+              status: 'Healthy',
+              privilege: 'Student',
+            );
+            context.read<studentUserProvider>().addStudentUser(student);
+            await context.read<AuthProvider>().signUp(
+                emailController.text.trim(), passwordController.text.trim());
             if (context.mounted) {
               Navigator.pop(context);
             }

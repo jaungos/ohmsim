@@ -21,11 +21,12 @@ to determine which view should be seen by the end-user.
 import 'dart:convert';
 
 class studentUser {
-  String id;
+  // String id;
+  String email;
   String fname;
   String mname;
   String lname;
-
+  String course;
   String username;
   String college;
   String studentNo;
@@ -35,46 +36,55 @@ class studentUser {
 
   String currentLocation = "";
   List<String> preexistingIllnesses = [];
-  studentUser({required this.id, required this.fname,required this.mname, required this.lname,required this.username, required this.college,
-      required this.studentNo, required this.status, required this.privilege, required this.currentLocation, required this.preexistingIllnesses });
-  
+  studentUser(
+      {required this.email,
+      // required this.id,
+      required this.fname,
+      required this.mname,
+      required this.lname,
+      required this.username,
+      required this.college,
+      required this.course,
+      required this.studentNo,
+      required this.status,
+      required this.privilege});
 
-
-  factory studentUser.fromJson(Map<String,dynamic> json) {
-    
+  factory studentUser.fromJson(Map<String, dynamic> json) {
     return studentUser(
-      id: json['id'],
+      // id: json['id'],
+      email: json['email'],
       fname: json['fname'],
       mname: json['mname'],
       lname: json['lname'],
       username: json['username'],
       college: json['college'],
+      course: json['course'],
       studentNo: json['studentNo'],
       status: json['status'],
       privilege: json['privilege'],
-      currentLocation: json['currentLocation'],
-      preexistingIllnesses: json['preexistingIllnesses'],
     );
-    }
-
-  static List<studentUser> fromJsonArray(String jsonData){
-    final Iterable<dynamic> data = jsonDecode(jsonData);
-    return data.map<studentUser> ((dynamic d) => studentUser.fromJson(d)).toList();
   }
 
-  Map<String, dynamic> toJson(studentUser user){
+  static List<studentUser> fromJsonArray(String jsonData) {
+    final Iterable<dynamic> data = jsonDecode(jsonData);
+    return data
+        .map<studentUser>((dynamic d) => studentUser.fromJson(d))
+        .toList();
+  }
+
+  Map<String, dynamic> toJson(studentUser user) {
     return {
-      "id": this.id,
+      // "id": this.id,
+      "email": this.email,
       "fname": this.fname,
       "mname": this.mname,
       "lname": this.lname,
       "username": this.username,
       "college": this.college,
+      "course": this.course,
       "studentNo": this.studentNo,
       "status": this.status,
       "privilege": this.privilege,
-      "currentLocation": this.currentLocation,
-      "preexistingIllnesses": this.preexistingIllnesses,
     };
   }
 }
