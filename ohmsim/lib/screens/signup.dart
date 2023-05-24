@@ -146,6 +146,7 @@ class _SignupFormState extends State<SignupForm> {
       controller: emailController,
       decoration: const InputDecoration(
         hintText: "Email",
+        labelText: "Email",
         border: OutlineInputBorder(
           borderSide: BorderSide(
             width: 2,
@@ -172,6 +173,7 @@ class _SignupFormState extends State<SignupForm> {
       controller: passwordController,
       decoration: const InputDecoration(
         hintText: "Password",
+        labelText: "Password",
         border: OutlineInputBorder(
           borderSide: BorderSide(
             width: 2,
@@ -199,6 +201,7 @@ class _SignupFormState extends State<SignupForm> {
       controller: fNameController,
       decoration: const InputDecoration(
         hintText: "First Name",
+        labelText: "First Name",
         border: OutlineInputBorder(
           borderSide: BorderSide(
             width: 2,
@@ -225,6 +228,7 @@ class _SignupFormState extends State<SignupForm> {
       controller: mNameController,
       decoration: const InputDecoration(
         hintText: "Middle Initial",
+        labelText: "Middle Initial",
         border: OutlineInputBorder(
           borderSide: BorderSide(
             width: 2,
@@ -251,6 +255,7 @@ class _SignupFormState extends State<SignupForm> {
       controller: lNameController,
       decoration: const InputDecoration(
         hintText: "Last Name",
+        labelText: "Last Name",
         border: OutlineInputBorder(
           borderSide: BorderSide(
             width: 2,
@@ -277,6 +282,7 @@ class _SignupFormState extends State<SignupForm> {
       controller: userNameController,
       decoration: const InputDecoration(
         hintText: "Username",
+        labelText: "Username",
         border: OutlineInputBorder(
           borderSide: BorderSide(
             width: 2,
@@ -303,6 +309,7 @@ class _SignupFormState extends State<SignupForm> {
       controller: collegeController,
       decoration: const InputDecoration(
         hintText: "College",
+        labelText: "College",
         border: OutlineInputBorder(
           borderSide: BorderSide(
             width: 2,
@@ -329,6 +336,7 @@ class _SignupFormState extends State<SignupForm> {
       controller: courseController,
       decoration: const InputDecoration(
         hintText: "Course",
+        labelText: "Course",
         border: OutlineInputBorder(
           borderSide: BorderSide(
             width: 2,
@@ -355,6 +363,7 @@ class _SignupFormState extends State<SignupForm> {
       controller: studentNoController,
       decoration: const InputDecoration(
         hintText: "Student Number",
+        labelText: "Student Number",
         border: OutlineInputBorder(
           borderSide: BorderSide(
             width: 2,
@@ -381,6 +390,7 @@ class _SignupFormState extends State<SignupForm> {
       controller: employeeNoController,
       decoration: const InputDecoration(
         hintText: "Employee Number",
+        labelText: "Employee Number",
         border: OutlineInputBorder(
           borderSide: BorderSide(
             width: 2,
@@ -407,6 +417,7 @@ class _SignupFormState extends State<SignupForm> {
       controller: positionController,
       decoration: const InputDecoration(
         hintText: "Position",
+        labelText: "Position",
         border: OutlineInputBorder(
           borderSide: BorderSide(
             width: 2,
@@ -433,6 +444,7 @@ class _SignupFormState extends State<SignupForm> {
       controller: homeUnitController,
       decoration: const InputDecoration(
         hintText: "Home Unit",
+        labelText: "Home Unit",
         border: OutlineInputBorder(
           borderSide: BorderSide(
             width: 2,
