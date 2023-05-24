@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:ohmsim/providers/authProvider.dart';
 import 'package:ohmsim/providers/adminProvider.dart';
-import 'package:ohmsim/providers/sampleprovider.dart';
 import 'package:ohmsim/screens/adminView.dart';
 import 'package:ohmsim/screens/login.dart';
 import 'package:ohmsim/screens/signup.dart';
@@ -31,10 +30,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<ServiceProvider>(
-            create: (_) => ServiceProvider()),
         ChangeNotifierProvider(create: (_) => AuthProvider()),
-        ChangeNotifierProvider(create: (_) => adminProvider())
+        ChangeNotifierProvider(create: (_) => AdminProvider())
       ],
       child: MaterialApp(
         title: 'OHMSIM',

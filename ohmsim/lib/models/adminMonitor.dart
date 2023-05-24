@@ -1,32 +1,30 @@
-import 'dart:convert';
-
-class adminMonitor {
+class AdminMonitor {
   String? id;
   String name;
-
   String employeeNo;
   String position;
   String homeUnit;
-
   String? status;
   String privilege;
-
   String currentLocation = "";
+  String assignedLocation = "";
   List<String> preexistingIllnesses = [];
 
-  adminMonitor(
-      {this.id,
-      required this.name,
-      required this.employeeNo,
-      required this.position,
-      required this.homeUnit,
-      this.status,
-      required this.privilege,
-      currentLocation,
-      preexistingIllnesses});
+  AdminMonitor({
+    this.id,
+    required this.name,
+    required this.employeeNo,
+    required this.position,
+    required this.homeUnit,
+    this.status,
+    required this.privilege,
+    this.currentLocation = "",
+    this.assignedLocation = "",
+    this.preexistingIllnesses = const [],
+  });
 
-  factory adminMonitor.fromJson(Map<String, dynamic> json) {
-    return adminMonitor(
+  factory AdminMonitor.fromJson(Map<String, dynamic> json) {
+    return AdminMonitor(
       id: json['id'],
       name: json['name'],
       employeeNo: json['employeeNo'],
@@ -35,28 +33,23 @@ class adminMonitor {
       status: json['status'],
       privilege: json['privilege'],
       currentLocation: json['currentLocation'],
-      preexistingIllnesses: json['preexistingIllnesses'],
+      assignedLocation: json['assignedLocation'],
+      preexistingIllnesses: List<String>.from(json['preexistingIllnesses'] ?? []),
     );
   }
 
-  static List<adminMonitor> fromJsonArray(String jsonData) {
-    final Iterable<dynamic> data = jsonDecode(jsonData);
-    return data
-        .map<adminMonitor>((dynamic d) => adminMonitor.fromJson(d))
-        .toList();
-  }
-
-  Map<String, dynamic> toJson(adminMonitor adminMonitor) {
+  Map<String, dynamic> toJson() {
     return {
-      'id': adminMonitor.id,
-      'name': adminMonitor.name,
-      'employeeNo': adminMonitor.employeeNo,
-      'position': adminMonitor.position,
-      'homeUnit': adminMonitor.homeUnit,
-      'status': adminMonitor.status,
-      'privilege': adminMonitor.privilege,
-      'currentLocation': adminMonitor.currentLocation,
-      'preexistingIllnesses': adminMonitor.preexistingIllnesses,
+      'id': id,
+      'name': name,
+      'employeeNo': employeeNo,
+      'position': position,
+      'homeUnit': homeUnit,
+      'status': status,
+      'privilege': privilege,
+      'currentLocation': currentLocation,
+      'assignedLocation': assignedLocation,
+      'preexistingIllnesses': preexistingIllnesses,
     };
   }
 }
