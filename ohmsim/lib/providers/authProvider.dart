@@ -5,7 +5,7 @@ import 'package:ohmsim/models/samplemodel.dart';
 
 class AuthProvider with ChangeNotifier {
   String _id = "";
-  String _privilege = "";
+  String _privilege = "Student";
   String _view = "";
 
   String _status = "";

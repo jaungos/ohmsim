@@ -114,8 +114,19 @@ class _LoginPageState extends State<LoginPage> {
                       controller: _emailController,
                       decoration: const InputDecoration(
                         labelText: 'Email',
-                        prefixIcon: Icon(Icons.person),
-                        border: OutlineInputBorder(),
+                        suffixIcon: Icon(Icons.mail),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            width: 2,
+                          ),
+                        ),
+                        // Changes the label name color when the field is active/clicked
+                        floatingLabelStyle: TextStyle(color: Color(0xFF00A65A)),
+                        // Changes the border color when the field is active/clicked
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color(0xFF008D4C), width: 2),
+                        ),
                       ),
                     ),
                   ),
@@ -127,8 +138,19 @@ class _LoginPageState extends State<LoginPage> {
                       controller: _passwordController,
                       decoration: const InputDecoration(
                         labelText: 'Password',
-                        prefixIcon: Icon(Icons.lock),
-                        border: OutlineInputBorder(),
+                        suffixIcon: Icon(Icons.lock),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            width: 2,
+                          ),
+                        ),
+                        // Changes the label name color when the field is active/clicked
+                        floatingLabelStyle: TextStyle(color: Color(0xFF00A65A)),
+                        // Changes the border color when the field is active/clicked
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color(0xFF008D4C), width: 2),
+                        ),
                       ),
                       obscureText: true,
                     ),

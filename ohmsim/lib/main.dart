@@ -40,6 +40,8 @@ class MyApp extends StatelessWidget {
         title: 'OHMSIM',
         theme: ThemeData(
           fontFamily: 'CircularStd',
+          primaryColor: const Color(0xFF00A65A),
+          primarySwatch: Colors.green,
         ),
         initialRoute: '/',
         routes: {
