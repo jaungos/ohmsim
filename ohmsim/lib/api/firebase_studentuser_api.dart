@@ -13,8 +13,7 @@ class FirebaseStudentUserAPI {
     }
   }
 
-
-  Stream<QuerySnapshot> getAllStudentUsers(){
+  Stream<QuerySnapshot> getAllStudentUsers() {
     return db.collection("studentUsers").snapshots();
   }
 
@@ -23,6 +22,26 @@ class FirebaseStudentUserAPI {
       await db.collection("studentUsers").doc(id).delete();
 
       return "Successfully deleted student user!";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}";
+    }
+  }
+
+  Future<String> editTodayEntry(Map<String, dynamic> entryData) async {
+    try {
+      // Implement edit today's entry functionality here
+
+      return "Successfully edited today's entry!";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}";
+    }
+  }
+
+  Future<String> deleteTodayEntry(String? id) async {
+    try {
+      // Implement delete today's entry functionality here
+
+      return "Successfully deleted today's entry!";
     } on FirebaseException catch (e) {
       return "Failed with error '${e.code}: ${e.message}";
     }
