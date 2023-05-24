@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ohmsim/providers/authProvider.dart';
 import 'package:provider/provider.dart';
@@ -87,8 +88,18 @@ class _SignupFormState extends State<SignupForm> {
     TextEditingController employeeNoController = TextEditingController();
     TextEditingController positionController = TextEditingController();
     TextEditingController homeUnitController = TextEditingController();
-
+    final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
     late String privilege = context.watch<AuthProvider>().privilege;
+    Future<bool> emailValidator(String email) async {
+      try {
+        List<String> usersignin =
+            await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
+
+        return usersignin.isEmpty;
+      } catch (e) {
+        return true;
+      }
+    }
 
     // TextField for Email
     final email = TextFormField(
@@ -97,12 +108,14 @@ class _SignupFormState extends State<SignupForm> {
         hintText: "Email",
       ),
       validator: (value) {
-        if (value == null || value.isEmpty) {
-          return "Please enter your first name";
+        if (value == null ||
+            value.isEmpty ||
+            emailRegex.hasMatch(value) == false) {
+          return "Please enter valid email address";
         }
         return null;
       },
-      onSaved: (newValue) => debugPrint("First Name Saved"),
+      onSaved: (newValue) => debugPrint("Email Saved"),
     );
 
     // TextField for Password
@@ -113,11 +126,11 @@ class _SignupFormState extends State<SignupForm> {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return "Please enter your first name";
+          return "Please enter your password";
         }
         return null;
       },
-      onSaved: (newValue) => debugPrint("First Name Saved"),
+      onSaved: (newValue) => debugPrint("Password Saved"),
     );
 
     // TextField for First Name
@@ -143,11 +156,11 @@ class _SignupFormState extends State<SignupForm> {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return "Please enter your first name";
+          return "Please enter your middle initial";
         }
         return null;
       },
-      onSaved: (newValue) => debugPrint("First Name Saved"),
+      onSaved: (newValue) => debugPrint("Middle Initial Saved"),
     );
 
     // TextField for Last Name
@@ -158,11 +171,11 @@ class _SignupFormState extends State<SignupForm> {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return "Please enter your first name";
+          return "Please enter your last name";
         }
         return null;
       },
-      onSaved: (newValue) => debugPrint("First Name Saved"),
+      onSaved: (newValue) => debugPrint("Last Name Saved"),
     );
 
     // TextField for Username
@@ -173,11 +186,11 @@ class _SignupFormState extends State<SignupForm> {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return "Please enter your first name";
+          return "Please enter your username";
         }
         return null;
       },
-      onSaved: (newValue) => debugPrint("First Name Saved"),
+      onSaved: (newValue) => debugPrint("Username Saved"),
     );
 
     // TextField for College
@@ -188,11 +201,11 @@ class _SignupFormState extends State<SignupForm> {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return "Please enter your first name";
+          return "Please enter your college";
         }
         return null;
       },
-      onSaved: (newValue) => debugPrint("First Name Saved"),
+      onSaved: (newValue) => debugPrint("College Saved"),
     );
 
     // TextField for Course
@@ -203,11 +216,11 @@ class _SignupFormState extends State<SignupForm> {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return "Please enter your first name";
+          return "Please enter your course";
         }
         return null;
       },
-      onSaved: (newValue) => debugPrint("First Name Saved"),
+      onSaved: (newValue) => debugPrint("Course Saved"),
     );
 
     // TextField for Student Number
@@ -218,11 +231,11 @@ class _SignupFormState extends State<SignupForm> {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return "Please enter your first name";
+          return "Please enter your student number";
         }
         return null;
       },
-      onSaved: (newValue) => debugPrint("First Name Saved"),
+      onSaved: (newValue) => debugPrint("Student Number Saved"),
     );
 
     // TextField for Employee Number
@@ -233,11 +246,11 @@ class _SignupFormState extends State<SignupForm> {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return "Please enter your first name";
+          return "Please enter your employee number";
         }
         return null;
       },
-      onSaved: (newValue) => debugPrint("First Name Saved"),
+      onSaved: (newValue) => debugPrint("Employee Number Saved"),
     );
 
     // TextField for Position
@@ -248,11 +261,11 @@ class _SignupFormState extends State<SignupForm> {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return "Please enter your first name";
+          return "Please enter your position";
         }
         return null;
       },
-      onSaved: (newValue) => debugPrint("First Name Saved"),
+      onSaved: (newValue) => debugPrint("Position Saved"),
     );
 
     // TextField for Home Unit
@@ -263,11 +276,11 @@ class _SignupFormState extends State<SignupForm> {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return "Please enter your first name";
+          return "Please enter your home unit";
         }
         return null;
       },
-      onSaved: (newValue) => debugPrint("First Name Saved"),
+      onSaved: (newValue) => debugPrint("Home Unit Saved"),
     );
 
     // SignUp Button
