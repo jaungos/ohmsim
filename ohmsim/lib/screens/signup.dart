@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ohmsim/models/studentUserModel.dart';
 import 'package:ohmsim/providers/authProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -291,6 +292,19 @@ class _SignupFormState extends State<SignupForm> {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState?.save();
 
+            final signUpData = StudentUser(
+              email: emailController.text,
+              password: passwordController.text,
+              fname: fNameController.text,
+              lname: lNameController.text, 
+              college: collegeController.text, 
+              course: courseController.text, 
+              mname: mNameController.text, 
+              studentNo: studentNoController.text, 
+              username: userNameController.text,
+            );
+
+            await context.read<AuthProvider>().signUpStudent(signUpData);
             if (context.mounted) {
               Navigator.pop(context);
             }

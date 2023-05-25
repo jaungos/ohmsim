@@ -118,6 +118,10 @@ class _LoginPageState extends State<LoginPage> {
                                   _emailController.text.trim(),
                                   _passwordController.text.trim(),
                                 );
+                             if (context.mounted){
+                              Navigator.pop(context);
+                              Navigator.pushNamed(context, '/admin');
+                             } 
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF00A65A),
