@@ -140,7 +140,12 @@ class _LoginPageState extends State<LoginPage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                         child: ElevatedButton(
-                          onPressed: _login,
+                          onPressed: () async {
+                            await context.read<AuthProvider>().signIn(
+                                  _emailController.text.trim(),
+                                  _passwordController.text.trim(),
+                                );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF00A65A),
                           ),

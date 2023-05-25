@@ -2,6 +2,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../api/firebase_auth_api.dart';
+
 class AuthProvider with ChangeNotifier {
   String _id = "";
   String _privilege = "";
@@ -18,6 +20,23 @@ class AuthProvider with ChangeNotifier {
   String get status => _status;
   String get name => _name;
 
+  late FirebaseAuthAPI authService;
+  late Stream<User?> uStream;
+  User? userObj;
+
+  AuthProvider() {
+    authService = FirebaseAuthAPI();
+    fetchAuthentication();
+  }
+
+  Stream<User?> get userStream => uStream;
+
+  void fetchAuthentication() {
+    uStream = authService.getUser();
+
+    notifyListeners();
+  }
+
   List<List<String>> data = [
     ["Juan Makasalanan", "123456", "juanmakasalanan@up.edu.ph", "Admin"]
   ];
@@ -33,6 +52,11 @@ class AuthProvider with ChangeNotifier {
     }
     return Future.value(
         {"isLoggedIn": false, "message": "User does not exist", data: []});
+  }
+
+   Future<void> signIn(String email, String password) async {
+    await authService.signIn(email, password);
+    notifyListeners();
   }
 
   Future<void> switchSignUpPrivilege(String newPrivilege) {
