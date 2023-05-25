@@ -1,8 +1,30 @@
 // Define a provider class
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/material.dart';
+import 'package:ohmsim/models/adminMonitor.dart';
+import 'package:ohmsim/models/studentUserModel.dart';
+
+import '../api/firebase_auth_api.dart';
 
 class AuthProvider with ChangeNotifier {
+  late FirebaseAuthAPI authService;
+  late Stream<User?> uStream;
+  User? userObj;
+
+  AuthProvider() {
+    authService = FirebaseAuthAPI();
+    fetchAuthentication();
+  }
+
+  Stream<User?> get userStream => uStream;
+
+  void fetchAuthentication() {
+    uStream = authService.getUser();
+
+    notifyListeners();
+  }
   String _id = "";
   String _privilege = "";
   String _view = "";
@@ -18,22 +40,81 @@ class AuthProvider with ChangeNotifier {
   String get status => _status;
   String get name => _name;
 
-  List<List<String>> data = [
-    ["Juan Makasalanan", "123456", "juanmakasalanan@up.edu.ph", "Admin"]
-  ];
+  Future<void> signUpAdminMonitor(AdminMonitor signUpData) async {
+    try {
+      final credential = await authService.signUpAdminMonitor(
+        signUpData.email,
+        signUpData.password,
+        signUpData.fname,
+        signUpData.mname,
+        signUpData.lname,
+        signUpData.username,
+        signUpData.employeeNo,
+        signUpData.position,
+        signUpData.homeUnit,
+        signUpData.privilege,
+      );
 
-  Future<Map> authenticateUser(email, password) {
-    for (int i = 0; i < data.length; i++) {
-      if (data[i][2] == email && data[i][1] == password) {
-        _name = data[i][0];
-        _privilege = data[i][3];
-        return Future.value(
-            {"isLoggedIn": true, "message": "Logged In!", data: data});
-      }
+      // Store additional user data in Firestore
+      await FirebaseFirestore.instance.collection('adminMonitor').add({
+        'email': signUpData.email,
+        'fname': signUpData.fname,
+        'mname': signUpData.mname,
+        'lname': signUpData.lname,
+        'username': signUpData.username,
+        'password': signUpData.password,
+        'employeeNo': signUpData.employeeNo,
+        'position': signUpData.position,
+        'homeUnit': signUpData.homeUnit,
+        'privilege': signUpData.privilege,
+      });
+
+      notifyListeners();
+    } catch (e) {
+      // Handle any errors
+      print(e);
     }
-    return Future.value(
-        {"isLoggedIn": false, "message": "User does not exist", data: []});
   }
+
+  Future<void> signUpStudent(StudentUser signUpData) async {
+    try {
+      final credential = await authService.signUpStudent(
+        signUpData.email,
+        signUpData.password,
+        signUpData.fname,
+        signUpData.mname,
+        signUpData.lname,
+        signUpData.username,
+        signUpData.college,
+        signUpData.course,
+        signUpData.studentNo,
+      );
+
+      // Store additional user data in Firestore
+      await FirebaseFirestore.instance.collection('studentUsers').add({
+        'email': signUpData.email,
+        'password': signUpData.password,
+        'fname': signUpData.fname,
+        'mname': signUpData.mname,
+        'lname': signUpData.lname,
+        'username': signUpData.username,
+        'college': signUpData.college,
+        'course':signUpData.course,        
+        'studentNo':signUpData.studentNo,
+      });
+
+      notifyListeners();
+    } catch (e) {
+      // Handle any errors
+      print(e);
+    }
+  }
+
+  Future<void> signIn(String email, String password) async {
+    await authService.signIn(email, password);
+    notifyListeners();
+  }
+
 
   Future<void> switchSignUpPrivilege(String newPrivilege) {
     _privilege = newPrivilege;

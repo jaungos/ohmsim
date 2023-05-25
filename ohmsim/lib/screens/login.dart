@@ -28,33 +28,6 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  Future cleanData() {
-    email = _emailController.text.trim();
-    password = _passwordController.text.trim();
-    return Future.value();
-  }
-
-  void _login() {
-    setState(() {
-      _isLoading = true;
-
-      // Simulate login request delay
-      Future.delayed(Duration(milliseconds: 500), () async {
-        await cleanData();
-        authReturnValue = await context
-            .read<AuthProvider>()
-            .authenticateUser(email, password);
-        if (authReturnValue["isLoggedIn"]) {
-          Navigator.pop(context);
-          Navigator.pushNamed(context, '/admin');
-        }
-        setState(() {
-          _isLoading = false;
-        });
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,7 +113,12 @@ class _LoginPageState extends State<LoginPage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                         child: ElevatedButton(
-                          onPressed: _login,
+                          onPressed: () async {
+                            await context.read<AuthProvider>().signIn(
+                                  _emailController.text.trim(),
+                                  _passwordController.text.trim(),
+                                );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF00A65A),
                           ),
