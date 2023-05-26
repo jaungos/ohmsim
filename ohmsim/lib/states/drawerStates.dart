@@ -8,7 +8,7 @@ List<Widget> adminView(name, privilege) {
       ),
       child: Text(name),
     ),
-    ListTile(title: const Text('Home'), onTap: () {}),
+    ListTile(title: const Text('Home'), onTap: () {Navigator.pushNamed(context,"viewAllUsers")}),
     ListTile(title: const Text('Profile'), onTap: () {}),
     ListTile(title: const Text('View All Users'), onTap: () {}),
     ListTile(title: const Text('View Quarantined Users'), onTap: () {}),
