@@ -20,7 +20,6 @@ under the stateLogic folder.
 
 It lacks a stateLogic file of its own and certainly more states are needed in the drawerStates file.
 
-
 */
 class AdminView extends StatefulWidget {
   static String routeName = '/admin';

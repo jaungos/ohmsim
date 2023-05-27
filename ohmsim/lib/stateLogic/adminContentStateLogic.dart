@@ -6,8 +6,10 @@ Column adminContentStateLogic(
 ) {
   if (screen == "home")
     return adminHomePage();
-  else if (screen == "screen")
-    return Column();
+  else if (screen == "profile")
+    return adminProfile();
+  else if (screen == "viewAllUsers")
+    return adminViewUsers();
   else
     return Column();
 }

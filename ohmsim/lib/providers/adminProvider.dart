@@ -15,7 +15,7 @@ class AdminProvider with ChangeNotifier {
   List sampleUsers = [
     ["Julian Makasalanan", "jumakasalanan@up.edu.ph", "Healthy"],
     ["Alexis Corbi", "acorbi@up.edu.ph", "Monitored"],
-    ["AJ Raval", "araval@up.edu.ph", "Quarantined"]
+    ["Sunshine Dizon", "sdizon@up.edu.ph", "Quarantined"]
   ];
 
   List get listOfAllUsers => _listOfAllUsers;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:ohmsim/providers/adminProvider.dart';
 import 'package:ohmsim/providers/authProvider.dart';
+import 'package:ohmsim/screens/adminView.dart';
 import 'package:ohmsim/screens/signup.dart';
 import 'package:provider/provider.dart';
 
@@ -46,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
             .authenticateUser(email, password);
         if (authReturnValue["isLoggedIn"]) {
           Navigator.pop(context);
-          Navigator.pushNamed(context, '/admin');
+          Navigator.pushNamed(context, AdminView.routeName);
         }
         setState(() {
           _isLoading = false;
