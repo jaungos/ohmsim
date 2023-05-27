@@ -39,6 +39,14 @@ class AuthProvider with ChangeNotifier {
   Future<void> switchSignUpPrivilege(String newPrivilege) {
     _privilege = newPrivilege;
     notifyListeners();
+
+    return Future.value();
+  }
+
+  Future<void> getCredentials() {
+    _name = "Juan Makasalanan";
+    _privilege = "Admin";
+
     return Future.value();
   }
 }

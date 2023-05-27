@@ -90,6 +90,12 @@ class AdminProvider with ChangeNotifier {
     return Future.value({});
   }
 
+  Future<void> changeScreen(String newScreen) async {
+    _screen = newScreen;
+    notifyListeners();
+    return Future.value();
+  }
+
   Future cleanValues() async {
     _listOfAllUsers = [];
     _listOfQuarantinedUsers = [];
