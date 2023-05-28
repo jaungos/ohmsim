@@ -7,18 +7,15 @@ import 'package:ohmsim/stateLogic/viewStateLogic.dart';
 import './drawer.dart';
 import 'package:provider/provider.dart';
 
-
-
-
 class View extends StatefulWidget {
   static String routeName = '/view';
-  AdminView({super.key});
+  View({super.key});
 
   @override
-  State<AdminView> createState() => AdminViewState();
+  State<View> createState() => ViewState();
 }
 
-class ViewState extends State<AdminView> {
+class ViewState extends State<View> {
   late String view;
   late String status;
   late String name;
@@ -36,7 +33,9 @@ class ViewState extends State<AdminView> {
     status = context.watch<AuthProvider>().status;
     name = context.watch<AuthProvider>().name;
     privilege = context.watch<AuthProvider>().privilege;
-    screen = context.watch<AdminProvider>().screen; // Change the provider package to include all user types.
+    screen = context
+        .watch<AdminProvider>()
+        .screen; // Change the provider package to include all user types.
     return Scaffold(
       drawer: drawerView(view, status, name, privilege, context),
       appBar: AppBar(

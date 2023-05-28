@@ -7,6 +7,7 @@ import 'package:ohmsim/providers/sampleprovider.dart';
 import 'package:ohmsim/screens/adminView.dart';
 import 'package:ohmsim/screens/login.dart';
 import 'package:ohmsim/screens/signup.dart';
+import 'package:ohmsim/screens/view.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
 
