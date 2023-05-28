@@ -110,11 +110,20 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  Future<void> signIn(String email, String password) async {
+Future<bool> signIn(String email, String password) async {
+  try {
     await authService.signIn(email, password);
     notifyListeners();
+    return true;
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'user-not-found') {
+      print('No user found for that email.');
+    } else if (e.code == 'wrong-password') {
+      print('Wrong password provided for that user.');
+    }
+    return false;
   }
-
+}
 
   Future<void> switchSignUpPrivilege(String newPrivilege) {
     _privilege = newPrivilege;
