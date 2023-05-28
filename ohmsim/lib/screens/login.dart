@@ -158,34 +158,46 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(height: 20.0),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                    child: ElevatedButton(
+                      onPressed: _login,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF00A65A),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.fromLTRB(6, 12, 6, 12),
+                        child: Text('Login'),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: 0.5,
+                      width: 400.0,
+                      color: const Color(0xFFd3d3d3),
+                    ),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                        child: ElevatedButton(
-                          onPressed: _login,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF00A65A),
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.fromLTRB(6, 12, 6, 12),
-                            child: Text('Login'),
-                          ),
+                      const Text(
+                        "Don't have an account?",
+                        style: TextStyle(
+                          fontSize: 15,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, SignupPage.routeName);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF00A65A),
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.fromLTRB(6, 12, 6, 12),
-                            child: Text('Signup'),
+                      TextButton(
+                        onPressed: () async {
+                          Navigator.pushNamed(context, SignupPage.routeName);
+                        },
+                        child: const Text(
+                          'Sign Up',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFF00A65A),
                           ),
                         ),
                       ),
