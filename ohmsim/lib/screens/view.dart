@@ -3,33 +3,19 @@ import 'package:ohmsim/providers/adminProvider.dart';
 import 'package:ohmsim/providers/authProvider.dart';
 import 'package:ohmsim/states/adminScreenStates.dart';
 import 'package:ohmsim/stateLogic/adminContentStateLogic.dart';
+import 'package:ohmsim/stateLogic/viewStateLogic.dart';
 import './drawer.dart';
 import 'package:provider/provider.dart';
 
-/*
-
-TODO: Refactor adminView to just view. 
-
-1. Replace the state logic in the body section.
-
-Instead of solely relying on the adminContentStateLogic file. Replace and refactor it with
-viewState Logic where the userContentStateLogic and monitorStateLogic can be included
-under the stateLogic folder.
-
-2. Add content in the drawer state and refactor the children section of the drawer widget.
-
-It lacks a stateLogic file of its own and certainly more states are needed in the drawerStates file.
-
-*/
-class AdminView extends StatefulWidget {
-  static String routeName = '/admin';
-  AdminView({super.key});
+class View extends StatefulWidget {
+  static String routeName = '/view';
+  View({super.key});
 
   @override
-  State<AdminView> createState() => AdminViewState();
+  State<View> createState() => ViewState();
 }
 
-class AdminViewState extends State<AdminView> {
+class ViewState extends State<View> {
   late String view;
   late String status;
   late String name;
@@ -47,20 +33,21 @@ class AdminViewState extends State<AdminView> {
     status = context.watch<AuthProvider>().status;
     name = context.watch<AuthProvider>().name;
     privilege = context.watch<AuthProvider>().privilege;
-    screen = context.watch<AdminProvider>().screen;
+    screen = context
+        .watch<AdminProvider>()
+        .screen; // Change the provider package to include all user types.
     return Scaffold(
       drawer: drawerView(view, status, name, privilege, context),
       appBar: AppBar(
         title: const Text('OHMSIM'),
       ),
-      body: adminContentStateLogic(screen),
+      body: viewStateLogic(screen),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pushNamed(context, "/"); // Go to add entry
         },
         child: const Icon(Icons.add),
       ),
-      // body:Widget(co),
     );
   }
 }

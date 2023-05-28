@@ -7,6 +7,7 @@ import 'package:ohmsim/providers/sampleprovider.dart';
 import 'package:ohmsim/screens/adminView.dart';
 import 'package:ohmsim/screens/login.dart';
 import 'package:ohmsim/screens/signup.dart';
+import 'package:ohmsim/screens/view.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
 
@@ -40,13 +41,16 @@ class MyApp extends StatelessWidget {
         title: 'OHMSIM',
         theme: ThemeData(
           fontFamily: 'CircularStd',
+          primaryColor: const Color(0xFF00A65A),
+          primarySwatch: Colors.green,
         ),
         initialRoute: '/',
         routes: {
           //TODO: Put routes here
           LoginPage.routeName: (context) => LoginPage(),
           SignupPage.routeName: (context) => SignupPage(),
-          AdminView.routeName: (context) => AdminView()
+          AdminView.routeName: (context) => AdminView(),
+          View.routeName: (context) => View()
         },
         // onGenerateRoute: (settings) {
         //   //TODO: Edit according to the planned routes

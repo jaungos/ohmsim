@@ -10,6 +10,13 @@ class AdminProvider with ChangeNotifier {
   String _userToMonitor = "";
   String _userToElevate = "";
   String _userToClear = "";
+  String _screen = "home";
+
+  List sampleUsers = [
+    ["Julian Makasalanan", "jumakasalanan@up.edu.ph", "Healthy"],
+    ["Alexis Corbi", "acorbi@up.edu.ph", "Monitored"],
+    ["Sunshine Dizon", "sdizon@up.edu.ph", "Quarantined"]
+  ];
 
   List get listOfAllUsers => _listOfAllUsers;
   List get listOfQuarantinedUsers => _listOfQuarantinedUsers;
@@ -18,7 +25,7 @@ class AdminProvider with ChangeNotifier {
   String get userToQuarantine => _userToQuarantine;
   String get userToElevate => _userToElevate;
   String get userToClear => _userToClear;
-
+  String get screen => _screen;
   List<List<String>> data = [
     ["Juan Makasalanan", "123456", "User"]
   ];
@@ -81,6 +88,12 @@ class AdminProvider with ChangeNotifier {
     await cleanValues();
     _userToElevate = "0";
     return Future.value({});
+  }
+
+  Future<void> changeScreen(String newScreen) async {
+    _screen = newScreen;
+    notifyListeners();
+    return Future.value();
   }
 
   Future cleanValues() async {
