@@ -1,6 +1,6 @@
-# OHMSIM
+<h1 align="center"> OHMSIM </h1>
 
-Online Health Monitoring System In Mobile (OHMSIM) is an application that serves as a contact tracing tool for potential COVID-19 cases in the community. This aims to track any individuals who possibly have COVID-19 through symptoms and/or being exposed/contact to someone who is confirmed to have COVID-19.
+<p align="center">Online Health Monitoring System In Mobile (OHMSIM) is an application that serves as a contact tracing tool for potential COVID-19 cases in the community. This aims to track any individuals who possibly has COVID-19 through symptoms and/or being exposed/contact to someone who is confirmed to have COVID-19. </p>
 
 ## Table of Contents
 
@@ -19,27 +19,39 @@ Online Health Monitoring System In Mobile (OHMSIM) is an application that serves
 
 The features created for this milestone are:
 
-### Screens
+- Created 3 different screens
 
-1. **Log In Screen**  
-   ![Log In Screen](screenshots/LogIn.png)  
-   _Figure 1: Log In screen for all user types._
+### Screenshots
+1. **Log In Screen**
 
-2. **Sign Up Screen (Student)**  
-   ![Sign Up Screen (Student)](screenshots/SignUp_Student.png)  
-   _Figure 2a: Sign Up screen for all student users._
+   <p align="center"> 
+      <img src="screenshots/LogIn.png" height="500px"> 
+   </p>
+   <p align="center" style="font-size: 13px"><i>Figure 1. Log In screen for all user types.</i></p>
 
-3. **Sign Up Screen (Admin)**  
-   ![Sign Up Screen (Admin)](screenshots/SignUp_Admin.png)  
-   _Figure 2b: Sign Up screen for all admin and entrance monitor users._
+2. **Sign Up Screen**
 
-4. **Homepage for Admin View**  
-   ![Homepage for Admin View](screenshots/HomePage_Admin.png)  
-   _Figure 3a: Homepage of admin users._
+   <p align="center">
+      <img src="screenshots/SignUp_Student.png" height="500px">
+   </p>
+   <p align="center" style="font-size: 13px"><i>Figure 2a. Sign Up screen for all student users.</i></p>
 
-5. **Homepage Drawer for Admin View**  
-   ![Homepage Drawer for Admin View](screenshots/HomePage_Drawer.png)  
-   _Figure 3b: Drawer for the homepage of admin users with tabs of their features._
+   <p align="center">
+      <img src="screenshots/SignUp_Admin.png" height="500px">
+   </p>
+   <p align="center" style="font-size: 13px"><i>Figure 2b. Sign Up screen for all admin and entrance monitor users.</i></p>
+
+3. **Homepage for Admin View**
+
+   <p align="center">
+      <img src="screenshots/HomePage_Admin.png" height="500px">
+   </p>
+   <p align="center" style="font-size: 13px"><i>Figure 3a. Homepage of admin users.</i></p>
+
+   <p align="center">
+      <img src="screenshots/HomePage_Drawer.png" height="500px">
+   </p>
+   <p align="center" style="font-size: 13px"><i>Figure 3b. Drawer for the homepage of admin users with tabs of their features.</i></p>
 
 ## Milestone 2 <a name="milestone-2"></a>
 
@@ -56,24 +68,34 @@ The focus of Milestone 2 is to implement authentication and database functionali
 ### Screenshots
 
 1. **Database Setup for Storing User Information**  
-   ![Database Setup](screenshots/Milestone2_Database.png)  
-   _Figure 4: Screenshot of the database setup for storing user information._
+   <p align="center">
+      <img src="screenshots/Milestone2_Database.png" width="500px">
+   </p>
+   <p align="center" style="font-size: 13px"><i>Figure 4: Screenshot of the database setup for storing user information.</i></p>
 
 2. **Landing Page Design**  
-   ![Landing Page](screenshots/Milestone2_LandingPage.png)  
-   _Figure 5: Screenshot of the landing page design._
+   <p align="center">
+      <img src="screenshots/Milestone2_LandingPage.png" width="500px">
+   </p>
+   <p align="center" style="font-size: 13px"><i>Figure 5: Screenshot of the landing page design.</i></p>
 
-3. **Login Screen Design**  
-   ![Login Screen](screenshots/Milestone2_LogIn.png)  
-   _Figure 6: Screenshot of the login screen design._
+3. **Login Screen Design**
+   <p align="center">
+      <img src="screenshots/Milestone2_LogIn.png" width="500px">
+   </p>
+   <p align="center" style="font-size: 13px"><i>Figure 6: Screenshot of the login screen design.</i></p>
 
-4. **Signup Screen for Admin Users**  
-   ![Signup Screen (Admin)](screenshots/SignUp_Admin.png)  
-   _Figure 7: Screenshot of the signup screen design for admin users._
+4. **Signup Screen for Admin Users**
+   <p align="center">
+      <img src="screenshots/SignUp_Admin.png" height="500px">
+   </p>
+   <p align="center" style="font-size: 13px"><i>Figure 7: Screenshot of the signup screen design for admin users.</i></p>
 
-5. **Signup Screen for Student Users**  
-   ![Signup Screen (Student)](screenshots/SignUp_Student.png)  
-   _Figure 8: Screenshot of the signup screen design for student users._
+5. **Signup Screen for Student Users**
+   <p align="center">
+      <img src="screenshots/SignUp_Student.png" height="500px">
+   </p>
+   <p align="center" style="font-size: 13px"><i>Figure 8: Screenshot of the signup screen design for student users.</i></p>
 
 ## Authors <a name="authors"></a>
 
