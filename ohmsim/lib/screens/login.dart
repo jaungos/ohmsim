@@ -32,6 +32,7 @@ class _LoginPageState extends State<LoginPage> {
       // appBar: AppBar(
       //   title: Text('Login Page'),
       // ),
+      // @TODO: revise the code below add the loading animation again
       body: _isLoading
           ? const Center(
               child: CircularProgressIndicator(),
