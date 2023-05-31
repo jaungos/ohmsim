@@ -6,6 +6,7 @@ import '../models/adminMonitor.dart';
 class AdminProvider with ChangeNotifier {
   late FirebaseAdminMonitorAPI firebaseService;
   late Stream<QuerySnapshot> _adminStream;
+
   String _screen = "home";
   String get screen => _screen;
 
@@ -21,6 +22,45 @@ class AdminProvider with ChangeNotifier {
     notifyListeners();
   }
 
+//  HARDCODEEEEEEEEEEEEEEEEEEEEEEEEEEED
+  List<List<String>> _listOfAllUsers = [];
+  List _listOfQuarantinedUsers = [];
+  List _listOfMonitoredUsers = [];
+  String _userToQuarantine = "";
+  String _userToMonitor = "";
+  String _userToElevate = "";
+  String _userToClear = "";
+
+  List<List<String>> sampleUsers = [
+    ["Julian Makasalanan", "jumakasalanan@up.edu.ph", "Healthy"],
+    ["Alexis Corbi", "acorbi@up.edu.ph", "Monitored"],
+    ["Sunshine Dizon", "sdizon@up.edu.ph", "Quarantined"]
+  ];
+
+  List<List<String>> get listOfAllUsers => _listOfAllUsers;
+  Future<Map> viewAllUsers() async {
+    await cleanValues();
+    _listOfAllUsers = sampleUsers;
+    return Future.value({});
+  }
+
+  Future cleanValues() async {
+    _listOfAllUsers = [];
+    _listOfQuarantinedUsers = [];
+    _listOfMonitoredUsers = [];
+    _userToQuarantine = "";
+    _userToMonitor = "";
+    _userToElevate = "";
+    return Future.value();
+  }
+
+  Future<Map> viewSpecificUsers() async {
+    await cleanValues();
+    _listOfAllUsers = sampleUsers;
+    return Future.value({});
+  }
+
+//  HARDCODEEEEEEEEEEEEEEEEEEEEEEEEEEED
   void elevateUser(AdminMonitor user) async {
     String message = await firebaseService.elevateUser(user.toJson());
     print(message);
@@ -41,6 +81,7 @@ class AdminProvider with ChangeNotifier {
 
     notifyListeners();
   }
+
   Future<void> changeScreen(String newScreen) async {
     _screen = newScreen;
     notifyListeners();

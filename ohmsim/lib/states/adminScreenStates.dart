@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ohmsim/providers/adminProvider.dart';
+import 'package:provider/provider.dart';
 
 Column adminHomePage() {
   return Column(
@@ -47,9 +49,9 @@ Column adminProfile() {
   );
 }
 
-Column adminViewUsers() {
+Column adminViewUsers(BuildContext context) {
   List<String> filteredData = []; // Initialize filteredData list
-
+  List<List<String>> dummyData = context.watch<AdminProvider>().listOfAllUsers;
   TextEditingController searchController = TextEditingController();
 
   void filterData(String searchTerm) {
@@ -57,15 +59,16 @@ Column adminViewUsers() {
     // Filtering logic goes here based on your data source
     // For now, let's use dummy data for testing
     List<String> dummyData = [
-      'User 1',
-      'User 2',
-      'User 3',
-      'User 4',
-      'User 5',
+      'Juan Makasalanan',
+      'Bayani Santos',
+      'Jonah Pamulaklakin',
+      'Ama Namin',
+      'Juan Makasalanan',
     ];
     filteredData = dummyData
         .where((item) => item.toLowerCase().contains(searchTerm))
         .toList();
+    print(filteredData);
   }
 
   return Column(
@@ -86,8 +89,7 @@ Column adminViewUsers() {
             ),
             ElevatedButton(
               onPressed: () {
-                String searchTerm = searchController.text;
-                filterData(searchTerm);
+                context.read<AdminProvider>().viewSpecificUsers();
               },
               child: Text('Search'),
             ),
@@ -96,10 +98,10 @@ Column adminViewUsers() {
       ),
       Expanded(
         child: ListView.builder(
-          itemCount: filteredData.length,
+          itemCount: dummyData.length,
           itemBuilder: (context, index) {
             return ListTile(
-              title: Text(filteredData[index]),
+              title: Text(dummyData[index][0]),
             );
           },
         ),

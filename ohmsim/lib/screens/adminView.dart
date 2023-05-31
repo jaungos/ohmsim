@@ -55,7 +55,7 @@ class AdminViewState extends State<AdminView> {
       appBar: AppBar(
         title: const Text('OHMSIM'),
       ),
-      body: adminContentStateLogic(screen),
+      body: adminContentStateLogic(screen,context),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           final test = Entry(

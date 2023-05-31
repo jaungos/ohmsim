@@ -49,8 +49,7 @@ class MyApp extends StatelessWidget {
           LoginPage.routeName: (context) => LoginPage(),
           SignupPage.routeName: (context) => SignupPage(),
           AdminView.routeName: (context) => AdminView(),
-          GeneralView.routeName: (context) => GeneralView(),
-          // View.routeName: (context) => View()
+          GeneralView.routeName: (context) => GeneralView()
         },
         // onGenerateRoute: (settings) {
         //   //TODO: Edit according to the planned routes
