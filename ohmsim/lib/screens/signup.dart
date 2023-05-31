@@ -503,7 +503,16 @@ class _SignupFormState extends State<SignupForm> {
               username: userNameController.text,
             );
 
-            await context.read<AuthProvider>().signUpStudent(signUpData);
+            // ========================= @TODO: implement error prompt =========================
+            var err;
+            var success = false;
+
+            try {
+              await context.read<AuthProvider>().signUpStudent(signUpData);
+            } catch (e) {
+              err = e;
+            }
+
             if (context.mounted) {
               Navigator.pop(context);
             }
