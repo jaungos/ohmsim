@@ -7,15 +7,15 @@ import 'package:ohmsim/stateLogic/viewStateLogic.dart';
 import './drawer.dart';
 import 'package:provider/provider.dart';
 
-class GeneralView extends StatefulWidget {
-  static String routeName = '/view';
-  GeneralView({super.key});
+class Userview extends StatefulWidget {
+  static String routeName = '/user';
+  Userview({super.key});
 
   @override
-  State<GeneralView> createState() => GeneralViewState();
+  State<Userview> createState() => UserViewState();
 }
 
-class GeneralViewState extends State<GeneralView> {
+class UserViewState extends State<Userview> {
   late String view;
   late String status;
   late String name;

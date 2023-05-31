@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ohmsim/providers/authProvider.dart';
@@ -28,11 +31,18 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Error Prompt For Signing In
+    AlertDialog alert(String err) {
+      return AlertDialog(
+        title: Text("Login Failed"),
+        content: Text(err),
+      );
+    }
+
     return Scaffold(
       // appBar: AppBar(
       //   title: Text('Login Page'),
       // ),
-      // @TODO: revise the code below add the loading animation again
       body: _isLoading
           ? const Center(
               child: CircularProgressIndicator(),
@@ -128,6 +138,109 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(height: 20.0),
+                  // Widget for Login
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        if (_emailController.text.trim() == "" &&
+                            _passwordController.text.trim() == "") {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return alert('Please enter your credentials');
+                            },
+                          );
+                          return;
+                        }
+
+                        if (_emailController.text.trim() == "") {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return alert('Please enter your email');
+                            },
+                          );
+                          return;
+                        }
+
+                        if (_passwordController.text.trim() == "") {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return alert('Please enter your password');
+                            },
+                          );
+                          return;
+                        }
+
+                        // Displays a loading animation while waiting for the async function to complete
+                        setState(() {
+                          _isLoading = true;
+                        });
+
+                        // Holder variables
+                        var err;
+                        var success = false;
+
+                        try {
+                          success = await context.read<AuthProvider>().signIn(
+                                _emailController.text.trim(),
+                                _passwordController.text.trim(),
+                              );
+                        } catch (e) {
+                          err = e;
+                        }
+
+                        // Removes the loading animation as the async function has been completed
+                        setState(() {
+                          _isLoading = false;
+                        });
+
+                        if (success) {
+                          if (context.mounted) {
+                            // @TODO: implement the logic for navigating to the correct page based on privilege
+                            // User? currentUser =
+                            //     context.watch()<AuthProvider>().currentUser;
+                            // if (context.watch<AuthProvider>().privilege ==
+                            //     'Admin') {
+                            //   Navigator.pop(context);
+                            //   Navigator.pushNamed(context, '/admin');
+                            // } else if (context
+                            //         .watch<AuthProvider>()
+                            //         .privilege ==
+                            //     'Monitor') {
+                            //   Navigator.pop(context);
+                            //   Navigator.pushNamed(context, '/admin');
+                            // } else {
+                            //   Navigator.pop(context);
+                            //   Navigator.pushNamed(context, '/user');
+                            // }
+
+                            // print the details of the current user
+                            // print(currentUser!.email);
+                            Navigator.pop(context);
+                            Navigator.pushNamed(context, '/admin');
+                          }
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return alert(err);
+                            },
+                          );
+                          return;
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF00A65A),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.fromLTRB(6, 12, 6, 12),
+                        child: Text('Login'),
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
@@ -136,56 +249,14 @@ class _LoginPageState extends State<LoginPage> {
                       color: const Color(0xFFd3d3d3),
                     ),
                   ),
+                  // Row for Signup
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            if (_emailController.text.trim() == "") {
-                              AlertDialog alert = AlertDialog(
-                                  title: Text("Login Failed"),
-                                  content: Text("Please enter your email"));
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return alert;
-                                },
-                              );
-                              return;
-                            }
-                            final success =
-                                await context.read<AuthProvider>().signIn(
-                                      _emailController.text.trim(),
-                                      _passwordController.text.trim(),
-                                    );
-                            if (success) {
-                              if (context.mounted) {
-                                Navigator.pop(context);
-                                Navigator.pushNamed(context, '/view');
-                              }
-                            } else {
-                              AlertDialog alert = AlertDialog(
-                                  title: Text("Login Failed"),
-                                  content: Text(
-                                      "Your credentials are incorrect or the email you provided does not exist."));
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return alert;
-                                },
-                              );
-                              return;
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF00A65A),
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.fromLTRB(6, 12, 6, 12),
-                            child: Text('Login'),
-                          ),
+                      const Text(
+                        "Don't have an account?",
+                        style: TextStyle(
+                          fontSize: 15,
                         ),
                       ),
                       TextButton(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ohmsim/providers/adminProvider.dart';
+import 'package:ohmsim/providers/authProvider.dart';
 import 'package:provider/provider.dart';
 
 List<Widget> adminView(String name, String privilege, BuildContext context) {
@@ -42,6 +43,14 @@ List<Widget> adminView(String name, String privilege, BuildContext context) {
         }),
     ListTile(),
     ListTile(title: const Text('Switch To User View'), onTap: () {}),
-    ListTile(title: const Text('Log Out'), onTap: () {})
+    ListTile(
+      title: const Text('Log Out'),
+      onTap: () {
+        context.read<AuthProvider>().signOut();
+        // pop all screens and go to login
+        Navigator.popUntil(context, ModalRoute.withName('/'));
+        Navigator.pushNamed(context, '/');
+      },
+    )
   ];
 }

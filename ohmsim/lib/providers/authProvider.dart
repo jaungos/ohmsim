@@ -21,6 +21,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   Stream<User?> get userStream => uStream;
+  User? get currentUser => authService.currentUser;
 
   void fetchAuthentication() {
     uStream = authService.getUser();
@@ -31,14 +32,11 @@ class AuthProvider with ChangeNotifier {
   String _id = "";
   String _privilege = "Student";
   String _view = "";
-
   String _status = "";
-
   String _name = "";
   String _email = "";
 
   String get id => _id;
-
   String get privilege => _privilege;
   String get view => _view;
   String get status => _status;
@@ -121,11 +119,11 @@ class AuthProvider with ChangeNotifier {
       notifyListeners();
       return true;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-      }
+      // if (e.code == 'user-not-found') {
+      //   print('No user found for that email.');
+      // } else if (e.code == 'wrong-password') {
+      //   print('Wrong password provided for that user.');
+      // }
       return false;
     }
   }
@@ -142,5 +140,20 @@ class AuthProvider with ChangeNotifier {
     _privilege = "Admin";
 
     return Future.value();
+  }
+
+  Future<void> signOut() {
+    _id = "";
+    _privilege = "Student";
+    _view = "";
+
+    _status = "";
+
+    _name = "";
+    _email = "";
+
+    notifyListeners();
+
+    return authService.signOut();
   }
 }
