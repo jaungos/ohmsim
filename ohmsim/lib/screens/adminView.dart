@@ -5,6 +5,8 @@ import 'package:ohmsim/states/adminScreenStates.dart';
 import 'package:ohmsim/stateLogic/adminContentStateLogic.dart';
 import './drawer.dart';
 import 'package:provider/provider.dart';
+import 'package:ohmsim/providers/entryProvider.dart';
+import 'package:ohmsim/models/entryModel.dart';
 
 /*
 
@@ -56,7 +58,17 @@ class AdminViewState extends State<AdminView> {
       body: adminContentStateLogic(screen),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, "/"); // Go to add entry
+          final test = Entry(
+            symptoms: ["covid", "asdadasdasdasda"],
+            closeContact: false,
+            email: "email",
+            date: DateTime.now(),
+          );
+
+          context.read<EntryProvider>().addEntry(test);
+          if (context.mounted) {
+            Navigator.pushNamed(context, '/admin');
+          }
         },
         child: const Icon(Icons.add),
       ),

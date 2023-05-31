@@ -9,6 +9,7 @@ import 'package:ohmsim/screens/signup.dart';
 import 'package:ohmsim/screens/view.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
+import 'package:ohmsim/providers/entryProvider.dart';
 
 late final FirebaseApp app;
 late final FirebaseAuth auth;
@@ -32,7 +33,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
-        ChangeNotifierProvider(create: (_) => AdminProvider())
+        ChangeNotifierProvider(create: (_) => AdminProvider()),
+        ChangeNotifierProvider(create: (_) => EntryProvider()),
       ],
       child: MaterialApp(
         title: 'OHMSIM',

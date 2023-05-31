@@ -25,4 +25,9 @@ class EntryProvider with ChangeNotifier {
 
     notifyListeners();
   }
+
+  Future<void> toggleStatus(String id, bool closeContact) async {
+    String message = await firebaseService.toggleStatus(id, closeContact);
+    notifyListeners();
+  }
 }

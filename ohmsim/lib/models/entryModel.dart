@@ -6,20 +6,24 @@ class Entry {
   late bool closeContact;
   bool approvedByAdmin = false;
   String email;
+  DateTime date;
 
   Entry({
     this.id,
     required this.symptoms,
     required this.closeContact,
     required this.email,
+    required this.date,
   });
 
   factory Entry.fromJson(Map<String, dynamic> json) {
     return Entry(
-        id: json['id'],
-        symptoms: List<String>.from(json['symptoms'] ?? []),
-        closeContact: json['closeContact'],
-        email: json['email']);
+      id: json['id'],
+      symptoms: List<String>.from(json['symptoms'] ?? []),
+      closeContact: json['closeContact'],
+      email: json['email'],
+      date: json['date'],
+    );
   }
   static List<Entry> fromJsonArray(String jsonData) {
     final Iterable<dynamic> data = jsonDecode(jsonData);
@@ -32,6 +36,7 @@ class Entry {
       "symptoms": this.symptoms,
       "closeContact": this.closeContact,
       "email": this.email,
+      "date": this.date,
     };
   }
 }
