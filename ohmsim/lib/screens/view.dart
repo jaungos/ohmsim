@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ohmsim/providers/adminProvider.dart';
 import 'package:ohmsim/providers/authProvider.dart';
+import 'package:ohmsim/screens/addEntry.dart';
 import 'package:ohmsim/states/adminScreenStates.dart';
 import 'package:ohmsim/stateLogic/adminContentStateLogic.dart';
 import 'package:ohmsim/stateLogic/viewStateLogic.dart';
@@ -41,104 +42,18 @@ class GeneralViewState extends State<GeneralView> {
       appBar: AppBar(
         title: const Text('OHMSIM'),
       ),
-      body: viewStateLogic(screen,context),
+      body: viewStateLogic(screen, context),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _showAddModal(context); // Go to add entry
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => AddModal(
+              context: context,
+            ),
+          ); // Go to add entry
         },
         child: const Icon(Icons.add),
       ),
-    );
-  }
-
-  _showAddModal(context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        String? exposure;
-
-        Map<String, bool> symptoms = {
-          'Fever (37.8 C and above)': false,
-          'Feeling feverish': false,
-          ' Muscle or joint pains': false,
-          'Cough': false,
-          'Colds': false,
-          'Sore throat': false,
-          'Difficulty of breathing': false,
-          'Diarrhea': false,
-          'Loss of taste': false,
-          'Loss of smell': false,
-        };
-        return Dialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  constraints: const BoxConstraints(maxHeight: 560),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      children: [
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: symptoms.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            String key = symptoms.keys.elementAt(index);
-                            return CheckboxListTile(
-                              dense: true,
-                              title: Text(key),
-                              value: symptoms[key],
-                              onChanged: (bool? selected) {
-                                setState(() {
-                                  symptoms[key] = selected!;
-                                });
-                              },
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          const Text(
-                              'Did you recently have a face-to-face encounter or contact with a confirmed COVID-19 case?'),
-                          RadioListTile(
-                            title: const Text('Yes'),
-                            value: 'Yes',
-                            groupValue: exposure,
-                            onChanged: (value) {
-                              setState(() {
-                                exposure = value.toString();
-                              });
-                            },
-                          ),
-                          RadioListTile(
-                            title: const Text('No'),
-                            value: 'No',
-                            groupValue: exposure,
-                            onChanged: (value) {
-                              setState(() {
-                                exposure = value.toString();
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-        );
-      },
     );
   }
 }
