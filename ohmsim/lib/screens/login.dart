@@ -146,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                             if (success) {
                               if (context.mounted) {
                                 Navigator.pop(context);
-                                Navigator.pushNamed(context, '/admin');
+                                Navigator.pushNamed(context, '/view');
                               }
                             }
                           },

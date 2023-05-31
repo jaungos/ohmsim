@@ -30,4 +30,8 @@ class EntryProvider with ChangeNotifier {
     String message = await firebaseService.toggleStatus(id, closeContact);
     notifyListeners();
   }
+
+  Future<void> updateSymptoms(String id, List<String> symptoms) async {
+    String message = await firebaseService.updateSymptoms(id, symptoms);
+  }
 }

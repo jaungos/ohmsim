@@ -28,4 +28,14 @@ class FirebaseEntryAPI {
       return "Failed with error '${e.code}: ${e.message}";
     }
   }
+
+  Future<String> updateSymptoms(String? id, List<String> symptoms) async {
+    try {
+      await db.collection("entries").doc(id).update({"symptoms": symptoms});
+
+      return "Successfully updated entry!";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}";
+    }
+  }
 }
