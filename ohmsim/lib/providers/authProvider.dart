@@ -3,8 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
+import 'package:ohmsim/main.dart';
 import 'package:ohmsim/models/adminMonitor.dart';
 import 'package:ohmsim/models/studentUserModel.dart';
+import '../models/entryModel.dart';
 
 import '../api/firebase_auth_api.dart';
 
@@ -25,6 +27,7 @@ class AuthProvider with ChangeNotifier {
 
     notifyListeners();
   }
+
   String _id = "";
   String _privilege = "Student";
   String _view = "";
@@ -32,6 +35,7 @@ class AuthProvider with ChangeNotifier {
   String _status = "";
 
   String _name = "";
+  String _email = "";
 
   String get id => _id;
 
@@ -39,6 +43,7 @@ class AuthProvider with ChangeNotifier {
   String get view => _view;
   String get status => _status;
   String get name => _name;
+  String get email => _email;
 
   Future<void> signUpAdminMonitor(AdminMonitor signUpData) async {
     try {
@@ -99,8 +104,8 @@ class AuthProvider with ChangeNotifier {
         'lname': signUpData.lname,
         'username': signUpData.username,
         'college': signUpData.college,
-        'course':signUpData.course,        
-        'studentNo':signUpData.studentNo,
+        'course': signUpData.course,
+        'studentNo': signUpData.studentNo,
       });
 
       notifyListeners();
@@ -110,20 +115,20 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-Future<bool> signIn(String email, String password) async {
-  try {
-    await authService.signIn(email, password);
-    notifyListeners();
-    return true;
-  } on FirebaseAuthException catch (e) {
-    if (e.code == 'user-not-found') {
-      print('No user found for that email.');
-    } else if (e.code == 'wrong-password') {
-      print('Wrong password provided for that user.');
+  Future<bool> signIn(String email, String password) async {
+    try {
+      await authService.signIn(email, password);
+      notifyListeners();
+      return true;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+      return false;
     }
-    return false;
   }
-}
 
   Future<void> switchSignUpPrivilege(String newPrivilege) {
     _privilege = newPrivilege;

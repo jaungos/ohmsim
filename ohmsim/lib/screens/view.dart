@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 
 class View extends StatefulWidget {
   static String routeName = '/view';
-  View({super.key});
+  const View({super.key});
 
   @override
   State<View> createState() => ViewState();
@@ -21,6 +21,7 @@ class ViewState extends State<View> {
   late String name;
   late String privilege;
   late String screen;
+  late String email;
 
   @override
   void initState() {
@@ -29,6 +30,7 @@ class ViewState extends State<View> {
 
   @override
   Widget build(BuildContext context) {
+    email = context.watch<AuthProvider>().email;
     view = context.watch<AuthProvider>().view;
     status = context.watch<AuthProvider>().status;
     name = context.watch<AuthProvider>().name;
@@ -44,6 +46,7 @@ class ViewState extends State<View> {
       body: viewStateLogic(screen),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          // Go to add entry
           Navigator.pushNamed(context, "/"); // Go to add entry
         },
         child: const Icon(Icons.add),

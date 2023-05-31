@@ -495,11 +495,11 @@ class _SignupFormState extends State<SignupForm> {
               email: emailController.text,
               password: passwordController.text,
               fname: fNameController.text,
-              lname: lNameController.text, 
-              college: collegeController.text, 
-              course: courseController.text, 
-              mname: mNameController.text, 
-              studentNo: studentNoController.text, 
+              lname: lNameController.text,
+              college: collegeController.text,
+              course: courseController.text,
+              mname: mNameController.text,
+              studentNo: studentNoController.text,
               username: userNameController.text,
             );
 
