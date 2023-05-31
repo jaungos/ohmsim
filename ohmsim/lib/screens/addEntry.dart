@@ -31,29 +31,26 @@ class _AddModalState extends State<AddModal> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                children: [
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: symptoms.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      String key = symptoms.keys.elementAt(index);
-                      return CheckboxListTile(
-                        dense: true,
-                        title: Text(key),
-                        value: symptoms[key],
-                        onChanged: (bool? selected) {
-                          setState(() {
-                            symptoms[key] = selected!;
-                          });
-                        },
-                      );
-                    },
-                  ),
-                ],
-              ),
+            Column(
+              children: [
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: symptoms.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    String key = symptoms.keys.elementAt(index);
+                    return CheckboxListTile(
+                      dense: true,
+                      title: Text(key),
+                      value: symptoms[key],
+                      onChanged: (bool? selected) {
+                        setState(() {
+                          symptoms[key] = selected!;
+                        });
+                      },
+                    );
+                  },
+                ),
+              ],
             ),
             Row(
               children: [
