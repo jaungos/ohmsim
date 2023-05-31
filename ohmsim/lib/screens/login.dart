@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:ohmsim/providers/adminProvider.dart';
-import 'package:ohmsim/providers/authProvider.dart';
-import 'package:ohmsim/screens/adminView.dart';
-import 'package:ohmsim/screens/signup.dart';
-import 'package:ohmsim/screens/view.dart';
 import 'package:provider/provider.dart';
+import 'package:ohmsim/providers/authProvider.dart';
+import 'package:ohmsim/screens/signup.dart';
 
 class LoginPage extends StatefulWidget {
   static String routeName = '/';
@@ -16,8 +12,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   String email = "";
   String password = "";
   Map authReturnValue = {};
@@ -146,19 +142,17 @@ class _LoginPageState extends State<LoginPage> {
                         padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                         child: ElevatedButton(
                           onPressed: () async {
-                            
-                            if(_emailController.text.trim() == "")
-                            {
+                            if (_emailController.text.trim() == "") {
                               AlertDialog alert = AlertDialog(
-    title: Text("Login Failed"),
-    content: Text("Please enter your email"));
-                             showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
-  return;
+                                  title: Text("Login Failed"),
+                                  content: Text("Please enter your email"));
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return alert;
+                                },
+                              );
+                              return;
                             }
                             final success =
                                 await context.read<AuthProvider>().signIn(
@@ -170,19 +164,18 @@ class _LoginPageState extends State<LoginPage> {
                                 Navigator.pop(context);
                                 Navigator.pushNamed(context, '/view');
                               }
-                            }
-                            else
-                            {
-                                                            AlertDialog alert = AlertDialog(
-    title: Text("Login Failed"),
-    content: Text("Your credentials are incorrect or the email you provided does not exist."));
-                             showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
-  return;
+                            } else {
+                              AlertDialog alert = AlertDialog(
+                                  title: Text("Login Failed"),
+                                  content: Text(
+                                      "Your credentials are incorrect or the email you provided does not exist."));
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return alert;
+                                },
+                              );
+                              return;
                             }
                           },
                           style: ElevatedButton.styleFrom(
