@@ -6,6 +6,8 @@ import '../models/adminMonitor.dart';
 class AdminProvider with ChangeNotifier {
   late FirebaseAdminMonitorAPI firebaseService;
   late Stream<QuerySnapshot> _adminStream;
+  String _screen = "home";
+  String get screen => _screen;
 
   AdminProvider() {
     firebaseService = FirebaseAdminMonitorAPI();
@@ -38,6 +40,11 @@ class AdminProvider with ChangeNotifier {
     print(message);
 
     notifyListeners();
+  }
+  Future<void> changeScreen(String newScreen) async {
+    _screen = newScreen;
+    notifyListeners();
+    return Future.value();
   }
 }
 
