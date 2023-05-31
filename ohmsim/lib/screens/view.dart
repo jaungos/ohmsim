@@ -41,7 +41,7 @@ class GeneralViewState extends State<GeneralView> {
       appBar: AppBar(
         title: const Text('OHMSIM'),
       ),
-      body: viewStateLogic(screen),
+      body: viewStateLogic(screen,context),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _showAddModal(context); // Go to add entry

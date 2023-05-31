@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ohmsim/models/samplemodel.dart';
 
 class AdminProvider with ChangeNotifier {
-  List _listOfAllUsers = [];
+  List<List<String>> _listOfAllUsers = [];
   List _listOfQuarantinedUsers = [];
   List _listOfMonitoredUsers = [];
   String _userToQuarantine = "";
@@ -12,13 +12,13 @@ class AdminProvider with ChangeNotifier {
   String _userToClear = "";
   String _screen = "home";
 
-  List sampleUsers = [
+  List<List<String>> sampleUsers = [
     ["Julian Makasalanan", "jumakasalanan@up.edu.ph", "Healthy"],
     ["Alexis Corbi", "acorbi@up.edu.ph", "Monitored"],
     ["Sunshine Dizon", "sdizon@up.edu.ph", "Quarantined"]
   ];
 
-  List get listOfAllUsers => _listOfAllUsers;
+  List<List<String>> get listOfAllUsers => _listOfAllUsers;
   List get listOfQuarantinedUsers => _listOfQuarantinedUsers;
   List get listOfMonitoredUsers => _listOfMonitoredUsers;
   String get userToMonitor => _userToMonitor;
@@ -32,25 +32,25 @@ class AdminProvider with ChangeNotifier {
 
   Future<Map> viewAllUsers() async {
     await cleanValues();
-    _listOfAllUsers = data;
+    _listOfAllUsers = sampleUsers;
     return Future.value({});
   }
 
   Future<Map> viewSpecificUsers() async {
     await cleanValues();
-    _listOfAllUsers = data;
+    _listOfAllUsers = sampleUsers;
     return Future.value({});
   }
 
   Future<Map> viewQuarantinedUsers() async {
     await cleanValues();
-    _listOfAllUsers = data;
+    _listOfAllUsers = sampleUsers;
     return Future.value({});
   }
 
   Future<Map> viewMonitoredUsers() async {
     await cleanValues();
-    _listOfMonitoredUsers = data;
+    _listOfMonitoredUsers = sampleUsers;
     return Future.value({});
   }
 
