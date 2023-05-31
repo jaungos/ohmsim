@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
             .authenticateUser(email, password);
         if (authReturnValue["isLoggedIn"]) {
           Navigator.pop(context);
-          Navigator.pushNamed(context, AdminView.routeName);
+          Navigator.pushNamed(context, GeneralView.routeName);
         }
         setState(() {
           _isLoading = false;
