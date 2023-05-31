@@ -146,6 +146,20 @@ class _LoginPageState extends State<LoginPage> {
                         padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                         child: ElevatedButton(
                           onPressed: () async {
+                            
+                            if(_emailController.text.trim() == "")
+                            {
+                              AlertDialog alert = AlertDialog(
+    title: Text("Login Failed"),
+    content: Text("Please enter your email"));
+                             showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+  return;
+                            }
                             final success =
                                 await context.read<AuthProvider>().signIn(
                                       _emailController.text.trim(),
@@ -156,6 +170,19 @@ class _LoginPageState extends State<LoginPage> {
                                 Navigator.pop(context);
                                 Navigator.pushNamed(context, '/view');
                               }
+                            }
+                            else
+                            {
+                                                            AlertDialog alert = AlertDialog(
+    title: Text("Login Failed"),
+    content: Text("Your credentials are incorrect or the email you provided does not exist."));
+                             showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+  return;
                             }
                           },
                           style: ElevatedButton.styleFrom(
