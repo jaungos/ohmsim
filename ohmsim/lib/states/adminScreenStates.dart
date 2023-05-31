@@ -88,8 +88,9 @@ Column adminViewUsers(BuildContext context) {
               ),
             ),
             ElevatedButton(
-              onPressed: () {
-                context.read<AdminProvider>().viewSpecificUsers();
+              onPressed: () async {
+                await context.read<AdminProvider>().viewSpecificUsers();
+                print(dummyData);
               },
               child: Text('Search'),
             ),

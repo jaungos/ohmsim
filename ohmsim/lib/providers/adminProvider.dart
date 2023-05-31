@@ -32,12 +32,12 @@ class AdminProvider with ChangeNotifier {
 
   Future<Map> viewAllUsers() async {
     await cleanValues();
-    _listOfAllUsers = sampleUsers;
+    _listOfAllUsers = await sampleUsers;
     return Future.value({});
   }
 
   Future<Map> viewSpecificUsers() async {
-    await cleanValues();
+    cleanValues();
     _listOfAllUsers = sampleUsers;
     return Future.value({});
   }
