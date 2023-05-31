@@ -51,3 +51,12 @@ class ViewState extends State<View> {
     );
   }
 }
+
+_showAddModal(context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog();
+    },
+  );
+}
