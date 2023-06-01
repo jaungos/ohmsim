@@ -23,15 +23,15 @@ under the stateLogic folder.
 It lacks a stateLogic file of its own and certainly more states are needed in the drawerStates file.
 
 */
-class AdminView extends StatefulWidget {
-  static String routeName = '/admin';
-  AdminView({super.key});
+class MonitorView extends StatefulWidget {
+  static String routeName = '/monitor';
+  MonitorView({super.key});
 
   @override
-  State<AdminView> createState() => AdminViewState();
+  State<MonitorView> createState() => MonitorViewState();
 }
 
-class AdminViewState extends State<AdminView> {
+class MonitorViewState extends State<MonitorView> {
   late String view;
   late String status;
   late String name;
@@ -55,8 +55,8 @@ class AdminViewState extends State<AdminView> {
       appBar: AppBar(
         title: const Text('OHMSIM'),
       ),
-      body: const Text('Admin View Screen'),
-      // body: adminContentStateLogic(screen,context),
+      body: const Text('Monitor View Screen'),
+      // body: adminContentStateLogic(screen, context),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           final test = Entry(

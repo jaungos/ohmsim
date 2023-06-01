@@ -5,6 +5,7 @@ import 'package:ohmsim/providers/authProvider.dart';
 import 'package:ohmsim/providers/adminProvider.dart';
 import 'package:ohmsim/screens/adminView.dart';
 import 'package:ohmsim/screens/login.dart';
+import 'package:ohmsim/screens/monitorView.dart';
 import 'package:ohmsim/screens/signup.dart';
 import 'package:ohmsim/screens/userView.dart';
 import 'firebase_options.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
           SignupPage.routeName: (context) => SignupPage(),
           AdminView.routeName: (context) => AdminView(),
           Userview.routeName: (context) => Userview(),
+          MonitorView.routeName: (context) => MonitorView(),
         },
         // onGenerateRoute: (settings) {
         //   //TODO: Edit according to the planned routes

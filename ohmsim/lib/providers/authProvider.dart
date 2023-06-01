@@ -146,7 +146,6 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<String?> searchPrivilegeByEmail(String? email) async {
-    print('The email to search is $email');
     try {
       var currentUser = await studentAuthService.searchStudentByEmail(email);
       if (currentUser != null) {

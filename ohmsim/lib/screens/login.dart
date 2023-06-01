@@ -206,8 +206,6 @@ class _LoginPageState extends State<LoginPage> {
                                 .read<AuthProvider>()
                                 .searchPrivilegeByEmail(currentUser?.email);
 
-                            print(currentPrivilege);
-
                             if (currentPrivilege == 'Student') {
                               Navigator.pop(context);
                               Navigator.pushNamed(context, '/user');
@@ -216,7 +214,7 @@ class _LoginPageState extends State<LoginPage> {
                               Navigator.pushNamed(context, '/admin');
                             } else if (currentPrivilege == 'Entrance Monitor') {
                               Navigator.pop(context);
-                              Navigator.pushNamed(context, '/admin');
+                              Navigator.pushNamed(context, '/monitor');
                             }
                           }
                         } else {
