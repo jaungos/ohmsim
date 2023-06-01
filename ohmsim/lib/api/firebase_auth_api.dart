@@ -47,14 +47,16 @@ class FirebaseAuthAPI {
 
       print(credential);
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
-    } catch (e) {
-      print(e);
+      // if (e.code == 'weak-password') {
+      //   print('The password provided is too weak.');
+      // } else if (e.code == 'email-already-in-use') {
+      //   print('The account already exists for that email.');
+      // }
+      throw e.message!;
     }
+    // } catch (e) {
+    //   print(e);
+    // }
   }
 
   Future<void> signUpAdminMonitor(

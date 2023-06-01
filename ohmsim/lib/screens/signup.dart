@@ -508,13 +508,27 @@ class _SignupFormState extends State<SignupForm> {
             var success = false;
 
             try {
-              await context.read<AuthProvider>().signUpStudent(signUpData);
+              success =
+                  await context.read<AuthProvider>().signUpStudent(signUpData);
             } catch (e) {
               err = e;
             }
 
-            if (context.mounted) {
-              Navigator.pop(context);
+            if (success) {
+              if (context.mounted) {
+                Navigator.pop(context);
+              }
+            } else {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Signup Failed"),
+                    content: Text(err),
+                  );
+                },
+              );
+              return;
             }
           }
         },

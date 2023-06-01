@@ -79,7 +79,7 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  Future<void> signUpStudent(StudentUser signUpData) async {
+  Future<bool> signUpStudent(StudentUser signUpData) async {
     try {
       final credential = await authService.signUpStudent(
         signUpData.email,
@@ -107,9 +107,11 @@ class AuthProvider with ChangeNotifier {
       });
 
       notifyListeners();
-    } catch (e) {
+      return true;
+    } on FirebaseAuthException catch (e) {
       // Handle any errors
       print(e);
+      return false;
     }
   }
 
