@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ohmsim/providers/adminProvider.dart';
 import 'package:ohmsim/providers/authProvider.dart';
-import 'package:ohmsim/states/adminScreenStates.dart';
-import 'package:ohmsim/stateLogic/adminContentStateLogic.dart';
 import './drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:ohmsim/providers/entryProvider.dart';

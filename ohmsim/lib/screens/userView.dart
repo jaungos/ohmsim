@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ohmsim/screens/homePage.dart';
+import 'package:ohmsim/screens/homepage.dart';
 
 class UserView extends StatefulWidget {
   static String routeName = '/user';
