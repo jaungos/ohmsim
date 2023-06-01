@@ -1,9 +1,39 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ohmsim/models/adminMonitor.dart';
 
 class FirebaseAdminMonitorAPI {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
 
-  // @TODO: Ok lang ba na irevise 'to ito nalang icall sa authProvider??
+  // @TODO: search student using email
+  Future<AdminMonitor?> searchStudentByEmail(String? email) async {
+    Map<String, dynamic> adminMonitorResult = {};
+    try {
+      final adminMonitorSearch = await db
+          .collection('adminMonitor')
+          .where('email', isEqualTo: email)
+          .get();
+      if (adminMonitorSearch.docs.isNotEmpty) {
+        adminMonitorResult = adminMonitorSearch.docs[0].data();
+
+        return AdminMonitor(
+          email: adminMonitorResult['email'],
+          password: adminMonitorResult['password'],
+          fname: adminMonitorResult['fname'],
+          mname: adminMonitorResult['mname'],
+          lname: adminMonitorResult['lname'],
+          employeeNo: adminMonitorResult['employeeNo'],
+          position: adminMonitorResult['position'],
+          homeUnit: adminMonitorResult['homeUnit'],
+          privilege: adminMonitorResult['privilege'],
+        );
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future<String> elevateUser(Map<String, dynamic> user) async {
     try {
       await db.collection("adminMonitor").add(user);
@@ -13,7 +43,6 @@ class FirebaseAdminMonitorAPI {
       return "Failed with error '${e.code}: ${e.message}";
     }
   }
-  // ====================================================================
 
   Stream<QuerySnapshot> getAdminMonitors() {
     return db.collection("adminMonitor").snapshots();

@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ohmsim/models/adminMonitor.dart';
 
 class FirebaseAuthAPI {
   static final FirebaseAuth auth = FirebaseAuth.instance;
+  static final FirebaseFirestore db = FirebaseFirestore.instance;
 
   Stream<User?> getUser() {
     return auth.authStateChanges();
@@ -65,7 +68,6 @@ class FirebaseAuthAPI {
     String fname,
     String mname,
     String lname,
-    String username,
     String employeeNo,
     String position,
     String homeUnit,

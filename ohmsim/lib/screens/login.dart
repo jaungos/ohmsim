@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -200,27 +198,26 @@ class _LoginPageState extends State<LoginPage> {
                         if (success) {
                           if (context.mounted) {
                             // ================== @TODO: implement the logic for navigating to the correct page based on privilege ==================
-                            // User? currentUser =
-                            //     context.watch()<AuthProvider>().currentUser;
-                            // if (context.watch<AuthProvider>().privilege ==
-                            //     'Admin') {
-                            //   Navigator.pop(context);
-                            //   Navigator.pushNamed(context, '/admin');
-                            // } else if (context
-                            //         .watch<AuthProvider>()
-                            //         .privilege ==
-                            //     'Monitor') {
-                            //   Navigator.pop(context);
-                            //   Navigator.pushNamed(context, '/admin');
-                            // } else {
-                            //   Navigator.pop(context);
-                            //   Navigator.pushNamed(context, '/user');
-                            // }
 
-                            // print the details of the current user
-                            // print(currentUser!.email);
-                            Navigator.pop(context);
-                            Navigator.pushNamed(context, '/admin');
+                            User? currentUser =
+                                context.read<AuthProvider>().currentUser;
+
+                            String? currentPrivilege = await context
+                                .read<AuthProvider>()
+                                .searchPrivilegeByEmail(currentUser?.email);
+
+                            print(currentPrivilege);
+
+                            if (currentPrivilege == 'Student') {
+                              Navigator.pop(context);
+                              Navigator.pushNamed(context, '/user');
+                            } else if (currentPrivilege == 'Admin') {
+                              Navigator.pop(context);
+                              Navigator.pushNamed(context, '/admin');
+                            } else if (currentPrivilege == 'Entrance Monitor') {
+                              Navigator.pop(context);
+                              Navigator.pushNamed(context, '/admin');
+                            }
                           }
                         } else {
                           showDialog(

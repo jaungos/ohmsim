@@ -1,9 +1,42 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ohmsim/models/studentUserModel.dart';
 
 class FirebaseStudentUserAPI {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
 
-  // @TODO: Ok lang ba na irevise 'to ito nalang icall sa authProvider??
+  // @TODO: search student using email
+  Future<StudentUser?> searchStudentByEmail(String? email) async {
+    Map<String, dynamic> studentResult = {};
+    try {
+      final student = await db
+          .collection('studentUsers')
+          .where('email', isEqualTo: email)
+          .get();
+      if (student.docs.isNotEmpty) {
+        studentResult = student.docs[0].data();
+
+        return StudentUser(
+          email: studentResult['email'],
+          password: studentResult['password'],
+          fname: studentResult['fname'],
+          mname: studentResult['mname'],
+          lname: studentResult['lname'],
+          username: studentResult['username'],
+          studentNo: studentResult['studentNo'],
+          college: studentResult['college'],
+          course: studentResult['course'],
+          privilege: studentResult['privilege'],
+        );
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future<String> addStudentUser(Map<String, dynamic> user) async {
     try {
       await db.collection("studentUsers").add(user);
@@ -13,7 +46,6 @@ class FirebaseStudentUserAPI {
       return "Failed with error '${e.code}: ${e.message}";
     }
   }
-  // ====================================================================
 
   Stream<QuerySnapshot> getAllStudentUsers() {
     return db.collection("studentUsers").snapshots();

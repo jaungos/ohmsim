@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
+import 'package:ohmsim/api/firebase_adminMonitor_api.dart';
+import 'package:ohmsim/api/firebase_studentuser_api.dart';
 import 'package:ohmsim/main.dart';
 import 'package:ohmsim/models/adminMonitor.dart';
 import 'package:ohmsim/models/studentUserModel.dart';
@@ -12,11 +14,15 @@ import '../api/firebase_auth_api.dart';
 
 class AuthProvider with ChangeNotifier {
   late FirebaseAuthAPI authService;
+  late FirebaseStudentUserAPI studentAuthService;
+  late FirebaseAdminMonitorAPI adminMonitorAuthService;
   late Stream<User?> uStream;
   User? userObj;
 
   AuthProvider() {
     authService = FirebaseAuthAPI();
+    studentAuthService = FirebaseStudentUserAPI();
+    adminMonitorAuthService = FirebaseAdminMonitorAPI();
     fetchAuthentication();
   }
 
@@ -25,6 +31,12 @@ class AuthProvider with ChangeNotifier {
 
   void fetchAuthentication() {
     uStream = authService.getUser();
+
+    notifyListeners();
+  }
+
+  void fetchUserObj() {
+    userObj = authService.currentUser;
 
     notifyListeners();
   }
@@ -45,19 +57,19 @@ class AuthProvider with ChangeNotifier {
 
   Future<bool> signUpAdminMonitor(AdminMonitor signUpData) async {
     try {
-      // final credential = await authService.signUpAdminMonitor(
-      //   signUpData.email,
-      //   signUpData.password,
-      //   signUpData.fname,
-      //   signUpData.mname,
-      //   signUpData.lname,
-      //   signUpData.username,
-      //   signUpData.employeeNo,
-      //   signUpData.position,
-      //   signUpData.homeUnit,
-      //   signUpData.privilege,
-      // );
+      final credential = await authService.signUpAdminMonitor(
+        signUpData.email,
+        signUpData.password,
+        signUpData.fname,
+        signUpData.mname,
+        signUpData.lname,
+        signUpData.employeeNo,
+        signUpData.position,
+        signUpData.homeUnit,
+        signUpData.privilege,
+      );
 
+      // ======================== @TODO: add this method in adminMonitor provider ========================
       // Store additional user data in Firestore
       await FirebaseFirestore.instance.collection('adminMonitor').add({
         'email': signUpData.email,
@@ -82,18 +94,19 @@ class AuthProvider with ChangeNotifier {
 
   Future<bool> signUpStudent(StudentUser signUpData) async {
     try {
-      // final credential = await authService.signUpStudent(
-      //   signUpData.email,
-      //   signUpData.password,
-      //   signUpData.fname,
-      //   signUpData.mname,
-      //   signUpData.lname,
-      //   signUpData.username,
-      //   signUpData.college,
-      //   signUpData.course,
-      //   signUpData.studentNo,
-      // );
+      final credential = await authService.signUpStudent(
+        signUpData.email,
+        signUpData.password,
+        signUpData.fname,
+        signUpData.mname,
+        signUpData.lname,
+        signUpData.username,
+        signUpData.college,
+        signUpData.course,
+        signUpData.studentNo,
+      );
 
+      // ======================== @TODO: add this method in studentUser provider ========================
       // Store additional user data in Firestore
       await FirebaseFirestore.instance.collection('studentUsers').add({
         'email': signUpData.email,
@@ -132,6 +145,30 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
+  Future<String?> searchPrivilegeByEmail(String? email) async {
+    print('The email to search is $email');
+    try {
+      var currentUser = await studentAuthService.searchStudentByEmail(email);
+      if (currentUser != null) {
+        // print(currentUser.email);
+        // print(currentUser.privilege);
+        notifyListeners();
+        return currentUser.privilege;
+      }
+
+      var currentUser1 =
+          await adminMonitorAuthService.searchStudentByEmail(email);
+      if (currentUser1 != null) {
+        // print(currentUser1.email);
+        // print(currentUser1.privilege);
+        notifyListeners();
+        return currentUser1.privilege;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future<void> switchSignUpPrivilege(String newPrivilege) {
     _privilege = newPrivilege;
     notifyListeners();
@@ -146,18 +183,11 @@ class AuthProvider with ChangeNotifier {
     return Future.value();
   }
 
-  Future<void> signOut() {
-    _id = "";
-    _privilege = "Student";
-    _view = "";
-
-    _status = "";
-
-    _name = "";
-    _email = "";
-
+  // @TODO: implement proper logging out to reset the currentUser
+  Future<void> signOut() async {
+    print(currentUser);
+    await authService.signOut();
+    print(currentUser);
     notifyListeners();
-
-    return authService.signOut();
   }
 }

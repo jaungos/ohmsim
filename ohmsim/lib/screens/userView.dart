@@ -43,7 +43,8 @@ class UserViewState extends State<Userview> {
       appBar: AppBar(
         title: const Text('OHMSIM'),
       ),
-      body: viewStateLogic(screen, context),
+      body: const Text('User View'),
+      // body: viewStateLogic(screen, context),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _showAddModal(context); // Go to add entry
