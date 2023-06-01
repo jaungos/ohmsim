@@ -197,8 +197,7 @@ class _LoginPageState extends State<LoginPage> {
 
                         if (success) {
                           if (context.mounted) {
-                            // ================== @TODO: implement the logic for navigating to the correct page based on privilege ==================
-
+                            // Navigates to the correct page based on privilege
                             User? currentUser =
                                 context.read<AuthProvider>().currentUser;
 

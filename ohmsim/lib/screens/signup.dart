@@ -541,6 +541,9 @@ class _SignupFormState extends State<SignupForm> {
 
             if (success) {
               if (context.mounted) {
+                await context
+                    .read<AuthProvider>()
+                    .switchSignUpPrivilege('Student');
                 Navigator.pop(context);
               }
             } else {
@@ -567,6 +570,7 @@ class _SignupFormState extends State<SignupForm> {
     // Back Button
     final backButton = TextButton(
       onPressed: () async {
+        await context.read<AuthProvider>().switchSignUpPrivilege('Student');
         Navigator.pop(context);
       },
       child: const Text(
