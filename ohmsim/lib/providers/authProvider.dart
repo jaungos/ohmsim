@@ -43,20 +43,20 @@ class AuthProvider with ChangeNotifier {
   String get name => _name;
   String get email => _email;
 
-  Future<void> signUpAdminMonitor(AdminMonitor signUpData) async {
+  Future<bool> signUpAdminMonitor(AdminMonitor signUpData) async {
     try {
-      final credential = await authService.signUpAdminMonitor(
-        signUpData.email,
-        signUpData.password,
-        signUpData.fname,
-        signUpData.mname,
-        signUpData.lname,
-        signUpData.username,
-        signUpData.employeeNo,
-        signUpData.position,
-        signUpData.homeUnit,
-        signUpData.privilege,
-      );
+      // final credential = await authService.signUpAdminMonitor(
+      //   signUpData.email,
+      //   signUpData.password,
+      //   signUpData.fname,
+      //   signUpData.mname,
+      //   signUpData.lname,
+      //   signUpData.username,
+      //   signUpData.employeeNo,
+      //   signUpData.position,
+      //   signUpData.homeUnit,
+      //   signUpData.privilege,
+      // );
 
       // Store additional user data in Firestore
       await FirebaseFirestore.instance.collection('adminMonitor').add({
@@ -64,7 +64,6 @@ class AuthProvider with ChangeNotifier {
         'fname': signUpData.fname,
         'mname': signUpData.mname,
         'lname': signUpData.lname,
-        'username': signUpData.username,
         'password': signUpData.password,
         'employeeNo': signUpData.employeeNo,
         'position': signUpData.position,
@@ -73,25 +72,27 @@ class AuthProvider with ChangeNotifier {
       });
 
       notifyListeners();
-    } catch (e) {
+      return true;
+    } on FirebaseAuthException catch (e) {
       // Handle any errors
       print(e);
+      return false;
     }
   }
 
   Future<bool> signUpStudent(StudentUser signUpData) async {
     try {
-      final credential = await authService.signUpStudent(
-        signUpData.email,
-        signUpData.password,
-        signUpData.fname,
-        signUpData.mname,
-        signUpData.lname,
-        signUpData.username,
-        signUpData.college,
-        signUpData.course,
-        signUpData.studentNo,
-      );
+      // final credential = await authService.signUpStudent(
+      //   signUpData.email,
+      //   signUpData.password,
+      //   signUpData.fname,
+      //   signUpData.mname,
+      //   signUpData.lname,
+      //   signUpData.username,
+      //   signUpData.college,
+      //   signUpData.course,
+      //   signUpData.studentNo,
+      // );
 
       // Store additional user data in Firestore
       await FirebaseFirestore.instance.collection('studentUsers').add({
@@ -104,13 +105,14 @@ class AuthProvider with ChangeNotifier {
         'college': signUpData.college,
         'course': signUpData.course,
         'studentNo': signUpData.studentNo,
+        'privilege': signUpData.privilege,
       });
 
       notifyListeners();
       return true;
     } on FirebaseAuthException catch (e) {
       // Handle any errors
-      print(e);
+      // print(e);
       return false;
     }
   }

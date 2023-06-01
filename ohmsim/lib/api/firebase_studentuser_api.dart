@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class FirebaseStudentUserAPI {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
 
+  // @TODO: Ok lang ba na irevise 'to ito nalang icall sa authProvider??
   Future<String> addStudentUser(Map<String, dynamic> user) async {
     try {
       await db.collection("studentUsers").add(user);
@@ -12,6 +13,7 @@ class FirebaseStudentUserAPI {
       return "Failed with error '${e.code}: ${e.message}";
     }
   }
+  // ====================================================================
 
   Stream<QuerySnapshot> getAllStudentUsers() {
     return db.collection("studentUsers").snapshots();

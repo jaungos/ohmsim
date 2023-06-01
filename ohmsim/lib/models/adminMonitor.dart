@@ -4,7 +4,6 @@ class AdminMonitor {
   String mname;
   String lname;
 
-  String username;
   String employeeNo;
   String position;
   String homeUnit;
@@ -20,10 +19,9 @@ class AdminMonitor {
     this.id,
     required this.email,
     required this.password,
-        required this.fname,
+    required this.fname,
     required this.mname,
     required this.lname,
-    required this.username,
     required this.employeeNo,
     required this.position,
     required this.homeUnit,
@@ -40,7 +38,6 @@ class AdminMonitor {
       fname: json['fname'],
       mname: json['mname'],
       lname: json['lname'],
-      username: json['username'],
       email: json['email'],
       password: json['password'],
       employeeNo: json['employeeNo'],
@@ -50,7 +47,8 @@ class AdminMonitor {
       privilege: json['privilege'],
       currentLocation: json['currentLocation'],
       assignedLocation: json['assignedLocation'],
-      preexistingIllnesses: List<String>.from(json['preexistingIllnesses'] ?? []),
+      preexistingIllnesses:
+          List<String>.from(json['preexistingIllnesses'] ?? []),
     );
   }
 
@@ -60,7 +58,6 @@ class AdminMonitor {
       "fname": fname,
       "mname": mname,
       "lname": lname,
-      "username": username,      
       'employeeNo': employeeNo,
       'position': position,
       'homeUnit': homeUnit,

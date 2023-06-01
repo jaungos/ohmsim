@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class FirebaseAdminMonitorAPI {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
 
+  // @TODO: Ok lang ba na irevise 'to ito nalang icall sa authProvider??
   Future<String> elevateUser(Map<String, dynamic> user) async {
     try {
       await db.collection("adminMonitor").add(user);
@@ -12,6 +13,7 @@ class FirebaseAdminMonitorAPI {
       return "Failed with error '${e.code}: ${e.message}";
     }
   }
+  // ====================================================================
 
   Stream<QuerySnapshot> getAdminMonitors() {
     return db.collection("adminMonitor").snapshots();
@@ -29,7 +31,10 @@ class FirebaseAdminMonitorAPI {
 
   Future<String> addStudentToQuarantine(String studentId) async {
     try {
-      await db.collection("studentUsers").doc(studentId).update({"status": "Under Quarantine"});
+      await db
+          .collection("studentUsers")
+          .doc(studentId)
+          .update({"status": "Under Quarantine"});
 
       return "Student added to quarantine successfully!";
     } on FirebaseException catch (e) {
@@ -39,7 +44,10 @@ class FirebaseAdminMonitorAPI {
 
   Future<String> removeStudentFromQuarantine(String studentId) async {
     try {
-      await db.collection("studentUsers").doc(studentId).update({"status": "Cleared"});
+      await db
+          .collection("studentUsers")
+          .doc(studentId)
+          .update({"status": "Cleared"});
 
       return "Student removed from quarantine successfully!";
     } on FirebaseException catch (e) {
@@ -49,7 +57,10 @@ class FirebaseAdminMonitorAPI {
 
   Future<String> moveToQuarantine(String studentId) async {
     try {
-      await db.collection("studentUsers").doc(studentId).update({"status": "Under Quarantine"});
+      await db
+          .collection("studentUsers")
+          .doc(studentId)
+          .update({"status": "Under Quarantine"});
 
       return "Student moved to quarantine successfully!";
     } on FirebaseException catch (e) {
@@ -59,7 +70,10 @@ class FirebaseAdminMonitorAPI {
 
   Future<String> endMonitoring(String studentId) async {
     try {
-      await db.collection("studentUsers").doc(studentId).update({"status": "Cleared"});
+      await db
+          .collection("studentUsers")
+          .doc(studentId)
+          .update({"status": "Cleared"});
 
       return "Monitoring ended for the student successfully!";
     } on FirebaseException catch (e) {
@@ -79,7 +93,10 @@ class FirebaseAdminMonitorAPI {
 
   Future<String> rejectDeleteRequest(String studentId) async {
     try {
-      await db.collection("studentUsers").doc(studentId).update({"deleteRequest": false});
+      await db
+          .collection("studentUsers")
+          .doc(studentId)
+          .update({"deleteRequest": false});
 
       return "Delete request for the student rejected successfully!";
     } on FirebaseException catch (e) {

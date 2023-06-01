@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ohmsim/models/adminMonitor.dart';
 import 'package:ohmsim/models/studentUserModel.dart';
 import 'package:ohmsim/providers/authProvider.dart';
 import 'package:provider/provider.dart';
@@ -491,27 +492,51 @@ class _SignupFormState extends State<SignupForm> {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState?.save();
 
-            final signUpData = StudentUser(
-              email: emailController.text,
-              password: passwordController.text,
-              fname: fNameController.text,
-              lname: lNameController.text,
-              college: collegeController.text,
-              course: courseController.text,
-              mname: mNameController.text,
-              studentNo: studentNoController.text,
-              username: userNameController.text,
-            );
-
-            // ========================= @TODO: implement error prompt =========================
+            var signUpData;
             var err;
             var success = false;
 
-            try {
-              success =
-                  await context.read<AuthProvider>().signUpStudent(signUpData);
-            } catch (e) {
-              err = e;
+            if (privilege == 'Student') {
+              signUpData = StudentUser(
+                email: emailController.text,
+                password: passwordController.text,
+                fname: fNameController.text,
+                mname: mNameController.text,
+                lname: lNameController.text,
+                college: collegeController.text,
+                course: courseController.text,
+                studentNo: studentNoController.text,
+                username: userNameController.text,
+                privilege: privilege,
+              );
+
+              try {
+                success = await context
+                    .read<AuthProvider>()
+                    .signUpStudent(signUpData);
+              } catch (e) {
+                err = e;
+              }
+            } else if (privilege == 'Admin' ||
+                privilege == 'Entrance Monitor') {
+              signUpData = AdminMonitor(
+                  email: emailController.text,
+                  password: passwordController.text,
+                  fname: fNameController.text,
+                  mname: mNameController.text,
+                  lname: lNameController.text,
+                  employeeNo: employeeNoController.text,
+                  position: positionController.text,
+                  homeUnit: homeUnitController.text,
+                  privilege: privilege);
+
+              try {
+                success = await context
+                    .read<AuthProvider>()
+                    .signUpAdminMonitor(signUpData);
+              } catch (e) {
+                err = e;
+              }
             }
 
             if (success) {
