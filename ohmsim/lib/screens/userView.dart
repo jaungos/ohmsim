@@ -1,147 +1,92 @@
 import 'package:flutter/material.dart';
-import 'package:ohmsim/providers/adminProvider.dart';
-import 'package:ohmsim/providers/authProvider.dart';
-import 'package:ohmsim/states/adminScreenStates.dart';
-import 'package:ohmsim/stateLogic/adminContentStateLogic.dart';
-import 'package:ohmsim/stateLogic/viewStateLogic.dart';
-import './drawer.dart';
-import 'package:provider/provider.dart';
+import 'package:ohmsim/screens/homePage.dart';
 
-class Userview extends StatefulWidget {
+class UserView extends StatefulWidget {
   static String routeName = '/user';
-  Userview({super.key});
+  UserView({super.key});
 
   @override
-  State<Userview> createState() => UserViewState();
+  State<UserView> createState() => UserViewState();
 }
 
-class UserViewState extends State<Userview> {
-  late String view;
-  late String status;
-  late String name;
-  late String privilege;
-  late String screen;
-  late String email;
-
-  @override
-  void initState() {
-    context.read<AuthProvider>().getCredentials();
-  }
+class UserViewState extends State<UserView> {
+  int index = 0;
+  final screens = [
+    HomePage(),
+    HomePage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    email = context.watch<AuthProvider>().email;
-    view = context.watch<AuthProvider>().view;
-    status = context.watch<AuthProvider>().status;
-    name = context.watch<AuthProvider>().name;
-    privilege = context.watch<AuthProvider>().privilege;
-    screen = context
-        .watch<AdminProvider>()
-        .screen; // Change the provider package to include all user types.
     return Scaffold(
-      drawer: drawerView(view, status, name, privilege, context),
       appBar: AppBar(
-        title: const Text('OHMSIM'),
+        title: const Center(
+          child: Text(
+            'Dashboard',
+          ),
+        ),
+        backgroundColor: const Color(0xFF6c1915),
+        automaticallyImplyLeading: false,
       ),
-      body: const Text('User View'),
-      // body: viewStateLogic(screen, context),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _showAddModal(context); // Go to add entry
-        },
-        child: const Icon(Icons.add),
+      body: screens[index],
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text(
+          'Add Entry',
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.normal,
+          ),
+        ),
+        icon: const Icon(Icons.add_outlined),
+        onPressed: () {},
+        backgroundColor: const Color(0xFF944446),
       ),
-    );
-  }
-
-  _showAddModal(context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        String? exposure;
-
-        Map<String, bool> symptoms = {
-          'Fever (37.8 C and above)': false,
-          'Feeling feverish': false,
-          ' Muscle or joint pains': false,
-          'Cough': false,
-          'Colds': false,
-          'Sore throat': false,
-          'Difficulty of breathing': false,
-          'Diarrhea': false,
-          'Loss of taste': false,
-          'Loss of smell': false,
-        };
-        return Dialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  constraints: const BoxConstraints(maxHeight: 560),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      children: [
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: symptoms.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            String key = symptoms.keys.elementAt(index);
-                            return CheckboxListTile(
-                              dense: true,
-                              title: Text(key),
-                              value: symptoms[key],
-                              onChanged: (bool? selected) {
-                                setState(() {
-                                  symptoms[key] = selected!;
-                                });
-                              },
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          const Text(
-                              'Did you recently have a face-to-face encounter or contact with a confirmed COVID-19 case?'),
-                          RadioListTile(
-                            title: const Text('Yes'),
-                            value: 'Yes',
-                            groupValue: exposure,
-                            onChanged: (value) {
-                              setState(() {
-                                exposure = value.toString();
-                              });
-                            },
-                          ),
-                          RadioListTile(
-                            title: const Text('No'),
-                            value: 'No',
-                            groupValue: exposure,
-                            onChanged: (value) {
-                              setState(() {
-                                exposure = value.toString();
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ],
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: const Color(0xFFe8e8e8),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.4),
+              spreadRadius: 0,
+              blurRadius: 10,
+              offset: const Offset(0, -3),
+            ),
+          ],
+        ),
+        child: NavigationBarTheme(
+          data: NavigationBarThemeData(
+            indicatorColor: const Color(0xFF944446),
+            labelTextStyle: MaterialStateProperty.all(
+              const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
-        );
-      },
+          child: NavigationBar(
+            height: 60,
+            backgroundColor: const Color(0xFFf8fbf8),
+            selectedIndex: index,
+            labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+            animationDuration: const Duration(milliseconds: 1000),
+            onDestinationSelected: (index) =>
+                setState(() => this.index = index),
+            destinations: const [
+              NavigationDestination(
+                icon: Icon(Icons.home_outlined),
+                selectedIcon: Icon(Icons.home),
+                label: 'Home',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.person_outlined),
+                selectedIcon: Icon(Icons.person),
+                label: 'Profile',
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

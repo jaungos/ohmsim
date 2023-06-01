@@ -44,13 +44,14 @@ class MyApp extends StatelessWidget {
           primaryColor: const Color(0xFF00A65A),
           primarySwatch: Colors.green,
         ),
-        initialRoute: '/',
+        initialRoute: UserView.routeName,
+        // initialRoute: '/',
         routes: {
           //TODO: Put routes here
           LoginPage.routeName: (context) => LoginPage(),
           SignupPage.routeName: (context) => SignupPage(),
           AdminView.routeName: (context) => AdminView(),
-          Userview.routeName: (context) => Userview(),
+          UserView.routeName: (context) => UserView(),
           MonitorView.routeName: (context) => MonitorView(),
         },
         // onGenerateRoute: (settings) {
