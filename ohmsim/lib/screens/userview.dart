@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ohmsim/screens/homepage.dart';
+import 'package:ohmsim/screens/viewentries.dart';
 
 class UserView extends StatefulWidget {
   static String routeName = '/user';
@@ -10,8 +11,10 @@ class UserView extends StatefulWidget {
 }
 
 class UserViewState extends State<UserView> {
-  int index = 0;
+  int index = 1;
+  PageController _pageController = PageController(initialPage: 1);
   final screens = [
+    ViewAllEntries(),
     HomePage(),
     HomePage(),
   ];
@@ -28,7 +31,11 @@ class UserViewState extends State<UserView> {
         backgroundColor: const Color(0xFF6c1915),
         automaticallyImplyLeading: false,
       ),
-      body: screens[index],
+      body: PageView(
+        controller: _pageController,
+        children: screens,
+        onPageChanged: (index) => setState(() => this.index = index),
+      ),
       floatingActionButton: FloatingActionButton.extended(
         label: const Text(
           'Add Entry',
@@ -70,9 +77,20 @@ class UserViewState extends State<UserView> {
             selectedIndex: index,
             labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
             animationDuration: const Duration(milliseconds: 1000),
-            onDestinationSelected: (index) =>
-                setState(() => this.index = index),
+            onDestinationSelected: (index) {
+              setState(() => this.index = index);
+              _pageController.animateToPage(
+                index,
+                duration: const Duration(milliseconds: 1000),
+                curve: Curves.ease,
+              );
+            },
             destinations: const [
+              NavigationDestination(
+                icon: Icon(Icons.receipt_long_outlined),
+                selectedIcon: Icon(Icons.receipt_long),
+                label: 'Entries',
+              ),
               NavigationDestination(
                 icon: Icon(Icons.home_outlined),
                 selectedIcon: Icon(Icons.home),

@@ -191,13 +191,13 @@ class HomePageState extends State<HomePage> {
                 children: [
                   // Symptom Header
                   Padding(
-                    padding: EdgeInsets.fromLTRB(20, 40, 20, 10),
+                    padding: const EdgeInsets.fromLTRB(20, 40, 20, 10),
                     child: Row(
                       children: const [
                         Text(
                           'Daily Health Status',
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 17,
                             fontWeight: FontWeight.normal,
                             color: Color(0xFFe9ae48),
                           ),
@@ -215,7 +215,7 @@ class HomePageState extends State<HomePage> {
                           const Text(
                             'No Symptom/s',
                             style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 18,
                               fontWeight: FontWeight.w300,
                               fontStyle: FontStyle.italic,
                               color: Color(0xFFf9fefa),
@@ -227,13 +227,13 @@ class HomePageState extends State<HomePage> {
                   ),
                   // Exposure Header
                   Padding(
-                    padding: EdgeInsets.fromLTRB(20, 15, 20, 10),
+                    padding: const EdgeInsets.fromLTRB(20, 15, 20, 10),
                     child: Row(
                       children: const [
                         Text(
                           'Exposure to a Confirmed COVID-19 Case',
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 17,
                             fontWeight: FontWeight.normal,
                             color: Color(0xFFe9ae48),
                           ),
@@ -251,7 +251,7 @@ class HomePageState extends State<HomePage> {
                           Text(
                             '${sample['exposure']}. Needs to be quarantined',
                             style: const TextStyle(
-                              fontSize: 15,
+                              fontSize: 18,
                               fontWeight: FontWeight.w300,
                               fontStyle: FontStyle.italic,
                               color: Color(0xFFf9fefa),
