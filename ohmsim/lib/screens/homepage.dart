@@ -21,6 +21,9 @@ class HomePageState extends State<HomePage> {
       ['May 28, 2023', 'Healthy'],
       ['May 27, 2023', 'Healthy'],
       ['May 26, 2023', 'Healthy'],
+      ['May 25, 2023', 'Healthy'],
+      ['May 24, 2023', 'Healthy'],
+      ['May 23, 2023', 'Exposed'],
     ],
   };
   // ==============================================================
@@ -270,14 +273,14 @@ class HomePageState extends State<HomePage> {
 
   // Widget for health entries header
   Widget healthEntriesHeader() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
+    return const Padding(
+      padding: EdgeInsets.fromLTRB(15, 5, 15, 0),
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Column(
+              Column(
                 children: [
                   Text(
                     'Health Entries',
@@ -287,21 +290,6 @@ class HomePageState extends State<HomePage> {
                       color: Color(0xFF191313),
                     ),
                     textAlign: TextAlign.left,
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      'View All',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w300,
-                        fontSize: 18,
-                        color: Color(0xFF191313),
-                      ),
-                    ),
                   ),
                 ],
               ),
