@@ -37,15 +37,15 @@ class ViewAllEntriesState extends State<ViewAllEntries> {
 
   // Widget for the title header
   Widget titleHeader() {
-    return const Padding(
-      padding: EdgeInsets.fromLTRB(15, 5, 15, 0),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Column(
-                children: [
+                children: const [
                   Text(
                     'All Health Entries',
                     style: TextStyle(
