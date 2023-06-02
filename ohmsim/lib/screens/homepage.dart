@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ohmsim/screens/viewentries.dart';
 
 class HomePage extends StatefulWidget {
   // static String routeName = '/home';
@@ -104,8 +103,8 @@ class HomePageState extends State<HomePage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Column(
-                children: [
+              Column(
+                children: const [
                   Text(
                     'Today\'s Entry',
                     style: TextStyle(
@@ -191,14 +190,14 @@ class HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // Symptom Header
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.fromLTRB(20, 40, 20, 10),
                     child: Row(
-                      children: [
+                      children: const [
                         Text(
                           'Daily Health Status',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
                             fontWeight: FontWeight.normal,
                             color: Color(0xFFe9ae48),
                           ),
@@ -216,7 +215,7 @@ class HomePageState extends State<HomePage> {
                           const Text(
                             'No Symptom/s',
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 15,
                               fontWeight: FontWeight.w300,
                               fontStyle: FontStyle.italic,
                               color: Color(0xFFf9fefa),
@@ -227,14 +226,14 @@ class HomePageState extends State<HomePage> {
                     ),
                   ),
                   // Exposure Header
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.fromLTRB(20, 15, 20, 10),
                     child: Row(
-                      children: [
+                      children: const [
                         Text(
                           'Exposure to a Confirmed COVID-19 Case',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
                             fontWeight: FontWeight.normal,
                             color: Color(0xFFe9ae48),
                           ),
@@ -252,7 +251,7 @@ class HomePageState extends State<HomePage> {
                           Text(
                             '${sample['exposure']}. Needs to be quarantined',
                             style: const TextStyle(
-                              fontSize: 18,
+                              fontSize: 15,
                               fontWeight: FontWeight.w300,
                               fontStyle: FontStyle.italic,
                               color: Color(0xFFf9fefa),
@@ -274,15 +273,15 @@ class HomePageState extends State<HomePage> {
 
   // Widget for health entries header
   Widget healthEntriesHeader() {
-    return const Padding(
-      padding: EdgeInsets.fromLTRB(15, 5, 15, 0),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Column(
-                children: [
+                children: const [
                   Text(
                     'Health Entries',
                     style: TextStyle(
