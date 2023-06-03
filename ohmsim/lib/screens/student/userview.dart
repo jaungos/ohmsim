@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ohmsim/screens/homepage.dart';
-import 'package:ohmsim/screens/profilepage.dart';
-import 'package:ohmsim/screens/viewentries.dart';
+import 'package:ohmsim/screens/student/homepage.dart';
+import 'package:ohmsim/screens/student/profilepage.dart';
+import 'package:ohmsim/screens/student/viewentries.dart';
 
 class UserView extends StatefulWidget {
   static String routeName = '/user';
@@ -12,8 +12,8 @@ class UserView extends StatefulWidget {
 }
 
 class UserViewState extends State<UserView> {
-  int index = 2;
-  final PageController _pageController = PageController(initialPage: 2);
+  int index = 1;
+  final PageController _pageController = PageController(initialPage: 1);
   final screens = [
     ViewAllEntries(),
     HomePage(),

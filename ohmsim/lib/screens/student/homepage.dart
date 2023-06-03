@@ -329,8 +329,8 @@ class HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.circular(10),
                   child: Container(
                     color: index % 2 == 0
-                        ? const Color(0xFFc68932)
-                        : const Color(0xFFf0c974),
+                        ? const Color(0xFFffe6ad)
+                        : const Color(0xFFbf963e),
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                       child: ListTile(
