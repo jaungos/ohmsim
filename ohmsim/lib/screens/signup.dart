@@ -127,6 +127,17 @@ class _SignupFormState extends State<SignupForm> {
     TextEditingController(),
   ];
 
+  List<String> sampleIllnesses = [
+    "Hypertension",
+    "Diabetes",
+    "Tuberculosis",
+    "Cancer",
+    "Kidney Disease",
+    "Cardiac Disease",
+    "Autoimmune Disease",
+    "Asthma",
+  ];
+
   @override
   void dispose() {
     for (var controller in preExistingIllnesses) {
@@ -164,7 +175,9 @@ class _SignupFormState extends State<SignupForm> {
                   child: TextFormField(
                     controller: preExistingIllnesses[index],
                     decoration: InputDecoration(
-                      hintText: "e.g. Asthma ${index + 1}",
+                      hintText: index <= sampleIllnesses.length - 1
+                          ? "e.g. ${sampleIllnesses[index]}"
+                          : "e.g. ${sampleIllnesses[index % (sampleIllnesses.length - 1)]}",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(13),
                         borderSide: BorderSide.none,
@@ -236,7 +249,7 @@ class _SignupFormState extends State<SignupForm> {
     final email = TextFormField(
       controller: emailController,
       decoration: InputDecoration(
-        hintText: "example@domain.com",
+        hintText: "e.g. example@domain.com",
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(13),
           borderSide: BorderSide.none,
@@ -297,7 +310,7 @@ class _SignupFormState extends State<SignupForm> {
     final firstName = TextFormField(
       controller: fNameController,
       decoration: InputDecoration(
-        hintText: "First Name",
+        hintText: "e.g. Juan",
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(13),
           borderSide: BorderSide.none,
@@ -326,7 +339,7 @@ class _SignupFormState extends State<SignupForm> {
     final middleInitial = TextFormField(
       controller: mNameController,
       decoration: InputDecoration(
-        hintText: "Middle Initial",
+        hintText: "e.g. C. ",
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(13),
           borderSide: BorderSide.none,
@@ -355,7 +368,7 @@ class _SignupFormState extends State<SignupForm> {
     final lastName = TextFormField(
       controller: lNameController,
       decoration: InputDecoration(
-        hintText: "Last Name",
+        hintText: "e.g. Dela Cruz",
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(13),
           borderSide: BorderSide.none,
@@ -692,22 +705,48 @@ class _SignupFormState extends State<SignupForm> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                formLabel,
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.normal,
-                  color: Color(0xFF3e3b3a),
-                ),
-              ),
               if (formLabel == 'Pre-existing Illnesses') ...[
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      addField();
-                    });
-                  },
-                  icon: const Icon(Icons.add),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      formLabel,
+                      style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.normal,
+                        color: Color(0xFF3e3b3a),
+                      ),
+                    ),
+                    const Text(
+                      "If none, please type 'None'. For allergies, please specify.",
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w300,
+                        color: Color(0xFF3e3b3a),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          addField();
+                        });
+                      },
+                      icon: const Icon(Icons.add),
+                    ),
+                  ],
+                ),
+              ] else ...[
+                Text(
+                  formLabel,
+                  style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.normal,
+                    color: Color(0xFF3e3b3a),
+                  ),
                 ),
               ],
             ],
