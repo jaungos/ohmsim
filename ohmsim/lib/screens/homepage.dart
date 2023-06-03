@@ -12,7 +12,9 @@ class HomePageState extends State<HomePage> {
   // =================== HARD CODED VALUES ONLY ===================
   final Map<String, dynamic> sample = {
     'name': 'Juan',
-    'status': 'Healthy',
+    // 'status': 'Cleared',
+    // 'status': 'Under Monitoring',
+    'status': 'Under Quarantine',
     'dailyStatus': null,
     'exposure': 'Yes',
     'healthEntries': [
@@ -58,7 +60,7 @@ class HomePageState extends State<HomePage> {
               Text(
                 'Hi, ${sample['name']}',
                 style: const TextStyle(
-                  fontSize: 20,
+                  fontSize: 24,
                   fontWeight: FontWeight.normal,
                   color: Color(0xFF191313),
                 ),
@@ -68,22 +70,31 @@ class HomePageState extends State<HomePage> {
           ),
           Row(
             children: [
-              if (sample['status'] == 'Healthy') ...[
-                Text(
-                  '${sample['status']} (Not Quarantined)',
-                  style: const TextStyle(
-                    fontSize: 24,
+              if (sample['status'] == 'Cleared') ...[
+                const Text(
+                  'Healthy',
+                  style: TextStyle(
+                    fontSize: 30,
                     fontWeight: FontWeight.w700,
                     color: Color(0xFF21523c),
                   ),
                 ),
-              ] else ...[
+              ] else if (sample['status'] == 'Under Monitoring') ...[
                 Text(
-                  '${sample['status']} (Quarantined)',
+                  '${sample['status']}',
                   style: const TextStyle(
-                    fontSize: 24,
+                    fontSize: 30,
                     fontWeight: FontWeight.w700,
                     color: Color(0xFFf65151),
+                  ),
+                ),
+              ] else ...[
+                Text(
+                  '${sample['status']}',
+                  style: const TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFFff0000),
                   ),
                 ),
               ]
@@ -318,8 +329,8 @@ class HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.circular(10),
                   child: Container(
                     color: index % 2 == 0
-                        ? const Color(0xFFe4bc79)
-                        : const Color(0xFFe7cda1),
+                        ? const Color(0xFFc68932)
+                        : const Color(0xFFf0c974),
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                       child: ListTile(

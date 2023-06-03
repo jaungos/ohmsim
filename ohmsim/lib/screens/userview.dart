@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ohmsim/screens/homepage.dart';
+import 'package:ohmsim/screens/profilepage.dart';
 import 'package:ohmsim/screens/viewentries.dart';
 
 class UserView extends StatefulWidget {
@@ -11,12 +12,12 @@ class UserView extends StatefulWidget {
 }
 
 class UserViewState extends State<UserView> {
-  int index = 1;
-  PageController _pageController = PageController(initialPage: 1);
+  int index = 2;
+  final PageController _pageController = PageController(initialPage: 2);
   final screens = [
     ViewAllEntries(),
     HomePage(),
-    HomePage(),
+    ProfilePage(),
   ];
 
   @override
@@ -41,29 +42,32 @@ class UserViewState extends State<UserView> {
           'Add Entry',
           style: TextStyle(
             fontSize: 14,
-            fontWeight: FontWeight.normal,
+            fontWeight: FontWeight.w700,
+            color: Color(0xFFf9fefa),
           ),
         ),
-        icon: const Icon(Icons.add_outlined),
+        icon: const Icon(
+          Icons.add,
+          color: Color(0xFFf9fefa),
+        ),
         onPressed: () {},
-        backgroundColor: const Color(0xFF944446),
+        backgroundColor: const Color(0xFFa12034),
       ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: const Color(0xFFe8e8e8),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.4),
+              color: Colors.grey.withOpacity(0.6),
               spreadRadius: 0,
               blurRadius: 10,
-              offset: const Offset(0, -3),
+              offset: const Offset(0, -5),
             ),
           ],
         ),
         child: NavigationBarTheme(
           data: NavigationBarThemeData(
-            indicatorColor: const Color(0xFF944446),
+            indicatorColor: const Color(0xFFa12034),
             labelTextStyle: MaterialStateProperty.all(
               const TextStyle(
                 fontSize: 14,
@@ -88,17 +92,26 @@ class UserViewState extends State<UserView> {
             destinations: const [
               NavigationDestination(
                 icon: Icon(Icons.receipt_long_outlined),
-                selectedIcon: Icon(Icons.receipt_long),
+                selectedIcon: Icon(
+                  Icons.receipt_long,
+                  color: Color(0xFFf9fefa),
+                ),
                 label: 'Entries',
               ),
               NavigationDestination(
                 icon: Icon(Icons.home_outlined),
-                selectedIcon: Icon(Icons.home),
+                selectedIcon: Icon(
+                  Icons.home,
+                  color: Color(0xFFf9fefa),
+                ),
                 label: 'Home',
               ),
               NavigationDestination(
                 icon: Icon(Icons.person_outlined),
-                selectedIcon: Icon(Icons.person),
+                selectedIcon: Icon(
+                  Icons.person,
+                  color: Color(0xFFf9fefa),
+                ),
                 label: 'Profile',
               ),
             ],

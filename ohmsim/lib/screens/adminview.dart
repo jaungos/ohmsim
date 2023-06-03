@@ -1,10 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ohmsim/providers/adminProvider.dart';
-import 'package:ohmsim/providers/authProvider.dart';
-import './drawer.dart';
-import 'package:provider/provider.dart';
-import 'package:ohmsim/providers/entryProvider.dart';
-import 'package:ohmsim/models/entryModel.dart';
 
 /*
 
@@ -30,48 +24,13 @@ class AdminView extends StatefulWidget {
 }
 
 class AdminViewState extends State<AdminView> {
-  late String view;
-  late String status;
-  late String name;
-  late String privilege;
-  late String screen;
-
-  @override
-  void initState() {
-    context.read<AuthProvider>().getCredentials();
-  }
-
   @override
   Widget build(BuildContext context) {
-    view = context.watch<AuthProvider>().view;
-    status = context.watch<AuthProvider>().status;
-    name = context.watch<AuthProvider>().name;
-    privilege = context.watch<AuthProvider>().privilege;
-    screen = context.watch<AdminProvider>().screen;
     return Scaffold(
-      drawer: drawerView(view, status, name, privilege, context),
       appBar: AppBar(
         title: const Text('OHMSIM'),
       ),
       body: const Text('Admin View Screen'),
-      // body: adminContentStateLogic(screen,context),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          final test = Entry(
-            symptoms: ["covid", "asdadasdasdasda"],
-            closeContact: false,
-            email: "email",
-            date: DateTime.now(),
-          );
-
-          context.read<EntryProvider>().addEntry(test);
-          if (context.mounted) {
-            Navigator.pushNamed(context, '/admin');
-          }
-        },
-        child: const Icon(Icons.add),
-      ),
-      // body:Widget(co),
     );
   }
 }

@@ -38,7 +38,7 @@ class ViewAllEntriesState extends State<ViewAllEntries> {
   // Widget for the title header
   Widget titleHeader() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
+      padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
       child: Column(
         children: [
           Row(
@@ -67,7 +67,7 @@ class ViewAllEntriesState extends State<ViewAllEntries> {
   // Widget for the list of all health entries
   Widget allHealthEntries(List<List> entries) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
+      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
       child: Column(
         children: [
           // ListView builder for at most 5 entries only
@@ -82,8 +82,8 @@ class ViewAllEntriesState extends State<ViewAllEntries> {
                   borderRadius: BorderRadius.circular(10),
                   child: Container(
                     color: index % 2 == 0
-                        ? const Color(0xFFe4bc79)
-                        : const Color(0xFFe7cda1),
+                        ? const Color(0xFFc68932)
+                        : const Color(0xFFf0c974),
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                       child: ListTile(
