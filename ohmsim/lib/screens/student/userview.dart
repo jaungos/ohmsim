@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ohmsim/screens/student/addentry.dart';
 import 'package:ohmsim/screens/student/homepage.dart';
 import 'package:ohmsim/screens/student/profilepage.dart';
 import 'package:ohmsim/screens/student/viewentries.dart';
@@ -50,7 +51,15 @@ class UserViewState extends State<UserView> {
           Icons.add,
           color: Color(0xFFf9fefa),
         ),
-        onPressed: () {},
+        onPressed: () {
+          // create a modal form that has a checkbox for symptoms and radio button that asks if they have been exposed
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AddEntry();
+            },
+          );
+        },
         backgroundColor: const Color(0xFFa12034),
       ),
       bottomNavigationBar: Container(
