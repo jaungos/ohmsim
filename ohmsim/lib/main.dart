@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
           primaryColor: const Color(0xFF00A65A),
           primarySwatch: Colors.green,
         ),
-        initialRoute: UserView.routeName,
+        initialRoute: SignupPage.routeName,
         // initialRoute: '/',
         routes: {
           //TODO: Put routes here

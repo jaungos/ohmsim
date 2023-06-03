@@ -21,9 +21,6 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Sign Up'),
-      // ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -43,7 +40,7 @@ class _SignupPageState extends State<SignupPage> {
               'Fill in the form to continue',
               style: TextStyle(
                 fontSize: 15.0,
-                fontWeight: FontWeight.w300,
+                fontWeight: FontWeight.normal,
               ),
             ),
             SignupForm(),
@@ -126,6 +123,86 @@ class SignupForm extends StatefulWidget {
 }
 
 class _SignupFormState extends State<SignupForm> {
+  List<TextEditingController> preExistingIllnesses = [
+    TextEditingController(),
+  ];
+
+  @override
+  void dispose() {
+    for (var controller in preExistingIllnesses) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  void addField() {
+    setState(() {
+      TextEditingController newField = TextEditingController();
+      preExistingIllnesses.add(newField);
+    });
+  }
+
+  void removeField(int index) {
+    setState(() {
+      preExistingIllnesses[index].dispose();
+      preExistingIllnesses.removeAt(index);
+    });
+  }
+
+  // Dynamic textfield/s for Pre-existing Illnesses
+  Widget illnesses() => ListView.builder(
+        padding: EdgeInsets.zero,
+        shrinkWrap: true,
+        physics: const ScrollPhysics(),
+        itemCount: preExistingIllnesses.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    controller: preExistingIllnesses[index],
+                    decoration: InputDecoration(
+                      hintText: "e.g. Asthma ${index + 1}",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(13),
+                        borderSide: BorderSide.none,
+                      ),
+                      filled: true,
+                      fillColor: const Color(0xFFC7EAD9),
+                      // Changes the border color when the field is active/clicked
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(13),
+                        borderSide: const BorderSide(
+                          color: Color(0xFF008D4C),
+                          width: 2,
+                        ),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Please enter an illness";
+                      }
+                      return null;
+                    },
+                    onSaved: (newValue) =>
+                        debugPrint("Pre-existing illness $index Saved"),
+                  ),
+                ),
+                if (index > 0)
+                  IconButton(
+                    onPressed: () {
+                      removeField(index);
+                    },
+                    icon: const Icon(Icons.remove),
+                  ),
+              ],
+            ),
+          );
+        },
+      );
+
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
@@ -141,6 +218,7 @@ class _SignupFormState extends State<SignupForm> {
     TextEditingController employeeNoController = TextEditingController();
     TextEditingController positionController = TextEditingController();
     TextEditingController homeUnitController = TextEditingController();
+
     final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
     late String privilege = context.watch<AuthProvider>().privilege;
     Future<bool> emailValidator(String email) async {
@@ -157,19 +235,21 @@ class _SignupFormState extends State<SignupForm> {
     // TextField for Email
     final email = TextFormField(
       controller: emailController,
-      decoration: const InputDecoration(
-        hintText: "Email",
-        labelText: "Email",
+      decoration: InputDecoration(
+        hintText: "example@domain.com",
         border: OutlineInputBorder(
-          borderSide: BorderSide(
-            width: 2,
-          ),
+          borderRadius: BorderRadius.circular(13),
+          borderSide: BorderSide.none,
         ),
-        // Changes the label name color when the field is active/clicked
-        floatingLabelStyle: TextStyle(color: Color(0xFF00A65A)),
+        filled: true,
+        fillColor: const Color(0xFFC7EAD9),
         // Changes the border color when the field is active/clicked
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFF008D4C), width: 2),
+          borderRadius: BorderRadius.circular(13),
+          borderSide: const BorderSide(
+            color: Color(0xFF008D4C),
+            width: 2,
+          ),
         ),
       ),
       validator: (value) {
@@ -186,19 +266,21 @@ class _SignupFormState extends State<SignupForm> {
     // TextField for Password
     final password = TextFormField(
       controller: passwordController,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         hintText: "Password",
-        labelText: "Password",
         border: OutlineInputBorder(
-          borderSide: BorderSide(
-            width: 2,
-          ),
+          borderRadius: BorderRadius.circular(13),
+          borderSide: BorderSide.none,
         ),
-        // Changes the label name color when the field is active/clicked
-        floatingLabelStyle: TextStyle(color: Color(0xFF00A65A)),
+        filled: true,
+        fillColor: const Color(0xFFC7EAD9),
         // Changes the border color when the field is active/clicked
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFF008D4C), width: 2),
+          borderRadius: BorderRadius.circular(13),
+          borderSide: const BorderSide(
+            color: Color(0xFF008D4C),
+            width: 2,
+          ),
         ),
       ),
       obscureText: true,
@@ -214,19 +296,21 @@ class _SignupFormState extends State<SignupForm> {
     // TextField for First Name
     final firstName = TextFormField(
       controller: fNameController,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         hintText: "First Name",
-        labelText: "First Name",
         border: OutlineInputBorder(
-          borderSide: BorderSide(
-            width: 2,
-          ),
+          borderRadius: BorderRadius.circular(13),
+          borderSide: BorderSide.none,
         ),
-        // Changes the label name color when the field is active/clicked
-        floatingLabelStyle: TextStyle(color: Color(0xFF00A65A)),
+        filled: true,
+        fillColor: const Color(0xFFC7EAD9),
         // Changes the border color when the field is active/clicked
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFF008D4C), width: 2),
+          borderRadius: BorderRadius.circular(13),
+          borderSide: const BorderSide(
+            color: Color(0xFF008D4C),
+            width: 2,
+          ),
         ),
       ),
       validator: (value) {
@@ -241,19 +325,21 @@ class _SignupFormState extends State<SignupForm> {
     // TextField for Middle Initial
     final middleInitial = TextFormField(
       controller: mNameController,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         hintText: "Middle Initial",
-        labelText: "Middle Initial",
         border: OutlineInputBorder(
-          borderSide: BorderSide(
-            width: 2,
-          ),
+          borderRadius: BorderRadius.circular(13),
+          borderSide: BorderSide.none,
         ),
-        // Changes the label name color when the field is active/clicked
-        floatingLabelStyle: TextStyle(color: Color(0xFF00A65A)),
+        filled: true,
+        fillColor: const Color(0xFFC7EAD9),
         // Changes the border color when the field is active/clicked
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFF008D4C), width: 2),
+          borderRadius: BorderRadius.circular(13),
+          borderSide: const BorderSide(
+            color: Color(0xFF008D4C),
+            width: 2,
+          ),
         ),
       ),
       validator: (value) {
@@ -268,19 +354,21 @@ class _SignupFormState extends State<SignupForm> {
     // TextField for Last Name
     final lastName = TextFormField(
       controller: lNameController,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         hintText: "Last Name",
-        labelText: "Last Name",
         border: OutlineInputBorder(
-          borderSide: BorderSide(
-            width: 2,
-          ),
+          borderRadius: BorderRadius.circular(13),
+          borderSide: BorderSide.none,
         ),
-        // Changes the label name color when the field is active/clicked
-        floatingLabelStyle: TextStyle(color: Color(0xFF00A65A)),
+        filled: true,
+        fillColor: const Color(0xFFC7EAD9),
         // Changes the border color when the field is active/clicked
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFF008D4C), width: 2),
+          borderRadius: BorderRadius.circular(13),
+          borderSide: const BorderSide(
+            color: Color(0xFF008D4C),
+            width: 2,
+          ),
         ),
       ),
       validator: (value) {
@@ -295,19 +383,21 @@ class _SignupFormState extends State<SignupForm> {
     // TextField for Username
     final username = TextFormField(
       controller: userNameController,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         hintText: "Username",
-        labelText: "Username",
         border: OutlineInputBorder(
-          borderSide: BorderSide(
-            width: 2,
-          ),
+          borderRadius: BorderRadius.circular(13),
+          borderSide: BorderSide.none,
         ),
-        // Changes the label name color when the field is active/clicked
-        floatingLabelStyle: TextStyle(color: Color(0xFF00A65A)),
+        filled: true,
+        fillColor: const Color(0xFFC7EAD9),
         // Changes the border color when the field is active/clicked
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFF008D4C), width: 2),
+          borderRadius: BorderRadius.circular(13),
+          borderSide: const BorderSide(
+            color: Color(0xFF008D4C),
+            width: 2,
+          ),
         ),
       ),
       validator: (value) {
@@ -322,19 +412,21 @@ class _SignupFormState extends State<SignupForm> {
     // TextField for College
     final college = TextFormField(
       controller: collegeController,
-      decoration: const InputDecoration(
-        hintText: "College",
-        labelText: "College",
+      decoration: InputDecoration(
+        hintText: "e.g. CAS",
         border: OutlineInputBorder(
-          borderSide: BorderSide(
-            width: 2,
-          ),
+          borderRadius: BorderRadius.circular(13),
+          borderSide: BorderSide.none,
         ),
-        // Changes the label name color when the field is active/clicked
-        floatingLabelStyle: TextStyle(color: Color(0xFF00A65A)),
+        filled: true,
+        fillColor: const Color(0xFFC7EAD9),
         // Changes the border color when the field is active/clicked
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFF008D4C), width: 2),
+          borderRadius: BorderRadius.circular(13),
+          borderSide: const BorderSide(
+            color: Color(0xFF008D4C),
+            width: 2,
+          ),
         ),
       ),
       validator: (value) {
@@ -349,19 +441,21 @@ class _SignupFormState extends State<SignupForm> {
     // TextField for Course
     final course = TextFormField(
       controller: courseController,
-      decoration: const InputDecoration(
-        hintText: "Course",
-        labelText: "Course",
+      decoration: InputDecoration(
+        hintText: "e.g. BS Computer Science",
         border: OutlineInputBorder(
-          borderSide: BorderSide(
-            width: 2,
-          ),
+          borderRadius: BorderRadius.circular(13),
+          borderSide: BorderSide.none,
         ),
-        // Changes the label name color when the field is active/clicked
-        floatingLabelStyle: TextStyle(color: Color(0xFF00A65A)),
+        filled: true,
+        fillColor: const Color(0xFFC7EAD9),
         // Changes the border color when the field is active/clicked
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFF008D4C), width: 2),
+          borderRadius: BorderRadius.circular(13),
+          borderSide: const BorderSide(
+            color: Color(0xFF008D4C),
+            width: 2,
+          ),
         ),
       ),
       validator: (value) {
@@ -376,19 +470,21 @@ class _SignupFormState extends State<SignupForm> {
     // TextField for Student Number
     final studentNum = TextFormField(
       controller: studentNoController,
-      decoration: const InputDecoration(
-        hintText: "Student Number",
-        labelText: "Student Number",
+      decoration: InputDecoration(
+        hintText: "e.g. 20XX-XXXXX",
         border: OutlineInputBorder(
-          borderSide: BorderSide(
-            width: 2,
-          ),
+          borderRadius: BorderRadius.circular(13),
+          borderSide: BorderSide.none,
         ),
-        // Changes the label name color when the field is active/clicked
-        floatingLabelStyle: TextStyle(color: Color(0xFF00A65A)),
+        filled: true,
+        fillColor: const Color(0xFFC7EAD9),
         // Changes the border color when the field is active/clicked
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFF008D4C), width: 2),
+          borderRadius: BorderRadius.circular(13),
+          borderSide: const BorderSide(
+            color: Color(0xFF008D4C),
+            width: 2,
+          ),
         ),
       ),
       validator: (value) {
@@ -403,19 +499,21 @@ class _SignupFormState extends State<SignupForm> {
     // TextField for Employee Number
     final employeeNum = TextFormField(
       controller: employeeNoController,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         hintText: "Employee Number",
-        labelText: "Employee Number",
         border: OutlineInputBorder(
-          borderSide: BorderSide(
-            width: 2,
-          ),
+          borderRadius: BorderRadius.circular(13),
+          borderSide: BorderSide.none,
         ),
-        // Changes the label name color when the field is active/clicked
-        floatingLabelStyle: TextStyle(color: Color(0xFF00A65A)),
+        filled: true,
+        fillColor: const Color(0xFFC7EAD9),
         // Changes the border color when the field is active/clicked
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFF008D4C), width: 2),
+          borderRadius: BorderRadius.circular(13),
+          borderSide: const BorderSide(
+            color: Color(0xFF008D4C),
+            width: 2,
+          ),
         ),
       ),
       validator: (value) {
@@ -430,19 +528,21 @@ class _SignupFormState extends State<SignupForm> {
     // TextField for Position
     final position = TextFormField(
       controller: positionController,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         hintText: "Position",
-        labelText: "Position",
         border: OutlineInputBorder(
-          borderSide: BorderSide(
-            width: 2,
-          ),
+          borderRadius: BorderRadius.circular(13),
+          borderSide: BorderSide.none,
         ),
-        // Changes the label name color when the field is active/clicked
-        floatingLabelStyle: TextStyle(color: Color(0xFF00A65A)),
+        filled: true,
+        fillColor: const Color(0xFFC7EAD9),
         // Changes the border color when the field is active/clicked
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFF008D4C), width: 2),
+          borderRadius: BorderRadius.circular(13),
+          borderSide: const BorderSide(
+            color: Color(0xFF008D4C),
+            width: 2,
+          ),
         ),
       ),
       validator: (value) {
@@ -457,19 +557,21 @@ class _SignupFormState extends State<SignupForm> {
     // TextField for Home Unit
     final homeUnit = TextFormField(
       controller: homeUnitController,
-      decoration: const InputDecoration(
-        hintText: "Home Unit",
-        labelText: "Home Unit",
+      decoration: InputDecoration(
+        hintText: "e.g. ICS",
         border: OutlineInputBorder(
-          borderSide: BorderSide(
-            width: 2,
-          ),
+          borderRadius: BorderRadius.circular(13),
+          borderSide: BorderSide.none,
         ),
-        // Changes the label name color when the field is active/clicked
-        floatingLabelStyle: TextStyle(color: Color(0xFF00A65A)),
+        filled: true,
+        fillColor: const Color(0xFFC7EAD9),
         // Changes the border color when the field is active/clicked
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFF008D4C), width: 2),
+          borderRadius: BorderRadius.circular(13),
+          borderSide: const BorderSide(
+            color: Color(0xFF008D4C),
+            width: 2,
+          ),
         ),
       ),
       validator: (value) {
@@ -496,6 +598,7 @@ class _SignupFormState extends State<SignupForm> {
             var err;
             var success = false;
 
+            // @TODO: add the preexisting illnesses to the database
             if (privilege == 'Student') {
               signUpData = StudentUser(
                 email: emailController.text,
@@ -583,61 +686,106 @@ class _SignupFormState extends State<SignupForm> {
       ),
     );
 
+    // Form field labels
+    formLabel(String formLabel) => Padding(
+          padding: const EdgeInsets.only(top: 20.0, left: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                formLabel,
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.normal,
+                  color: Color(0xFF3e3b3a),
+                ),
+              ),
+              if (formLabel == 'Pre-existing Illnesses') ...[
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      addField();
+                    });
+                  },
+                  icon: const Icon(Icons.add),
+                ),
+              ],
+            ],
+          ),
+        );
+
     return Form(
       key: _formKey,
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.only(left: 40.0, right: 40.0),
+          padding: const EdgeInsets.only(left: 20.0, right: 20.0),
           child: Column(
             children: [
+              formLabel('Email'),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
                 child: email,
               ),
+              formLabel('Password'),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
                 child: password,
               ),
+              formLabel('First Name'),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
                 child: firstName,
               ),
+              formLabel('Middle Initial'),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
                 child: middleInitial,
               ),
+              formLabel('Last Name'),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
                 child: lastName,
               ),
               if (privilege == 'Student') ...[
+                formLabel('Username'),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
                   child: username,
                 ),
+                formLabel('College'),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
                   child: college,
                 ),
+                formLabel('Course'),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
                   child: course,
                 ),
+                formLabel('Student Number'),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
                   child: studentNum,
                 ),
-              ] else ...[
+                formLabel('Pre-existing Illnesses'),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  child: illnesses(),
+                ),
+              ] else ...[
+                formLabel('Employee Number'),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
                   child: employeeNum,
                 ),
+                formLabel('Position'),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
                   child: position,
                 ),
+                formLabel('Home Unit'),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
                   child: homeUnit,
                 ),
               ],
@@ -650,17 +798,20 @@ class _SignupFormState extends State<SignupForm> {
                   color: const Color(0xFFd3d3d3),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Already have an account?',
-                    style: TextStyle(
-                      fontSize: 15,
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 8, 8, 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Already have an account?',
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
                     ),
-                  ),
-                  backButton,
-                ],
+                    backButton,
+                  ],
+                ),
               ),
             ],
           ),
