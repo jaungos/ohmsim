@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:ohmsim/providers/authProvider.dart';
 import 'package:ohmsim/providers/adminProvider.dart';
+import 'package:ohmsim/providers/studentUser_provider.dart';
 import 'package:ohmsim/screens/admin/adminview.dart';
 import 'package:ohmsim/screens/login.dart';
 import 'package:ohmsim/screens/entrance/monitorview.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => AdminProvider()),
         ChangeNotifierProvider(create: (_) => EntryProvider()),
+        ChangeNotifierProvider(create: (_) => StudentUserProvider())
       ],
       child: MaterialApp(
         title: 'OHMSIM',
