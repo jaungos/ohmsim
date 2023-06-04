@@ -32,6 +32,9 @@ class _AddEntryState extends State<AddEntry> {
           color: Color(0xFF191313),
         ),
       ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
       content: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

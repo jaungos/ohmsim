@@ -132,46 +132,15 @@ class HomePageState extends State<HomePage> {
                     children: [
                       IconButton(
                         hoverColor: const Color(0xFFd07173),
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) => AlertDialog(
-                              title: const Text('Sample Prompt'),
-                              content: const Text('This is a sample prompt.'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text('Okay'),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
+                        // @TODO: implement edit function
+                        onPressed: () {},
                         icon: const Icon(Icons.create_outlined),
                         color: const Color(0xFF00a65a),
                       ),
                       IconButton(
                         hoverColor: const Color(0xFFd07173),
-                        onPressed: () {
-                          // create an sample prompt that the button is pressed
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) => AlertDialog(
-                              title: const Text('Sample Prompt'),
-                              content: const Text('This is a sample prompt.'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text('Okay'),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
+                        // @TODO: implement delete function
+                        onPressed: () {},
                         icon: const Icon(Icons.delete_outlined),
                         color: const Color(0xFFf65151),
                       ),

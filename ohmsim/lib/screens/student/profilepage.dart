@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ohmsim/providers/authProvider.dart';
 
 class ProfilePage extends StatefulWidget {
   // static String routeName = '/home';
@@ -14,7 +16,7 @@ class ProfilePageState extends State<ProfilePage> {
     // =================== HARD CODED VALUES ONLY ===================
     final Map<String, dynamic> sampleData = {
       'fname': 'Juan',
-      'mname': 'Dangal',
+      'mname': 'D.',
       'lname': 'Makasalanan',
       // 'status': 'Cleared',
       // 'status': 'Under Monitoring',
@@ -161,7 +163,13 @@ class ProfilePageState extends State<ProfilePage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
               child: ElevatedButton(
-                onPressed: () {},
+                // @TODO: implement logout feature
+                onPressed: () {
+                  context.read<AuthProvider>().signOut();
+                  // pop all screens and go to login
+                  Navigator.popUntil(context, ModalRoute.withName('/'));
+                  Navigator.pushNamed(context, '/');
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF191313),
                 ),
