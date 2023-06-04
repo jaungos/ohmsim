@@ -15,8 +15,10 @@ class AdminViewState extends State<AdminView> {
   int index = 1;
   final PageController _pageController = PageController(initialPage: 1);
   final screens = [
+    // @TODO: For the search, just follow a guide in youtube
     AdminHomePage(),
     AdminHomePage(),
+    // @TODO: For the profile, use the current image selected in the dribbble website
     AdminHomePage(),
   ];
 
@@ -37,22 +39,6 @@ class AdminViewState extends State<AdminView> {
         children: screens,
         onPageChanged: (index) => setState(() => this.index = index),
       ),
-      // floatingActionButton: FloatingActionButton.extended(
-      //   label: const Text(
-      //     'Add Entry',
-      //     style: TextStyle(
-      //       fontSize: 14,
-      //       fontWeight: FontWeight.w700,
-      //       color: Color(0xFFf9fefa),
-      //     ),
-      //   ),
-      //   icon: const Icon(
-      //     Icons.add,
-      //     color: Color(0xFFf9fefa),
-      //   ),
-      //   onPressed: () {},
-      //   backgroundColor: const Color(0xFFa12034),
-      // ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: const Color(0xFFe8e8e8),

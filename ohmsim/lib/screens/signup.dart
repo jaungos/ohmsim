@@ -277,6 +277,7 @@ class _SignupFormState extends State<SignupForm> {
     );
 
     // TextField for Password
+    // @TODO: implement the display password the eye is pressed
     final password = TextFormField(
       controller: passwordController,
       decoration: InputDecoration(
@@ -612,6 +613,7 @@ class _SignupFormState extends State<SignupForm> {
             var success = false;
 
             // @TODO: add the preexisting illnesses to the database
+            // @TODO: don't store or implement hashing to the password
             if (privilege == 'Student') {
               signUpData = StudentUser(
                 email: emailController.text,

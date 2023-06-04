@@ -303,6 +303,7 @@ class HomePageState extends State<HomePage> {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                       child: ListTile(
+                        // @TODO: (optional) add a trailing text button of view details per entry
                         title: Text(
                           sample['healthEntries'][index][1],
                           style: TextStyle(

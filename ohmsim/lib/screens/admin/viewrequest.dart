@@ -65,6 +65,8 @@ class RequestModalForm extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 18,
                       color: Color(0xFF191313),
+                      // @TODO: (optional) try to implement the different color based on the status of the user
+                      // color: status == 'Cleared' ? Colors.red : Colors.blue,
                     ),
                   ),
                 ],

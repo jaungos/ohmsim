@@ -114,6 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     width: 400,
                     height: 45,
+                    // @TODO: implement the display password the eye is pressed
                     child: TextFormField(
                       controller: _passwordController,
                       decoration: const InputDecoration(

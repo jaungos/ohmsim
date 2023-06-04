@@ -146,6 +146,7 @@ class AdminHomePageState extends State<AdminHomePage> {
                       return Center(
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width,
+                          // @TODO: change the layout gayahin medj 'yung sa google classroom
                           child: ListTile(
                             dense: true,
                             title: Text(
@@ -169,6 +170,7 @@ class AdminHomePageState extends State<AdminHomePage> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
+                                // @TODO: Replace the IconButtons with a single TextButton of View Details
                                 IconButton(
                                   icon: const Icon(
                                     Icons.check_rounded,
