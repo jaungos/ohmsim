@@ -9,6 +9,7 @@ class AdminHomePage extends StatefulWidget {
 }
 
 class AdminHomePageState extends State<AdminHomePage> {
+  // =================== HARD CODED VALUES ONLY ===================
   final Map<String, dynamic> sample = {
     'name': 'Jerico',
     'privilege': 'Admin',
@@ -37,6 +38,12 @@ class AdminHomePageState extends State<AdminHomePage> {
       },
     ],
   };
+
+  final List<String> quarantinedStudents = [
+    'jaungos@up.edu.ph',
+    'jlaungos@up.edu.ph',
+    'juanmakasalanan@up.edu.ph',
+  ];
   // ==============================================================
 
   // @TODO: have a provider method to get the needed data from the database
@@ -47,6 +54,7 @@ class AdminHomePageState extends State<AdminHomePage> {
       child: Column(
         children: [
           adminHeader(),
+          quarantineCounter(),
           editDeleteRequestsHeader(),
           editDeleteRequests(),
         ],
@@ -91,6 +99,77 @@ class AdminHomePageState extends State<AdminHomePage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  // Widget for the tracker of the number of students in quarantine
+  Widget quarantineCounter() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 210,
+            height: 210,
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+                side: const BorderSide(
+                  color: Color(0xFF191313),
+                  width: 1.0,
+                ),
+              ),
+              color: const Color(0xFFe6b8b7),
+              elevation: 4, // Add elevation for the shadow effect
+              shadowColor: Colors.grey[400], // Set the shadow color
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Text(
+                          'Quarantined',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Icon(Icons.coronavirus),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${quarantinedStudents.length}',
+                          style: const TextStyle(
+                            fontSize: 80,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        const Text(
+                          'Students',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -170,26 +249,46 @@ class AdminHomePageState extends State<AdminHomePage> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                // @TODO: Replace the IconButtons with a single TextButton of View Details
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.check_rounded,
-                                    size: 30,
-                                    color: Color(0xFF21523c),
-                                  ),
+                                TextButton(
                                   onPressed: () {
-                                    // @TODO: implement approve request
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return RequestModalForm(
+                                          date: sample['requests'][index]
+                                              ['date'],
+                                          email: sample['requests'][index]
+                                              ['email'],
+                                          status: sample['requests'][index]
+                                              ['status'],
+                                          isEditRequest: sample['requests']
+                                                      [index]['type'] ==
+                                                  'Edit'
+                                              ? true
+                                              : false,
+                                          newSymptoms: sample['requests'][index]
+                                                      ['type'] ==
+                                                  'Edit'
+                                              ? sample['requests'][index]
+                                                  ['symptoms']
+                                              : null,
+                                          exposure: sample['requests'][index]
+                                                      ['type'] ==
+                                                  'Edit'
+                                              ? sample['requests'][index]
+                                                  ['closeContact']
+                                              : null,
+                                        );
+                                      },
+                                    );
                                   },
-                                ),
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.close_sharp,
-                                    size: 30,
-                                    color: Color(0xFF6c1915),
+                                  child: const Text(
+                                    'View Details',
+                                    style: TextStyle(
+                                      color: Color(0xFF191313),
+                                      fontWeight: FontWeight.w300,
+                                    ),
                                   ),
-                                  onPressed: () {
-                                    // @TODO: implement deny request
-                                  },
                                 ),
                               ],
                             ),

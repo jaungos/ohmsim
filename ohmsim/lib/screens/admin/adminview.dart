@@ -13,8 +13,8 @@ class AdminView extends StatefulWidget {
 }
 
 class AdminViewState extends State<AdminView> {
-  int index = 2;
-  final PageController _pageController = PageController(initialPage: 2);
+  int index = 1;
+  final PageController _pageController = PageController(initialPage: 1);
   final screens = [
     // @TODO: For the search, just follow a guide in youtube
     AdminHomePage(),
