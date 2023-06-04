@@ -201,7 +201,7 @@ class _LoginPageState extends State<LoginPage> {
 
                             String? currentPrivilege = await context
                                 .read<AuthProvider>()
-                                .searchPrivilegeByEmail(currentUser?.email);
+                                .searchPrivilegeByEmail(currentUser!.email!);
 
                             print(currentPrivilege);
 

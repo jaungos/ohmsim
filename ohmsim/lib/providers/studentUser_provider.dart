@@ -19,6 +19,11 @@ class StudentUserProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<StudentUser> getStudentUser(String email) async {
+    StudentUser user = await firebaseService.searchStudentByEmail(email);
+    return user;
+  }
+
   void addStudentUser(StudentUser user) async {
     String message = await firebaseService.addStudentUser(user.toJson());
     print(message);

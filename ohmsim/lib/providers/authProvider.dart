@@ -109,26 +109,20 @@ class AuthProvider with ChangeNotifier {
       notifyListeners();
       return true;
     } on FirebaseAuthException catch (e) {
-      // if (e.code == 'user-not-found') {
-      //   print('No user found for that email.');
-      // } else if (e.code == 'wrong-password') {
-      //   print('Wrong password provided for that user.');
-      // }
       return false;
     }
   }
 
-  Future<String?> searchPrivilegeByEmail(String? email) async {
+  Future<String?> searchPrivilegeByEmail(String email) async {
     try {
       var currentUser1 = await studentAuthService.searchStudentByEmail(email);
-      print(currentUser1);
       if (currentUser1 != null) {
         notifyListeners();
         return currentUser1.privilege;
       }
 
       var currentUser2 =
-          await adminMonitorAuthService.searchStudentByEmail(email);
+          await adminMonitorAuthService.searchAdminMonitorByEmail(email);
       if (currentUser2 != null) {
         notifyListeners();
         return currentUser2.privilege;
@@ -152,7 +146,6 @@ class AuthProvider with ChangeNotifier {
     return Future.value();
   }
 
-  // @TODO: implement proper logging out to reset the currentUser
   Future<void> signOut() async {
     print(currentUser);
     await authService.signOut();

@@ -1,4 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ohmsim/models/studentUserModel.dart';
+import 'package:ohmsim/providers/authProvider.dart';
+import 'package:ohmsim/providers/studentUser_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   // static String routeName = '/home';
@@ -29,22 +34,44 @@ class HomePageState extends State<HomePage> {
     ],
   };
   // ==============================================================
-
   // @TODO: have a provider method to get the needed data from the database
+  StudentUser? studentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchStudentUser();
+  }
+
+  Future<void> fetchStudentUser() async {
+    User? currentUser = context.read<AuthProvider>().currentUser;
+    String email = currentUser!.email!;
+    StudentUser user =
+        await context.read<StudentUserProvider>().getStudentUser(email);
+    setState(() {
+      studentUser = user;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          welcomeHeader(),
-          entryHeader(),
-          entry(),
-          healthEntriesHeader(),
-          healthEntries(),
-        ],
-      ),
-    );
+    if (studentUser == null) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    } else {
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            welcomeHeader(),
+            entryHeader(),
+            entry(),
+            healthEntriesHeader(),
+            healthEntries(),
+          ],
+        ),
+      );
+    }
   }
 
   // Widget for the name and status
@@ -58,7 +85,7 @@ class HomePageState extends State<HomePage> {
             // @TODO: implement dynamic method to fetch the name and status
             children: [
               Text(
-                'Hi, ${sample['name']}',
+                'Hi, ${studentUser!.fname}',
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.normal,
@@ -70,7 +97,7 @@ class HomePageState extends State<HomePage> {
           ),
           Row(
             children: [
-              if (sample['status'] == 'Cleared') ...[
+              if (studentUser!.status == 'Cleared') ...[
                 const Text(
                   'Healthy',
                   style: TextStyle(
@@ -79,22 +106,31 @@ class HomePageState extends State<HomePage> {
                     color: Color(0xFF21523c),
                   ),
                 ),
-              ] else if (sample['status'] == 'Under Monitoring') ...[
+              ] else if (studentUser!.status == 'Under Monitoring') ...[
                 Text(
-                  '${sample['status']}',
+                  '${studentUser!.status}',
                   style: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.w700,
                     color: Color(0xFFf65151),
                   ),
                 ),
-              ] else ...[
+              ] else if (studentUser!.status == 'Under Quarantine') ...[
                 Text(
-                  '${sample['status']}',
+                  '${studentUser!.status}',
                   style: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.w700,
                     color: Color(0xFFff0000),
+                  ),
+                ),
+              ] else ...[
+                const Text(
+                  'No Health Entry Yet',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF191313),
                   ),
                 ),
               ]
@@ -186,6 +222,7 @@ class HomePageState extends State<HomePage> {
                     ),
                   ),
                   // Symptoms Itself
+                  // @TODO: implement dynamic method to fetch the symptoms
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 15, 0, 30),
                     child: Row(
@@ -206,6 +243,7 @@ class HomePageState extends State<HomePage> {
                     ),
                   ),
                   // Exposure Header
+                  // @TODO: implement dynamic method to fetch the exposure
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 15, 20, 10),
                     child: Row(
@@ -222,6 +260,7 @@ class HomePageState extends State<HomePage> {
                     ),
                   ),
                   // Exposure Itself
+                  // @TODO: implement dynamic method to fetch the exposure
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 15, 0, 40),
                     child: Row(
@@ -294,6 +333,7 @@ class HomePageState extends State<HomePage> {
               padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
               child: Column(
                 children: [
+                  // @TODO: implement dynamic method to fetch the health entries
                   ListView.separated(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),

@@ -4,8 +4,7 @@ import 'package:ohmsim/models/adminMonitor.dart';
 class FirebaseAdminMonitorAPI {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
 
-  // @TODO: search student using email
-  Future<AdminMonitor?> searchStudentByEmail(String? email) async {
+  Future<AdminMonitor?> searchAdminMonitorByEmail(String? email) async {
     Map<String, dynamic> adminMonitorResult = {};
     try {
       final adminMonitorSearch = await db

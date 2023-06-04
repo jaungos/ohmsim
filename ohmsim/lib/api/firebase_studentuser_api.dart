@@ -1,42 +1,38 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ohmsim/models/studentUserModel.dart';
 
 class FirebaseStudentUserAPI {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
+  static final FirebaseAuth auth = FirebaseAuth.instance;
 
-  // @TODO: search student using email
-  Future<StudentUser?> searchStudentByEmail(String? email) async {
+  Future<StudentUser> searchStudentByEmail(String? email) async {
     Map<String, dynamic> studentResult = {};
     try {
       final student = await db
           .collection('studentUsers')
           .where('email', isEqualTo: email)
           .get();
-      if (student.docs.isNotEmpty) {
-        studentResult = student.docs[0].data();
-        print(studentResult['email']);
 
-        return StudentUser(
-          email: studentResult['email'],
-          password: studentResult['password'],
-          fname: studentResult['fname'],
-          mname: studentResult['mname'],
-          lname: studentResult['lname'],
-          username: studentResult['username'],
-          studentNo: studentResult['studentNo'],
-          college: studentResult['college'],
-          course: studentResult['course'],
-          privilege: studentResult['privilege'],
-          preexistingIllnesses:
-              List<String>.from(studentResult['preexistingIllnesses']),
-        );
-      } else {
-        return null;
-      }
+      studentResult = student.docs[0].data();
+
+      return StudentUser(
+        email: studentResult['email'],
+        password: studentResult['password'],
+        fname: studentResult['fname'],
+        mname: studentResult['mname'],
+        lname: studentResult['lname'],
+        username: studentResult['username'],
+        studentNo: studentResult['studentNo'],
+        college: studentResult['college'],
+        course: studentResult['course'],
+        privilege: studentResult['privilege'],
+        preexistingIllnesses:
+            List<String>.from(studentResult['preexistingIllnesses']),
+      );
     } catch (e) {
       print(e);
+      throw (e);
     }
   }
 
