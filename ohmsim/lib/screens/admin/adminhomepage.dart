@@ -62,7 +62,7 @@ class AdminHomePageState extends State<AdminHomePage> {
     );
   }
 
-  // Widget for the name and status
+  // Widget for the name and privilege
   Widget adminHeader() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 20, 15, 20),

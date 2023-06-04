@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:ohmsim/providers/authProvider.dart';
 import 'package:provider/provider.dart';
 
-class AdminProfilePage extends StatefulWidget {
+class MonitorProfilePage extends StatefulWidget {
   // static String routeName = '/home';
-  AdminProfilePage({super.key});
+  MonitorProfilePage({super.key});
 
   @override
-  State<AdminProfilePage> createState() => AdminProfilePageState();
+  State<MonitorProfilePage> createState() => MonitorProfilePagePageState();
 }
 
-class AdminProfilePageState extends State<AdminProfilePage> {
+class MonitorProfilePagePageState extends State<MonitorProfilePage> {
   @override
   Widget build(BuildContext context) {
     // =================== HARD CODED VALUES ONLY ===================
     final Map<String, dynamic> sampleData = {
-      'fname': 'Jerico Luis',
-      'mname': 'A.',
-      'lname': 'Ungos',
-      'privilege': 'Admin',
+      'fname': 'Juan',
+      'mname': 'D.',
+      'lname': 'Makasalanan',
+      'privilege': 'Entrance Monitor',
     };
     // ==============================================================
 
@@ -104,12 +104,8 @@ class AdminProfilePageState extends State<AdminProfilePage> {
   Widget generalButtons() {
     final List<Map<String, dynamic>> generalButtonsList = [
       {
-        'icon': Icons.supervisor_account,
-        'text': 'Under Monitoring Students',
-      },
-      {
-        'icon': Icons.accessibility_new,
-        'text': 'Quarantined Students',
+        'icon': Icons.document_scanner,
+        'text': 'Scan QR Code',
       },
       {
         'icon': Icons.switch_account,
@@ -168,12 +164,8 @@ class AdminProfilePageState extends State<AdminProfilePage> {
                             ),
                             onTap: () {
                               if (generalButtonsList[index]['text'] ==
-                                  'Under Monitoring Students') {
-                                // @TODO: go to page for under monitoring students
-                              }
-                              if (generalButtonsList[index]['text'] ==
-                                  'Quarantined Students') {
-                                // @TODO: go to page for quarantine students
+                                  'Scan QR Code') {
+                                // @TODO: go to page for scanning the qr code
                               }
                               if (generalButtonsList[index]['text'] ==
                                   'Change to User View') {

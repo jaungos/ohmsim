@@ -79,7 +79,10 @@ class AdminViewState extends State<AdminView> {
             },
             destinations: const [
               NavigationDestination(
-                icon: Icon(Icons.person_search_outlined),
+                icon: Icon(
+                  Icons.person_search_outlined,
+                  size: 30,
+                ),
                 selectedIcon: Icon(
                   Icons.person_search,
                   color: Color(0xFFf9fefa),
@@ -87,7 +90,10 @@ class AdminViewState extends State<AdminView> {
                 label: 'Search',
               ),
               NavigationDestination(
-                icon: Icon(Icons.home_outlined),
+                icon: Icon(
+                  Icons.home_outlined,
+                  size: 30,
+                ),
                 selectedIcon: Icon(
                   Icons.home,
                   color: Color(0xFFf9fefa),
@@ -95,7 +101,10 @@ class AdminViewState extends State<AdminView> {
                 label: 'Home',
               ),
               NavigationDestination(
-                icon: Icon(Icons.person_outlined),
+                icon: Icon(
+                  Icons.person_outlined,
+                  size: 30,
+                ),
                 selectedIcon: Icon(
                   Icons.person,
                   color: Color(0xFFf9fefa),

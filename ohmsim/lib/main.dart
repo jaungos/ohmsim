@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
           primaryColor: const Color(0xFF00A65A),
           primarySwatch: Colors.green,
         ),
-        initialRoute: AdminView.routeName,
+        initialRoute: MonitorView.routeName,
         // initialRoute: '/',
         routes: {
           //TODO: Put routes here
@@ -56,10 +56,6 @@ class MyApp extends StatelessWidget {
           UserView.routeName: (context) => UserView(),
           MonitorView.routeName: (context) => MonitorView(),
         },
-        // onGenerateRoute: (settings) {
-        //   //TODO: Edit according to the planned routes
-        //   return null;
-        // },
       ),
     );
   }

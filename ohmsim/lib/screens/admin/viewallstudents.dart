@@ -28,14 +28,27 @@ class StudentListViewState extends State<StudentListView> {
             child: TextField(
               controller: searchController,
               decoration: InputDecoration(
-                labelText: 'Search',
+                hintText: 'Enter student\'s name',
+                // Changes the border color when the field is active/clicked
+                focusedBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Color(0xFF21523c),
+                    width: 2,
+                  ),
+                ),
                 suffixIcon: IconButton(
-                  icon: const Icon(Icons.search),
+                  icon: const Icon(
+                    Icons.search,
+                    color: Color(0xFF21523c),
+                  ),
                   onPressed: () {
                     // Call the search function here
                     // searchStudents(searchController.text);
                   },
                 ),
+              ),
+              style: const TextStyle(
+                fontSize: 18,
               ),
             ),
           ),
@@ -51,7 +64,6 @@ class StudentListViewState extends State<StudentListView> {
               ),
             ),
           ),
-
           // Show the list of students here
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 0, 15, 20),

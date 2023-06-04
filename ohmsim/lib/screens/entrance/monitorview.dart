@@ -1,20 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ohmsim/screens/entrance/monitorhomepage.dart';
+import 'package:ohmsim/screens/entrance/monitorprofilepage.dart';
+import 'package:ohmsim/screens/entrance/viewstudentlogs.dart';
 
-/*
-
-TODO: Refactor adminView to just view. 
-
-1. Replace the state logic in the body section.
-
-Instead of solely relying on the adminContentStateLogic file. Replace and refactor it with
-viewState Logic where the userContentStateLogic and monitorStateLogic can be included
-under the stateLogic folder.
-
-2. Add content in the drawer state and refactor the children section of the drawer widget.
-
-It lacks a stateLogic file of its own and certainly more states are needed in the drawerStates file.
-
-*/
 class MonitorView extends StatefulWidget {
   static String routeName = '/monitor';
   MonitorView({super.key});
@@ -24,13 +12,105 @@ class MonitorView extends StatefulWidget {
 }
 
 class MonitorViewState extends State<MonitorView> {
+  int index = 1;
+  final PageController _pageController = PageController(initialPage: 1);
+  final screens = [
+    ViewAllLogs(),
+    MonitorHomePage(),
+    MonitorProfilePage(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('OHMSIM'),
+        title: const Center(
+          child: Text(
+            'Dashboard',
+          ),
+        ),
+        backgroundColor: const Color(0xFF6c1915),
+        automaticallyImplyLeading: false,
       ),
-      body: const Text('Monitor View Screen'),
+      body: PageView(
+        controller: _pageController,
+        children: screens,
+        onPageChanged: (index) => setState(() => this.index = index),
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: const Color(0xFFe8e8e8),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.6),
+              spreadRadius: 0,
+              blurRadius: 10,
+              offset: const Offset(0, -5),
+            ),
+          ],
+        ),
+        child: NavigationBarTheme(
+          data: NavigationBarThemeData(
+            indicatorColor: const Color(0xFFa12034),
+            labelTextStyle: MaterialStateProperty.all(
+              const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+          child: NavigationBar(
+            height: 60,
+            backgroundColor: const Color(0xFFf8fbf8),
+            selectedIndex: index,
+            labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+            animationDuration: const Duration(milliseconds: 1000),
+            onDestinationSelected: (index) {
+              setState(() => this.index = index);
+              _pageController.animateToPage(
+                index,
+                duration: const Duration(milliseconds: 1000),
+                curve: Curves.ease,
+              );
+            },
+            destinations: const [
+              NavigationDestination(
+                icon: Icon(
+                  Icons.person_search_outlined,
+                  size: 30,
+                ),
+                selectedIcon: Icon(
+                  Icons.person_search,
+                  color: Color(0xFFf9fefa),
+                ),
+                label: 'Search',
+              ),
+              NavigationDestination(
+                icon: Icon(
+                  Icons.home_outlined,
+                  size: 30,
+                ),
+                selectedIcon: Icon(
+                  Icons.home,
+                  color: Color(0xFFf9fefa),
+                ),
+                label: 'Home',
+              ),
+              NavigationDestination(
+                icon: Icon(
+                  Icons.person_outlined,
+                  size: 30,
+                ),
+                selectedIcon: Icon(
+                  Icons.person,
+                  color: Color(0xFFf9fefa),
+                ),
+                label: 'Profile',
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

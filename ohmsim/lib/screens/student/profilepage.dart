@@ -140,44 +140,64 @@ class ProfilePageState extends State<ProfilePage> {
   Widget logoutButton() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-      child: ElevatedButton(
-        // @TODO: implement logout feature
-        onPressed: () {
-          context.read<AuthProvider>().signOut();
-          // pop all screens and go to login
-          Navigator.popUntil(context, ModalRoute.withName('/'));
-          Navigator.pushNamed(context, '/');
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF191313),
-        ),
-        child: IntrinsicWidth(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+      child: Column(
+        children: [
+          Row(
             children: const [
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
-                child: Icon(
-                  Icons.logout,
-                  color: Color(0xFFf9fefa),
-                  size: 16,
+              Text(
+                'General',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                child: Text(
-                  'Logout',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.normal,
-                    color: Color(0xFFf9fefa),
-                  ),
-                ),
-              ),
+              )
             ],
           ),
-        ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Row(
+              children: [
+                Expanded(
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
+                      ListTile(
+                        leading: const Icon(
+                          Icons.logout,
+                          color: Color(0xFF191313),
+                          size: 25,
+                        ),
+                        title: const Text(
+                          'Logout',
+                          style: TextStyle(
+                            color: Color(0xFF191313),
+                            fontSize: 17,
+                          ),
+                        ),
+                        trailing: const Icon(
+                          Icons.arrow_forward_ios,
+                          color: Color(0xFF191313),
+                          size: 15,
+                        ),
+                        onTap: () {
+                          context.read<AuthProvider>().signOut();
+                          // pop all screens and go to login
+                          Navigator.popUntil(context, ModalRoute.withName('/'));
+                          Navigator.pushNamed(context, '/');
+                        },
+                      ),
+                      const Divider(
+                        thickness: 2,
+                        height: 0,
+                        color: Color(0xFFe5e5e5),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

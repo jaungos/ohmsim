@@ -100,7 +100,10 @@ class UserViewState extends State<UserView> {
             },
             destinations: const [
               NavigationDestination(
-                icon: Icon(Icons.receipt_long_outlined),
+                icon: Icon(
+                  Icons.receipt_long_outlined,
+                  size: 30,
+                ),
                 selectedIcon: Icon(
                   Icons.receipt_long,
                   color: Color(0xFFf9fefa),
@@ -108,7 +111,10 @@ class UserViewState extends State<UserView> {
                 label: 'Entries',
               ),
               NavigationDestination(
-                icon: Icon(Icons.home_outlined),
+                icon: Icon(
+                  Icons.home_outlined,
+                  size: 30,
+                ),
                 selectedIcon: Icon(
                   Icons.home,
                   color: Color(0xFFf9fefa),
@@ -116,7 +122,10 @@ class UserViewState extends State<UserView> {
                 label: 'Home',
               ),
               NavigationDestination(
-                icon: Icon(Icons.person_outlined),
+                icon: Icon(
+                  Icons.person_outlined,
+                  size: 30,
+                ),
                 selectedIcon: Icon(
                   Icons.person,
                   color: Color(0xFFf9fefa),
