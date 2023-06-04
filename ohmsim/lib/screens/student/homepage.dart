@@ -164,7 +164,7 @@ class HomePageState extends State<HomePage> {
           borderRadius: BorderRadius.circular(10),
           child: Container(
             width: MediaQuery.of(context).size.width,
-            color: const Color(0xFF1d4429),
+            color: const Color(0xFF356c46),
             child: IntrinsicHeight(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -283,53 +283,66 @@ class HomePageState extends State<HomePage> {
   // Widget for the health entry itself
   Widget healthEntries() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
-      child: Column(
-        children: [
-          // ListView builder for at most 5 entries only
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const ScrollPhysics(),
-            itemCount: 5,
-            itemBuilder: ((context, index) {
-              return Padding(
-                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Container(
-                    color: index % 2 == 0
-                        ? const Color(0xFFffe6ad)
-                        : const Color(0xFFbf963e),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                      child: ListTile(
-                        // @TODO: (optional) add a trailing text button of view details per entry
-                        title: Text(
-                          sample['healthEntries'][index][1],
-                          style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 25,
-                              color:
-                                  sample['healthEntries'][index][1] == 'Healthy'
+      padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+      child: Center(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            color: const Color(0xFFffebc7),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+              child: Column(
+                children: [
+                  ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: 5,
+                    separatorBuilder: (context, index) {
+                      return const Divider(
+                        thickness: 2,
+                      );
+                    },
+                    itemBuilder: ((context, index) {
+                      return Center(
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          // @TODO: change the layout gayahin medj 'yung sa google classroom
+                          child: ListTile(
+                            dense: true,
+                            title: Text(
+                              sample['healthEntries'][index][1],
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 18,
+                                  color: sample['healthEntries'][index][1] ==
+                                          'Healthy'
                                       ? const Color(0xFF21523c)
                                       : const Color(0xFF6c1915)),
-                        ),
-                        subtitle: Text(
-                          sample['healthEntries'][index][0],
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 15,
-                            color: Color(0xFF191313),
+                            ),
+                            trailing: Text(
+                              sample['healthEntries'][index][0],
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w300,
+                                fontSize: 14,
+                                color: Color(0xFF191313),
+                              ),
+                            ),
+                            leading: const Icon(
+                              Icons.medical_information_outlined,
+                              size: 25,
+                              color: Color(0xFF191313),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
+                      );
+                    }),
                   ),
-                ),
-              );
-            }),
+                ],
+              ),
+            ),
           ),
-        ],
+        ),
       ),
     );
   }
