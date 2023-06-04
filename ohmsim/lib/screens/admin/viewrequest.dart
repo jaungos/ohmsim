@@ -62,11 +62,14 @@ class RequestModalForm extends StatelessWidget {
                   ),
                   Text(
                     status,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 18,
-                      color: Color(0xFF191313),
-                      // @TODO: (optional) try to implement the different color based on the status of the user
-                      // color: status == 'Cleared' ? Colors.red : Colors.blue,
+                      fontWeight: FontWeight.normal,
+                      color: status == 'Cleared'
+                          ? const Color(0xFF21523c)
+                          : status == 'Under Monitoring'
+                              ? const Color(0xFFf65151)
+                              : const Color(0xFFff0000),
                     ),
                   ),
                 ],
@@ -88,6 +91,7 @@ class RequestModalForm extends StatelessWidget {
                   Text(
                     date,
                     style: const TextStyle(
+                      fontWeight: FontWeight.normal,
                       fontSize: 18,
                       color: Color(0xFF191313),
                     ),
@@ -111,6 +115,7 @@ class RequestModalForm extends StatelessWidget {
                   Text(
                     email,
                     style: const TextStyle(
+                      fontWeight: FontWeight.normal,
                       fontSize: 18,
                       color: Color(0xFF191313),
                     ),
@@ -144,6 +149,7 @@ class RequestModalForm extends StatelessWidget {
                               child: Text(
                                 '${index + 1}. $symptom',
                                 style: const TextStyle(
+                                  fontWeight: FontWeight.normal,
                                   fontSize: 18,
                                   color: Color(0xFF191313),
                                 ),
@@ -173,6 +179,7 @@ class RequestModalForm extends StatelessWidget {
                       Text(
                         exposure! ? 'Yes' : 'No',
                         style: const TextStyle(
+                          fontWeight: FontWeight.normal,
                           fontSize: 18,
                           color: Color(0xFF191313),
                         ),
