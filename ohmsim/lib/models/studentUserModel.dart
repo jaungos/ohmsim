@@ -12,11 +12,11 @@ class StudentUser {
   String studentNo;
 
   String? status;
-  String? privilege;
+  String privilege;
   String email;
   String password;
   String? currentLocation = "";
-  List<String>? preexistingIllnesses = [];
+  List<String> preexistingIllnesses = [];
 
   StudentUser({
     this.id,
@@ -29,10 +29,10 @@ class StudentUser {
     required this.college,
     required this.course,
     required this.studentNo,
+    required this.privilege,
+    required this.preexistingIllnesses,
     this.status,
-    this.privilege,
     this.currentLocation,
-    this.preexistingIllnesses,
   });
 
   factory StudentUser.fromJson(Map<String, dynamic> json) {
@@ -50,31 +50,34 @@ class StudentUser {
       status: json['status'],
       privilege: json['privilege'],
       currentLocation: json['currentLocation'],
-      preexistingIllnesses: List<String>.from(json['preexistingIllnesses'] ?? []),
+      preexistingIllnesses:
+          List<String>.from(json['preexistingIllnesses'] ?? []),
     );
   }
 
   static List<StudentUser> fromJsonArray(String jsonData) {
     final Iterable<dynamic> data = jsonDecode(jsonData);
-    return data.map<StudentUser>((dynamic d) => StudentUser.fromJson(d)).toList();
+    return data
+        .map<StudentUser>((dynamic d) => StudentUser.fromJson(d))
+        .toList();
   }
 
   Map<String, dynamic> toJson() {
     return {
-      "id": this.id,
-      "email": this.email,
-      "password": this.password,
-      "fname": this.fname,
-      "mname": this.mname,
-      "lname": this.lname,
-      "username": this.username,
-      "college": this.college,
-      "course": this.course,
-      "studentNo": this.studentNo,
-      "status": this.status,
-      "privilege": this.privilege,
-      "currentLocation": this.currentLocation,
-      "preexistingIllnesses": this.preexistingIllnesses,
+      "id": id,
+      "email": email,
+      "password": password,
+      "fname": fname,
+      "mname": mname,
+      "lname": lname,
+      "username": username,
+      "college": college,
+      "course": course,
+      "studentNo": studentNo,
+      "status": status,
+      "privilege": privilege,
+      "currentLocation": currentLocation,
+      "preexistingIllnesses": preexistingIllnesses,
     };
   }
 }

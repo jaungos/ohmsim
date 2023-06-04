@@ -14,31 +14,28 @@ class FirebaseAuthAPI {
 
   Future<void> signIn(String email, String password) async {
     try {
-      final credential = await auth.signInWithEmailAndPassword(
+      await auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      print(credential);
     } on FirebaseAuthException catch (e) {
-      // if (e.code == 'user-not-found') {
-      //   print('No user found for that email.');
-      // } else if (e.code == 'wrong-password') {
-      //   print('Wrong password provided for that user.');
-      // }
       throw e.message!;
     }
   }
 
   Future<void> signUpStudent(
-      String email,
-      String password,
-      String fname,
-      String mname,
-      String lname,
-      String username,
-      String college,
-      String course,
-      String studentNo) async {
+    String email,
+    String password,
+    String fname,
+    String mname,
+    String lname,
+    String username,
+    String college,
+    String course,
+    String studentNo,
+    String privilege,
+    List<String> preexistingIllnesses,
+  ) async {
     try {
       final credential = await auth.createUserWithEmailAndPassword(
         email: email,
@@ -48,18 +45,24 @@ class FirebaseAuthAPI {
       final user = credential.user;
       await user?.updateDisplayName('$fname $mname $lname');
 
-      print(credential);
+      await FirebaseFirestore.instance.collection('studentUsers').add({
+        'email': email,
+        'password': password,
+        'fname': fname,
+        'mname': mname,
+        'lname': lname,
+        'username': username,
+        'college': college,
+        'course': course,
+        'studentNo': studentNo,
+        'privilege': privilege,
+        'preexistingIllnesses': preexistingIllnesses,
+      });
     } on FirebaseAuthException catch (e) {
-      // if (e.code == 'weak-password') {
-      //   print('The password provided is too weak.');
-      // } else if (e.code == 'email-already-in-use') {
-      //   print('The account already exists for that email.');
-      // }
       throw e.message!;
+    } catch (e) {
+      print(e);
     }
-    // } catch (e) {
-    //   print(e);
-    // }
   }
 
   Future<void> signUpAdminMonitor(
@@ -82,13 +85,19 @@ class FirebaseAuthAPI {
       final user = credential.user;
       await user?.updateDisplayName('$fname $mname $lname');
 
-      print(credential);
+      await FirebaseFirestore.instance.collection('adminMonitor').add({
+        'email': email,
+        'fname': fname,
+        'mname': mname,
+        'lname': lname,
+        'password': password,
+        'employeeNo': employeeNo,
+        'position': position,
+        'homeUnit': homeUnit,
+        'privilege': privilege,
+      });
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
+      throw e.message!;
     } catch (e) {
       print(e);
     }

@@ -32,15 +32,12 @@ class _LoginPageState extends State<LoginPage> {
     // Error Prompt For Signing In
     AlertDialog alert(String err) {
       return AlertDialog(
-        title: Text("Login Failed"),
+        title: const Text("Login Failed"),
         content: Text(err),
       );
     }
 
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Login Page'),
-      // ),
       body: _isLoading
           ? const Center(
               child: CircularProgressIndicator(),
@@ -205,6 +202,8 @@ class _LoginPageState extends State<LoginPage> {
                             String? currentPrivilege = await context
                                 .read<AuthProvider>()
                                 .searchPrivilegeByEmail(currentUser?.email);
+
+                            print(currentPrivilege);
 
                             if (currentPrivilege == 'Student') {
                               Navigator.pop(context);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MonitorHomePage extends StatefulWidget {
-  MonitorHomePage({Key? key});
+  MonitorHomePage({super.key});
 
   @override
   State<MonitorHomePage> createState() => MonitorHomePageState();

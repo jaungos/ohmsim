@@ -16,6 +16,7 @@ class FirebaseStudentUserAPI {
           .get();
       if (student.docs.isNotEmpty) {
         studentResult = student.docs[0].data();
+        print(studentResult['email']);
 
         return StudentUser(
           email: studentResult['email'],
@@ -28,6 +29,8 @@ class FirebaseStudentUserAPI {
           college: studentResult['college'],
           course: studentResult['course'],
           privilege: studentResult['privilege'],
+          preexistingIllnesses:
+              List<String>.from(studentResult['preexistingIllnesses']),
         );
       } else {
         return null;

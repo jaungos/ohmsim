@@ -615,6 +615,11 @@ class _SignupFormState extends State<SignupForm> {
             // @TODO: add the preexisting illnesses to the database
             // @TODO: don't store or implement hashing to the password
             if (privilege == 'Student') {
+              // This every illness to true
+              List<String> allPreExistingIllnesses = preExistingIllnesses
+                  .map((controller) => controller.text)
+                  .toList();
+
               signUpData = StudentUser(
                 email: emailController.text,
                 password: passwordController.text,
@@ -626,6 +631,7 @@ class _SignupFormState extends State<SignupForm> {
                 studentNo: studentNoController.text,
                 username: userNameController.text,
                 privilege: privilege,
+                preexistingIllnesses: allPreExistingIllnesses,
               );
 
               try {
@@ -762,6 +768,13 @@ class _SignupFormState extends State<SignupForm> {
           padding: const EdgeInsets.only(left: 20.0, right: 20.0),
           child: Column(
             children: [
+              if (privilege == 'Student') ...[
+                formLabel('Pre-existing Illnesses'),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  child: illnesses(),
+                ),
+              ],
               formLabel('Email'),
               Padding(
                 padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
@@ -807,11 +820,6 @@ class _SignupFormState extends State<SignupForm> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
                   child: studentNum,
-                ),
-                formLabel('Pre-existing Illnesses'),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                  child: illnesses(),
                 ),
               ] else ...[
                 formLabel('Employee Number'),

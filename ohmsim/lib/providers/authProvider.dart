@@ -69,20 +69,6 @@ class AuthProvider with ChangeNotifier {
         signUpData.privilege,
       );
 
-      // ======================== @TODO: add this method in adminMonitor provider ========================
-      // Store additional user data in Firestore
-      await FirebaseFirestore.instance.collection('adminMonitor').add({
-        'email': signUpData.email,
-        'fname': signUpData.fname,
-        'mname': signUpData.mname,
-        'lname': signUpData.lname,
-        'password': signUpData.password,
-        'employeeNo': signUpData.employeeNo,
-        'position': signUpData.position,
-        'homeUnit': signUpData.homeUnit,
-        'privilege': signUpData.privilege,
-      });
-
       notifyListeners();
       return true;
     } on FirebaseAuthException catch (e) {
@@ -104,22 +90,9 @@ class AuthProvider with ChangeNotifier {
         signUpData.college,
         signUpData.course,
         signUpData.studentNo,
+        signUpData.privilege,
+        signUpData.preexistingIllnesses,
       );
-
-      // ======================== @TODO: add this method in studentUser provider ========================
-      // Store additional user data in Firestore
-      await FirebaseFirestore.instance.collection('studentUsers').add({
-        'email': signUpData.email,
-        'password': signUpData.password,
-        'fname': signUpData.fname,
-        'mname': signUpData.mname,
-        'lname': signUpData.lname,
-        'username': signUpData.username,
-        'college': signUpData.college,
-        'course': signUpData.course,
-        'studentNo': signUpData.studentNo,
-        'privilege': signUpData.privilege,
-      });
 
       notifyListeners();
       return true;
@@ -147,21 +120,18 @@ class AuthProvider with ChangeNotifier {
 
   Future<String?> searchPrivilegeByEmail(String? email) async {
     try {
-      var currentUser = await studentAuthService.searchStudentByEmail(email);
-      if (currentUser != null) {
-        // print(currentUser.email);
-        // print(currentUser.privilege);
-        notifyListeners();
-        return currentUser.privilege;
-      }
-
-      var currentUser1 =
-          await adminMonitorAuthService.searchStudentByEmail(email);
+      var currentUser1 = await studentAuthService.searchStudentByEmail(email);
+      print(currentUser1);
       if (currentUser1 != null) {
-        // print(currentUser1.email);
-        // print(currentUser1.privilege);
         notifyListeners();
         return currentUser1.privilege;
+      }
+
+      var currentUser2 =
+          await adminMonitorAuthService.searchStudentByEmail(email);
+      if (currentUser2 != null) {
+        notifyListeners();
+        return currentUser2.privilege;
       }
     } catch (e) {
       print(e);
