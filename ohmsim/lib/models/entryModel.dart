@@ -32,11 +32,11 @@ class Entry {
 
   Map<String, dynamic> toJson() {
     return {
-      "id": this.id,
-      "symptoms": this.symptoms,
-      "closeContact": this.closeContact,
-      "email": this.email,
-      "date": this.date,
+      "id": id,
+      "symptoms": symptoms,
+      "closeContact": closeContact,
+      "email": email,
+      "date": date,
     };
   }
 }
