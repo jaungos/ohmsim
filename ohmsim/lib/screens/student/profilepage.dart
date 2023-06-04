@@ -18,9 +18,9 @@ class ProfilePageState extends State<ProfilePage> {
       'fname': 'Juan',
       'mname': 'D.',
       'lname': 'Makasalanan',
-      // 'status': 'Cleared',
+      'status': 'Cleared',
       // 'status': 'Under Monitoring',
-      'status': 'Under Quarantine',
+      // 'status': 'Under Quarantine',
     };
     // ==============================================================
 
@@ -28,37 +28,8 @@ class ProfilePageState extends State<ProfilePage> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          // titleHeader(),
           profileInfo(sampleData),
-        ],
-      ),
-    );
-  }
-
-  // Widget for the title header
-  Widget titleHeader() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Column(
-                children: const [
-                  Text(
-                    'Profile',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF191313),
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ],
-              ),
-            ],
-          ),
+          logoutButton(),
         ],
       ),
     );
@@ -73,7 +44,7 @@ class ProfilePageState extends State<ProfilePage> {
           children: [
             // Logo of the app
             Padding(
-              padding: const EdgeInsets.fromLTRB(10, 20, 20, 10),
+              padding: const EdgeInsets.fromLTRB(10, 20, 10, 10),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(75),
                 child: Image.asset(
@@ -104,7 +75,7 @@ class ProfilePageState extends State<ProfilePage> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
                   color: userInfo['status'] == 'Cleared'
-                      ? const Color(0xFF89a89a)
+                      ? const Color(0xFFb8c9ba)
                       : userInfo['status'] == 'Under Monitoring'
                           ? const Color(0xFFffbeab)
                           : const Color(0xFFffaaaa),
@@ -159,50 +130,53 @@ class ProfilePageState extends State<ProfilePage> {
                 padding: const EdgeInsets.fromLTRB(20, 15, 20, 10),
               ),
             ],
-            // Logout Button
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-              child: ElevatedButton(
-                // @TODO: implement logout feature
-                onPressed: () {
-                  context.read<AuthProvider>().signOut();
-                  // pop all screens and go to login
-                  Navigator.popUntil(context, ModalRoute.withName('/'));
-                  Navigator.pushNamed(context, '/');
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF191313),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Widget for the logout button
+  Widget logoutButton() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+      child: ElevatedButton(
+        // @TODO: implement logout feature
+        onPressed: () {
+          context.read<AuthProvider>().signOut();
+          // pop all screens and go to login
+          Navigator.popUntil(context, ModalRoute.withName('/'));
+          Navigator.pushNamed(context, '/');
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xFF191313),
+        ),
+        child: IntrinsicWidth(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: const [
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
+                child: Icon(
+                  Icons.logout,
+                  color: Color(0xFFf9fefa),
+                  size: 16,
                 ),
-                child: IntrinsicWidth(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
-                        child: Icon(
-                          Icons.logout,
-                          color: Color(0xFFf9fefa),
-                          size: 16,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                        child: Text(
-                          'Logout',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
-                            color: Color(0xFFf9fefa),
-                          ),
-                        ),
-                      ),
-                    ],
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                child: Text(
+                  'Logout',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
+                    color: Color(0xFFf9fefa),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

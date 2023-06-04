@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ohmsim/providers/authProvider.dart';
 import 'package:ohmsim/screens/admin/adminhomepage.dart';
+import 'package:ohmsim/screens/admin/adminprofilepage.dart';
 import 'package:provider/provider.dart';
 
 class AdminView extends StatefulWidget {
@@ -12,14 +13,14 @@ class AdminView extends StatefulWidget {
 }
 
 class AdminViewState extends State<AdminView> {
-  int index = 1;
-  final PageController _pageController = PageController(initialPage: 1);
+  int index = 2;
+  final PageController _pageController = PageController(initialPage: 2);
   final screens = [
     // @TODO: For the search, just follow a guide in youtube
     AdminHomePage(),
     AdminHomePage(),
     // @TODO: For the profile, use the current image selected in the dribbble website
-    AdminHomePage(),
+    AdminProfilePage(),
   ];
 
   @override
