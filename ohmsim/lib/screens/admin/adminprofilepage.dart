@@ -84,7 +84,11 @@ class AdminProfilePageState extends State<AdminProfilePage> {
   Widget generalButtons() {
     final List<Map<String, dynamic>> generalButtonsList = [
       {
-        'icon': Icons.group,
+        'icon': Icons.supervisor_account,
+        'text': 'Under Monitoring Students',
+      },
+      {
+        'icon': Icons.accessibility_new,
         'text': 'Quarantined Students',
       },
       {
@@ -128,7 +132,7 @@ class AdminProfilePageState extends State<AdminProfilePage> {
                             leading: Icon(
                               generalButtonsList[index]['icon'],
                               color: const Color(0xFF191313),
-                              size: 18,
+                              size: 25,
                             ),
                             title: Text(
                               generalButtonsList[index]['text'],
@@ -140,9 +144,13 @@ class AdminProfilePageState extends State<AdminProfilePage> {
                             trailing: const Icon(
                               Icons.arrow_forward_ios,
                               color: Color(0xFF191313),
-                              size: 17,
+                              size: 15,
                             ),
                             onTap: () {
+                              if (generalButtonsList[index]['text'] ==
+                                  'Under Monitoring Students') {
+                                // @TODO: go to page for under monitoring students
+                              }
                               if (generalButtonsList[index]['text'] ==
                                   'Quarantined Students') {
                                 // @TODO: go to page for quarantine students
