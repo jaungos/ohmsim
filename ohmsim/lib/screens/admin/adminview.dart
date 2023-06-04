@@ -91,7 +91,7 @@ class AdminViewState extends State<AdminView> {
             },
             destinations: const [
               NavigationDestination(
-                icon: Icon(Icons.search_off_outlined),
+                icon: Icon(Icons.search_outlined),
                 selectedIcon: Icon(
                   Icons.search,
                   color: Color(0xFFf9fefa),
