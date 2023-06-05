@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:ohmsim/models/studentUserModel.dart';
 import 'package:ohmsim/providers/authProvider.dart';
 import 'package:ohmsim/providers/studentUser_provider.dart';
+import 'package:ohmsim/screens/student/deleteentry.dart';
+import 'package:ohmsim/screens/student/editentry.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -172,14 +174,28 @@ class HomePageState extends State<HomePage> {
                       IconButton(
                         hoverColor: const Color(0xFFd07173),
                         // @TODO: implement edit function
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return EditEntry();
+                            },
+                          );
+                        },
                         icon: const Icon(Icons.create_outlined),
                         color: const Color(0xFF00a65a),
                       ),
                       IconButton(
                         hoverColor: const Color(0xFFd07173),
                         // @TODO: implement delete function
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return DeleteEntry();
+                            },
+                          );
+                        },
                         icon: const Icon(Icons.delete_outlined),
                         color: const Color(0xFFf65151),
                       ),

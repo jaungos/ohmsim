@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
 
-class AddEntry extends StatefulWidget {
+class EditEntry extends StatefulWidget {
   @override
-  _AddEntryState createState() => _AddEntryState();
+  _EditEntryState createState() => _EditEntryState();
 }
 
-class _AddEntryState extends State<AddEntry> {
+class _EditEntryState extends State<EditEntry> {
+  // ====================== HARDCODED VALUES ======================
   Map<String, bool> symptoms = {
     'None': false,
     'Fever (37.8°C and above)': false,
     'Feeling feverish': false,
-    'Muscle or joint pains': false,
+    'Muscle or joint pains': true,
     'Cough': false,
     'Colds': false,
     'Sore throat': false,
     'Difficulty of breathing': false,
     'Diarrhea': false,
-    'Loss of taste': false,
+    'Loss of taste': true,
     'Loss of smell': false,
   };
   int exposureRadioValue = -1;
+  // ==============================================================
+
+  // @TODO: implement getting the values from the database and setting them here
 
   @override
   Widget build(BuildContext context) {
