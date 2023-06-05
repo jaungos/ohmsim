@@ -6,6 +6,16 @@ import '../api/firebase_entry_api.dart';
 class EntryProvider with ChangeNotifier {
   late FirebaseEntryAPI firebaseService;
   late Stream<QuerySnapshot> _entryStream;
+  List<String> _symptoms = [];
+  bool _hasContact = false;
+  String _email = "";
+  DateTime _date = DateTime.now();
+
+  List<String> get symptoms => _symptoms;
+  bool get hasContact => _hasContact;
+  String get email => _email;
+  DateTime get date => _date;
+
 
   EntryProvider() {
     firebaseService = FirebaseEntryAPI();
@@ -33,5 +43,24 @@ class EntryProvider with ChangeNotifier {
 
   Future<void> updateSymptoms(String id, List<String> symptoms) async {
     String message = await firebaseService.updateSymptoms(id, symptoms);
+  }
+
+  Future <void> cleanValues()
+  {
+    _symptoms = [];
+    _hasContact = false;
+    _email = "";
+    _date = DateTime.now();
+
+    notifyListeners();
+    return Future.value();
+  }
+  Future <void> setEntry(List<String> symptom, bool contact, String emailAdd)
+  {
+    _symptoms = symptom;
+    _hasContact = contact;
+    _email = emailAdd;
+    _date = DateTime.now();
+    return Future.value();
   }
 }

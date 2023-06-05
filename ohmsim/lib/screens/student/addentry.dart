@@ -1,11 +1,23 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:ohmsim/models/entryModel.dart';
+import 'package:provider/provider.dart';
+import 'package:ohmsim/providers/authProvider.dart';
+import 'package:ohmsim/providers/entryProvider.dart';
 class AddEntry extends StatefulWidget {
   @override
   _AddEntryState createState() => _AddEntryState();
 }
 
 class _AddEntryState extends State<AddEntry> {
+
+  String? email;
+  List<String> symptomCheckList = [];
+  bool hasContactValue = false;
+  late List<String> symptomsProvider;
+  late bool hasContact;
+  late User? user;
+  late DateTime date;
   Map<String, bool> symptoms = {
     'None': false,
     'Fever (37.8°C and above)': false,
@@ -21,8 +33,31 @@ class _AddEntryState extends State<AddEntry> {
   };
   int exposureRadioValue = -1;
 
+  void addEntry()
+  async{
+    symptomCheckList = [];
+
+    List<String> symptomKeys = symptoms.keys.toList();
+    
+    for(int i = 0; i < symptomKeys.length; i++)
+    {
+      if(symptoms[symptomKeys[i]] == true && symptomKeys[i] != "None")
+      {
+        symptomCheckList.add(symptomKeys[i]);
+      }
+    }
+    hasContactValue = exposureRadioValue >= 1? true:false;
+    await context.read<EntryProvider>().setEntry(symptomsProvider, hasContactValue, email!);
+    await context.read<EntryProvider>().addEntry(Entry(symptoms: symptomCheckList, closeContact: hasContact, email: email!, date: date));
+  }
   @override
   Widget build(BuildContext context) {
+    symptomsProvider = context.watch<EntryProvider>().symptoms;
+    hasContact = context.watch<EntryProvider>().hasContact;
+    user = context.watch<AuthProvider>().currentUser;
+    date = context.watch<EntryProvider>().date;
+    email = user!.email;
+    
     return AlertDialog(
       title: const Text(
         'Health Assessment',
@@ -160,6 +195,7 @@ class _AddEntryState extends State<AddEntry> {
         ElevatedButton(
           onPressed: () {
             // @TODO: Handle form submission here including validation
+            addEntry();
             Navigator.pop(context);
           },
           style: ElevatedButton.styleFrom(
