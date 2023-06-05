@@ -42,20 +42,22 @@ class AdminMonitorProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void searchStudentLogs() async {
-    // TODO: Implement the search student logs functionality here
-  }
-
-  void viewLogsOfStudentsEntered() async {
-    // TODO: Implement the view logs of students entered functionality here
-  }
-
   void readGeneratedQR() async {
     // TODO: Implement the read generated QR functionality here
   }
 
-  void updateLogs(Map<String, dynamic> logData) async {
-    // TODO: Implement the update logs functionality here
+  void searchStudentLogs(String searchText) async {
+    _adminMonitorStream = firebaseService.searchStudentLogs(searchText);
+    notifyListeners();
+  }
+
+  void viewEnteredStudentsLogs() {
+    _adminMonitorStream = firebaseService.getEnteredStudentLogs();
+    notifyListeners();
+  }
+
+  void updateLogs(String location, String studentNo, String status) {
+    firebaseService.updateLogs(location, studentNo, status);
   }
 
   Future<String> removeStudentFromQuarantine(
