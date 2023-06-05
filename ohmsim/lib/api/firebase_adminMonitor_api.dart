@@ -168,7 +168,7 @@ class FirebaseAdminMonitorAPI {
     }
   }
 
-    Stream<QuerySnapshot> searchStudentLogs(String searchText) {
+  Stream<QuerySnapshot> searchStudentLogs(String searchText) {
     return db
         .collection('studentUsers')
         .where('entries', arrayContains: searchText)
