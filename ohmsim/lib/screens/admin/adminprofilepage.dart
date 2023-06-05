@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ohmsim/models/adminMonitor.dart';
+import 'package:ohmsim/providers/adminProvider.dart';
 import 'package:ohmsim/providers/authProvider.dart';
 import 'package:ohmsim/screens/admin/viewallmonitors.dart';
 import 'package:provider/provider.dart';
@@ -12,29 +15,47 @@ class AdminProfilePage extends StatefulWidget {
 }
 
 class AdminProfilePageState extends State<AdminProfilePage> {
+  AdminMonitor? adminMonitor;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchAdminMonitorUser();
+  }
+
+  Future<void> fetchAdminMonitorUser() async {
+    User? currentUser = context.read<AuthProvider>().currentUser;
+    String email = currentUser!.email!;
+    AdminMonitor user =
+        await context.read<AdminMonitorProvider>().getAdminMonitorUser(email);
+    setState(() {
+      adminMonitor = user;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    // =================== HARD CODED VALUES ONLY ===================
-    final Map<String, dynamic> sampleData = {
-      'fname': 'Jerico Luis',
-      'mname': 'A.',
-      'lname': 'Ungos',
-      'privilege': 'Admin',
-    };
-    // ==============================================================
-
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          profileInfo(sampleData),
-          generalButtons(),
-        ],
-      ),
-    );
+    if (adminMonitor == null) {
+      return SizedBox(
+        height: MediaQuery.of(context).size.height,
+        child: const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    } else {
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            profileInfo(),
+            generalButtons(),
+          ],
+        ),
+      );
+    }
   }
 
   // Widget for the profile info
-  Widget profileInfo(Map<String, dynamic> userInfo) {
+  Widget profileInfo() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 20, 15, 20),
       child: Center(
@@ -57,7 +78,7 @@ class AdminProfilePageState extends State<AdminProfilePage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
               child: Text(
-                '${userInfo['fname']} ${userInfo['mname']} ${userInfo['lname']}',
+                '${adminMonitor!.fname} ${adminMonitor!.fname} ${adminMonitor!.lname}',
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w700,
@@ -81,7 +102,7 @@ class AdminProfilePageState extends State<AdminProfilePage> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                           child: Text(
-                            '${userInfo['privilege']}',
+                            adminMonitor!.privilege,
                             style: const TextStyle(
                               color: Color(0xFF191313),
                               fontSize: 15,
@@ -174,7 +195,6 @@ class AdminProfilePageState extends State<AdminProfilePage> {
                             onTap: () {
                               if (generalButtonsList[index]['text'] ==
                                   'View All Entrance Monitor') {
-                                // @TODO: go to page for all entrance monitor
                                 Navigator.pushNamed(
                                     context, MonitorListView.routeName);
                               }

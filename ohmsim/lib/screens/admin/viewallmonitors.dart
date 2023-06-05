@@ -293,7 +293,6 @@ class MonitorListViewState extends State<MonitorListView> {
       ),
       onPressed: () {
         Navigator.popUntil(context, ModalRoute.withName(AdminView.routeName));
-        // Navigator.pushNamed(context, AdminView.routeName);
       },
     );
   }

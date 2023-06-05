@@ -1,5 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ohmsim/models/adminMonitor.dart';
+import 'package:ohmsim/providers/adminProvider.dart';
+import 'package:ohmsim/providers/authProvider.dart';
 import 'package:ohmsim/screens/admin/viewrequest.dart';
+import 'package:provider/provider.dart';
 
 class AdminHomePage extends StatefulWidget {
   AdminHomePage({super.key});
@@ -9,6 +14,24 @@ class AdminHomePage extends StatefulWidget {
 }
 
 class AdminHomePageState extends State<AdminHomePage> {
+  AdminMonitor? adminMonitor;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchAdminMonitorUser();
+  }
+
+  Future<void> fetchAdminMonitorUser() async {
+    User? currentUser = context.read<AuthProvider>().currentUser;
+    String email = currentUser!.email!;
+    AdminMonitor user =
+        await context.read<AdminMonitorProvider>().getAdminMonitorUser(email);
+    setState(() {
+      adminMonitor = user;
+    });
+  }
+
   // =================== HARD CODED VALUES ONLY ===================
   final Map<String, dynamic> sample = {
     'name': 'Jerico',
@@ -50,16 +73,25 @@ class AdminHomePageState extends State<AdminHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          adminHeader(),
-          quarantineCounter(),
-          editDeleteRequestsHeader(),
-          editDeleteRequests(),
-        ],
-      ),
-    );
+    if (adminMonitor == null) {
+      return SizedBox(
+        height: MediaQuery.of(context).size.height,
+        child: const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    } else {
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            adminHeader(),
+            quarantineCounter(),
+            editDeleteRequestsHeader(),
+            editDeleteRequests(),
+          ],
+        ),
+      );
+    }
   }
 
   // Widget for the name and privilege
@@ -74,7 +106,7 @@ class AdminHomePageState extends State<AdminHomePage> {
             Row(
               children: [
                 Text(
-                  'Hi, ${sample['name']}',
+                  'Hi, ${adminMonitor!.fname}',
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.normal,
@@ -87,7 +119,7 @@ class AdminHomePageState extends State<AdminHomePage> {
             Row(
               children: [
                 Text(
-                  sample['privilege'],
+                  adminMonitor!.privilege,
                   style: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.w700,

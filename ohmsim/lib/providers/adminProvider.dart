@@ -23,6 +23,11 @@ class AdminMonitorProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<AdminMonitor> getAdminMonitorUser(String email) async {
+    AdminMonitor? user = await firebaseService.searchAdminMonitorByEmail(email);
+    return user!;
+  }
+
   void approveDeleteRequest(String studentId) async {
     String message = await firebaseService.approveDeleteRequest(studentId);
     print(message);
