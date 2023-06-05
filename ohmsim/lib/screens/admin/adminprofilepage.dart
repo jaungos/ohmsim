@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ohmsim/providers/authProvider.dart';
+import 'package:ohmsim/screens/admin/viewallmonitors.dart';
 import 'package:provider/provider.dart';
 
 class AdminProfilePage extends StatefulWidget {
@@ -104,6 +105,10 @@ class AdminProfilePageState extends State<AdminProfilePage> {
   Widget generalButtons() {
     final List<Map<String, dynamic>> generalButtonsList = [
       {
+        'icon': Icons.badge,
+        'text': 'View All Entrance Monitor',
+      },
+      {
         'icon': Icons.supervisor_account,
         'text': 'Under Monitoring Students',
       },
@@ -167,6 +172,12 @@ class AdminProfilePageState extends State<AdminProfilePage> {
                               size: 15,
                             ),
                             onTap: () {
+                              if (generalButtonsList[index]['text'] ==
+                                  'View All Entrance Monitor') {
+                                // @TODO: go to page for all entrance monitor
+                                Navigator.pushNamed(
+                                    context, MonitorListView.routeName);
+                              }
                               if (generalButtonsList[index]['text'] ==
                                   'Under Monitoring Students') {
                                 // @TODO: go to page for under monitoring students

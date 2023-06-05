@@ -19,14 +19,9 @@ class MonitorProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void searchStudentLogs(String searchText) async {
+  void searchStudentLogs(String searchText) async {}
 
-  }
+  void viewEnteredStudentsLogs() {}
 
-  void viewEnteredStudentsLogs() {
-  }
-
-
-  void updateLogs(String location, String studentNo, String status) {
-  }
+  void updateLogs(String location, String studentNo, String status) {}
 }
