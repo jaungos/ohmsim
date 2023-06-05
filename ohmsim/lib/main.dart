@@ -5,6 +5,7 @@ import 'package:ohmsim/providers/authProvider.dart';
 import 'package:ohmsim/providers/adminProvider.dart';
 import 'package:ohmsim/providers/studentUser_provider.dart';
 import 'package:ohmsim/screens/admin/adminview.dart';
+import 'package:ohmsim/screens/admin/viewallmonitors.dart';
 import 'package:ohmsim/screens/login.dart';
 import 'package:ohmsim/screens/entrance/monitorview.dart';
 import 'package:ohmsim/screens/signup.dart';
@@ -46,8 +47,8 @@ class MyApp extends StatelessWidget {
           primaryColor: const Color(0xFF00A65A),
           primarySwatch: Colors.green,
         ),
-        initialRoute: AdminView.routeName,
-        // initialRoute: '/',
+        // initialRoute: MonitorListView.routeName,
+        initialRoute: '/',
         routes: {
           //TODO: Put routes here
           LoginPage.routeName: (context) => LoginPage(),
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
           AdminView.routeName: (context) => AdminView(),
           UserView.routeName: (context) => UserView(),
           MonitorView.routeName: (context) => MonitorView(),
+          MonitorListView.routeName: (context) => MonitorListView(),
         },
       ),
     );

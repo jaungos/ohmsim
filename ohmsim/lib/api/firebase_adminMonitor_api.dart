@@ -39,23 +39,39 @@ class FirebaseAdminMonitorAPI {
     String newPrivilege,
   ) async {
     try {
-      Map<String, dynamic> updatedUser = {
-        "email": user.email,
-        "password": user.password,
-        "fname": user.fname,
-        "mname": user.mname,
-        "lname": user.lname,
-        "username": user.username,
-        "studentNo": user.studentNo,
-        "college": user.college,
-        "course": user.course,
-        "privilege": newPrivilege,
-        "preexistingIllnesses": user.preexistingIllnesses,
-        "hasDailyEntry": user.hasDailyEntry,
-      };
+      // Map<String, dynamic> updatedUser = {
+      //   "email": user.email,
+      //   "password": user.password,
+      //   "fname": user.fname,
+      //   "mname": user.mname,
+      //   "lname": user.lname,
+      //   "username": user.username,
+      //   "studentNo": user.studentNo,
+      //   "college": user.college,
+      //   "course": user.course,
+      //   "privilege": newPrivilege,
+      //   "preexistingIllnesses": user.preexistingIllnesses,
+      //   "hasDailyEntry": user.hasDailyEntry,
+      // };
 
-      await db.collection("adminMonitor").add(updatedUser);
-      await db.collection("studentUsers").doc(user.id).delete();
+      // await db.collection("adminMonitor").add(updatedUser);
+      await db.collection("studentUsers").doc(user.id).update({
+        "privilege": newPrivilege,
+      });
+
+      return "Successfully added admin/monitor user!";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}'";
+    }
+  }
+
+  Future<String> elevateAdminMonitor(
+    String userId,
+  ) async {
+    try {
+      await db.collection("adminMonitor").doc(userId).update({
+        "privilege": "Admin",
+      });
 
       return "Successfully added admin/monitor user!";
     } on FirebaseException catch (e) {
