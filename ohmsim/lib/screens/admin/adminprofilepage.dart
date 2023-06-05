@@ -69,7 +69,7 @@ class AdminProfilePageState extends State<AdminProfilePage> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(75),
                 child: Image.asset(
-                  'assets/samplelogo.png',
+                  'assets/Logo4B.png',
                   height: 100,
                   width: 100,
                   fit: BoxFit.cover,

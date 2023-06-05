@@ -47,6 +47,19 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  // Logo of the app
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 20, 10, 10),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(75),
+                      child: Image.asset(
+                        'assets/Logo4B.png',
+                        height: 100,
+                        width: 100,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
