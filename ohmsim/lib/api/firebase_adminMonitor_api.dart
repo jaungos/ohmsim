@@ -151,4 +151,41 @@ class FirebaseAdminMonitorAPI {
       return "Failed with error '${e.code}: ${e.message}";
     }
   }
+
+  Stream<QuerySnapshot> searchStudentLogs(String searchText) {
+    return db
+        .collection('studentUsers')
+        .where('logs', arrayContains: searchText)
+        .snapshots();
+  }
+
+  Stream<QuerySnapshot> getEnteredStudentLogs() {
+    return db
+        .collection('studentUsers')
+        .where('entered', isEqualTo: true)
+        .snapshots();
+  }
+
+  Future<String> updateLogs(String location, String studentNo, String status) async {
+    try {
+      final snapshot = await db
+          .collection('studentUsers')
+          .where('studentNo', isEqualTo: studentNo)
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        final studentId = snapshot.docs[0].id;
+        await db
+            .collection('studentUsers')
+            .doc(studentId)
+            .update({'location': location, 'status': status});
+
+        return 'Logs updated successfully!';
+      } else {
+        return 'No student found with the provided student number.';
+      }
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}'";
+    }
+  }
 }

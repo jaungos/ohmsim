@@ -20,13 +20,16 @@ class MonitorProvider with ChangeNotifier {
   }
 
   void searchStudentLogs(String searchText) async {
-
+    _monitorStream = firebaseService.searchStudentLogs(searchText);
+    notifyListeners();
   }
 
   void viewEnteredStudentsLogs() {
+    _monitorStream = firebaseService.getEnteredStudentLogs();
+    notifyListeners();
   }
 
-
   void updateLogs(String location, String studentNo, String status) {
+    firebaseService.updateLogs(location, studentNo, status);
   }
 }
