@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ohmsim/api/firebase_studentuser_api.dart';
+import 'package:ohmsim/models/studentUserModel.dart';
 import '../api/firebase_adminMonitor_api.dart';
 import '../models/adminMonitor.dart';
 
-class AdminProvider with ChangeNotifier {
+class AdminMonitorProvider with ChangeNotifier {
   late FirebaseAdminMonitorAPI firebaseService;
+  late FirebaseStudentUserAPI studentUserAPI;
   late Stream<QuerySnapshot> _adminStream;
 
   String _screen = "home";
   String get screen => _screen;
 
-  AdminProvider() {
+  AdminMonitorProvider() {
     firebaseService = FirebaseAdminMonitorAPI();
+    studentUserAPI = FirebaseStudentUserAPI();
     fetchAdminMonitors();
   }
 
@@ -61,12 +65,12 @@ class AdminProvider with ChangeNotifier {
   }
 
 //  HARDCODEEEEEEEEEEEEEEEEEEEEEEEEEEED
-  void elevateUser(AdminMonitor user) async {
-    String message = await firebaseService.elevateUser(user.toJson());
-    print(message);
+  // void elevateUser(String email, String newPrivilege) async {
+  //   String message = await firebaseService.elevateUser(email, newPrivilege);
+  //   print(message);
 
-    notifyListeners();
-  }
+  //   notifyListeners();
+  // }
 
   void approveDeleteRequest(String studentId) async {
     String message = await firebaseService.approveDeleteRequest(studentId);
@@ -87,10 +91,6 @@ class AdminProvider with ChangeNotifier {
     notifyListeners();
     return Future.value();
   }
-}
-
-class MonitorProvider with ChangeNotifier {
-  late FirebaseAdminMonitorAPI firebaseService;
 
   MonitorProvider() {
     firebaseService = FirebaseAdminMonitorAPI();
@@ -112,13 +112,25 @@ class MonitorProvider with ChangeNotifier {
     // TODO: Implement the update logs functionality here
   }
 
-  Future<String> elevateUser(Map<String, dynamic> user) async {
+  Future<String> elevateUser(
+    StudentUser user,
+    String newPrivilege,
+  ) async {
     try {
-      await firebaseService.elevateUser(user);
-
-      return "Successfully elevated user to admin/monitor!";
+      await firebaseService.elevateUser(user, newPrivilege);
+      notifyListeners();
+      return newPrivilege == 'Admin'
+          ? "Successfully elevated user to admin!"
+          : "Successfully elevated user to monitor";
     } on FirebaseException catch (e) {
       return "Failed with error '${e.code}: ${e.message}";
     }
+  }
+
+  void deleteStudentUser(String? id) async {
+    String message = await studentUserAPI.deleteStudentUser(id);
+    print(message);
+
+    notifyListeners();
   }
 }

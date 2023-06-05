@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:ohmsim/models/adminMonitor.dart';
+import 'package:ohmsim/models/studentUserModel.dart';
 
 class FirebaseAdminMonitorAPI {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
@@ -34,13 +34,32 @@ class FirebaseAdminMonitorAPI {
     }
   }
 
-  Future<String> elevateUser(Map<String, dynamic> user) async {
+  Future<String> elevateUser(
+    StudentUser user,
+    String newPrivilege,
+  ) async {
     try {
-      await db.collection("adminMonitor").add(user);
+      Map<String, dynamic> updatedUser = {
+        "email": user.email,
+        "password": user.password,
+        "fname": user.fname,
+        "mname": user.mname,
+        "lname": user.lname,
+        "username": user.username,
+        "studentNo": user.studentNo,
+        "college": user.college,
+        "course": user.course,
+        "privilege": newPrivilege,
+        "preexistingIllnesses": user.preexistingIllnesses,
+        "hasDailyEntry": user.hasDailyEntry,
+      };
+
+      await db.collection("adminMonitor").add(updatedUser);
+      await db.collection("studentUsers").doc(user.id).delete();
 
       return "Successfully added admin/monitor user!";
     } on FirebaseException catch (e) {
-      return "Failed with error '${e.code}: ${e.message}";
+      return "Failed with error '${e.code}: ${e.message}'";
     }
   }
 

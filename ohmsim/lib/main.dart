@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
-        ChangeNotifierProvider(create: (_) => AdminProvider()),
+        ChangeNotifierProvider(create: (_) => AdminMonitorProvider()),
         ChangeNotifierProvider(create: (_) => EntryProvider()),
         ChangeNotifierProvider(create: (_) => StudentUserProvider())
       ],
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
           primaryColor: const Color(0xFF00A65A),
           primarySwatch: Colors.green,
         ),
-        initialRoute: UserView.routeName,
+        initialRoute: AdminView.routeName,
         // initialRoute: '/',
         routes: {
           //TODO: Put routes here

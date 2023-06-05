@@ -203,8 +203,6 @@ class _LoginPageState extends State<LoginPage> {
                                 .read<AuthProvider>()
                                 .searchPrivilegeByEmail(currentUser!.email!);
 
-                            print('yawa $currentPrivilege');
-
                             if (currentPrivilege == 'Student') {
                               Navigator.pop(context);
                               Navigator.pushNamed(context, '/user');
