@@ -25,6 +25,7 @@ class FirebaseAdminMonitorAPI {
           position: adminMonitorResult['position'],
           homeUnit: adminMonitorResult['homeUnit'],
           privilege: adminMonitorResult['privilege'],
+          status: adminMonitorResult['status'],
         );
       } else {
         return null;

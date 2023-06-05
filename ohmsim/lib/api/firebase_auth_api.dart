@@ -35,6 +35,8 @@ class FirebaseAuthAPI {
     String studentNo,
     String privilege,
     List<String> preexistingIllnesses,
+    bool hasDailyEntry,
+    String status,
   ) async {
     try {
       final credential = await auth.createUserWithEmailAndPassword(
@@ -57,6 +59,8 @@ class FirebaseAuthAPI {
         'studentNo': studentNo,
         'privilege': privilege,
         'preexistingIllnesses': preexistingIllnesses,
+        'status': status,
+        'hasDailyEntry': hasDailyEntry,
       });
     } on FirebaseAuthException catch (e) {
       throw e.message!;
@@ -75,6 +79,7 @@ class FirebaseAuthAPI {
     String position,
     String homeUnit,
     String privilege,
+    String status,
   ) async {
     try {
       final credential = await auth.createUserWithEmailAndPassword(
@@ -95,6 +100,7 @@ class FirebaseAuthAPI {
         'position': position,
         'homeUnit': homeUnit,
         'privilege': privilege,
+        'status': status,
       });
     } on FirebaseAuthException catch (e) {
       throw e.message!;

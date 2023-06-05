@@ -11,7 +11,7 @@ class StudentUser {
   String course;
   String studentNo;
 
-  String? status;
+  String status;
   String privilege;
   String email;
   String password;
@@ -32,7 +32,7 @@ class StudentUser {
     required this.studentNo,
     required this.privilege,
     required this.preexistingIllnesses,
-    this.status,
+    required this.status,
     this.currentLocation,
     required this.hasDailyEntry,
   });

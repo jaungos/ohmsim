@@ -16,11 +16,11 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   // =================== HARD CODED VALUES ONLY ===================
   final Map<String, dynamic> sample = {
-    'name': 'Juan',
-    // 'status': 'Cleared',
-    // 'status': 'Under Monitoring',
-    'status': 'Under Quarantine',
-    'dailyStatus': null,
+    // 'name': 'Juan',
+    // // 'status': 'Cleared',
+    // // 'status': 'Under Monitoring',
+    // 'status': 'Under Quarantine',
+    // 'dailyStatus': null,
     'exposure': 'Yes',
     'healthEntries': [
       ['May 30, 2023', 'Exposed'],
@@ -56,8 +56,11 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     if (studentUser == null) {
-      return const Center(
-        child: CircularProgressIndicator(),
+      return SizedBox(
+        height: MediaQuery.of(context).size.height,
+        child: const Center(
+          child: CircularProgressIndicator(),
+        ),
       );
     } else {
       return SingleChildScrollView(
@@ -108,7 +111,7 @@ class HomePageState extends State<HomePage> {
                 ),
               ] else if (studentUser!.status == 'Under Monitoring') ...[
                 Text(
-                  '${studentUser!.status}',
+                  studentUser!.status,
                   style: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.w700,
@@ -117,7 +120,7 @@ class HomePageState extends State<HomePage> {
                 ),
               ] else if (studentUser!.status == 'Under Quarantine') ...[
                 Text(
-                  '${studentUser!.status}',
+                  studentUser!.status,
                   style: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.w700,

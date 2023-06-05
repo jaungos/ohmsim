@@ -7,7 +7,7 @@ class AdminMonitor {
   String employeeNo;
   String position;
   String homeUnit;
-  String? status;
+  String status;
   String privilege;
   String currentLocation = "";
   String assignedLocation = "";
@@ -25,7 +25,7 @@ class AdminMonitor {
     required this.employeeNo,
     required this.position,
     required this.homeUnit,
-    this.status,
+    required this.status,
     required this.privilege,
     this.currentLocation = "",
     this.assignedLocation = "",

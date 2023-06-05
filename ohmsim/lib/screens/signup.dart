@@ -633,6 +633,7 @@ class _SignupFormState extends State<SignupForm> {
                 privilege: privilege,
                 preexistingIllnesses: allPreExistingIllnesses,
                 hasDailyEntry: false,
+                status: 'None',
               );
 
               try {
@@ -645,15 +646,17 @@ class _SignupFormState extends State<SignupForm> {
             } else if (privilege == 'Admin' ||
                 privilege == 'Entrance Monitor') {
               signUpData = AdminMonitor(
-                  email: emailController.text,
-                  password: passwordController.text,
-                  fname: fNameController.text,
-                  mname: mNameController.text,
-                  lname: lNameController.text,
-                  employeeNo: employeeNoController.text,
-                  position: positionController.text,
-                  homeUnit: homeUnitController.text,
-                  privilege: privilege);
+                email: emailController.text,
+                password: passwordController.text,
+                fname: fNameController.text,
+                mname: mNameController.text,
+                lname: lNameController.text,
+                employeeNo: employeeNoController.text,
+                position: positionController.text,
+                homeUnit: homeUnitController.text,
+                privilege: privilege,
+                status: 'None',
+              );
 
               try {
                 success = await context

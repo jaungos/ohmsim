@@ -36,19 +36,8 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  String _id = "";
   String _privilege = "Student";
-  String _view = "";
-  String _status = "";
-  String _name = "";
-  String _email = "";
-
-  String get id => _id;
   String get privilege => _privilege;
-  String get view => _view;
-  String get status => _status;
-  String get name => _name;
-  String get email => _email;
 
   Future<bool> signUpAdminMonitor(AdminMonitor signUpData) async {
     try {
@@ -62,6 +51,7 @@ class AuthProvider with ChangeNotifier {
         signUpData.position,
         signUpData.homeUnit,
         signUpData.privilege,
+        signUpData.status,
       );
 
       notifyListeners();
@@ -87,6 +77,8 @@ class AuthProvider with ChangeNotifier {
         signUpData.studentNo,
         signUpData.privilege,
         signUpData.preexistingIllnesses,
+        signUpData.hasDailyEntry,
+        signUpData.status,
       );
 
       notifyListeners();
@@ -130,13 +122,6 @@ class AuthProvider with ChangeNotifier {
   Future<void> switchSignUpPrivilege(String newPrivilege) {
     _privilege = newPrivilege;
     notifyListeners();
-
-    return Future.value();
-  }
-
-  Future<void> getCredentials() {
-    _name = "Juan Makasalanan";
-    _privilege = "Admin";
 
     return Future.value();
   }
