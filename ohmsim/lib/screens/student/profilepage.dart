@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ohmsim/models/studentUserModel.dart';
+import 'package:ohmsim/providers/studentUser_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:ohmsim/providers/authProvider.dart';
 
@@ -11,32 +14,47 @@ class ProfilePage extends StatefulWidget {
 }
 
 class ProfilePageState extends State<ProfilePage> {
+  StudentUser? studentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchAdminMonitorUser();
+  }
+
+  Future<void> fetchAdminMonitorUser() async {
+    User? currentUser = context.read<AuthProvider>().currentUser;
+    String email = currentUser!.email!;
+    StudentUser user =
+        await context.read<StudentUserProvider>().getStudentUser(email);
+    setState(() {
+      studentUser = user;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    // =================== HARD CODED VALUES ONLY ===================
-    final Map<String, dynamic> sampleData = {
-      'fname': 'Juan',
-      'mname': 'D.',
-      'lname': 'Makasalanan',
-      'status': 'Cleared',
-      // 'status': 'Under Monitoring',
-      // 'status': 'Under Quarantine',
-    };
-    // ==============================================================
-
-    // @TODO: layout the profile page and add the logout button here
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          profileInfo(sampleData),
-          logoutButton(),
-        ],
-      ),
-    );
+    if (studentUser == null) {
+      return SizedBox(
+        height: MediaQuery.of(context).size.height,
+        child: const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    } else {
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            profileInfo(),
+            logoutButton(),
+          ],
+        ),
+      );
+    }
   }
 
   // Widget for the profile info
-  Widget profileInfo(Map<String, dynamic> userInfo) {
+  Widget profileInfo() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 20, 15, 20),
       child: Center(
@@ -59,7 +77,7 @@ class ProfilePageState extends State<ProfilePage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
               child: Text(
-                '${userInfo['fname']} ${userInfo['mname']} ${userInfo['lname']}',
+                '${studentUser!.fname} ${studentUser!.mname} ${studentUser!.lname}',
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w700,
@@ -74,11 +92,13 @@ class ProfilePageState extends State<ProfilePage> {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
-                  color: userInfo['status'] == 'Cleared'
+                  color: studentUser!.status == 'Cleared'
                       ? const Color(0xFFb8c9ba)
-                      : userInfo['status'] == 'Under Monitoring'
+                      : studentUser!.status == 'Under Monitoring'
                           ? const Color(0xFFffbeab)
-                          : const Color(0xFFffaaaa),
+                          : studentUser!.status == 'Under Quarantine'
+                              ? const Color(0xFFffaaaa)
+                              : const Color(0xFF333333),
                 ),
                 child: IntrinsicWidth(
                   child: IntrinsicHeight(
@@ -94,24 +114,32 @@ class ProfilePageState extends State<ProfilePage> {
                                 padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
                                 child: Icon(
                                   Icons.circle,
-                                  color: userInfo['status'] == 'Cleared'
+                                  color: studentUser!.status == 'Cleared'
                                       ? const Color(0xFF21523c)
-                                      : userInfo['status'] == 'Under Monitoring'
+                                      : studentUser!.status ==
+                                              'Under Monitoring'
                                           ? const Color(0xFFf65151)
-                                          : const Color(0xFFff0000),
+                                          : studentUser!.status ==
+                                                  'Under Quarantine'
+                                              ? const Color(0xFFff0000)
+                                              : const Color(0xFFf9fefa),
                                   size: 15,
                                 ),
                               ),
                               Text(
-                                userInfo['status'],
+                                studentUser!.status,
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.normal,
-                                  color: userInfo['status'] == 'Cleared'
+                                  color: studentUser!.status == 'Cleared'
                                       ? const Color(0xFF21523c)
-                                      : userInfo['status'] == 'Under Monitoring'
+                                      : studentUser!.status ==
+                                              'Under Monitoring'
                                           ? const Color(0xFFf65151)
-                                          : const Color(0xFFff0000),
+                                          : studentUser!.status ==
+                                                  'Under Quarantine'
+                                              ? const Color(0xFFff0000)
+                                              : const Color(0xFFf9fefa),
                                 ),
                               )
                             ],
@@ -124,8 +152,8 @@ class ProfilePageState extends State<ProfilePage> {
               ),
             ),
             // @TODO: Conditional QR Code Rendering
-            if (userInfo['status'] == 'Cleared' ||
-                userInfo['status'] == 'Under Monitoring') ...[
+            if (studentUser!.status == 'Cleared' ||
+                studentUser!.status == 'Under Monitoring') ...[
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 15, 20, 10),
               ),
