@@ -1,63 +1,32 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ohmsim/models/entryModel.dart';
-import 'package:provider/provider.dart';
-import 'package:ohmsim/providers/authProvider.dart';
-import 'package:ohmsim/providers/entryProvider.dart';
-class AddEntry extends StatefulWidget {
+
+class EditEntry extends StatefulWidget {
   @override
-  _AddEntryState createState() => _AddEntryState();
+  _EditEntryState createState() => _EditEntryState();
 }
 
-class _AddEntryState extends State<AddEntry> {
-
-  String? email;
-  List<String> symptomCheckList = [];
-  bool hasContactValue = false;
-  late List<String> symptomsProvider;
-  late bool hasContact;
-  late User? user;
-  late DateTime date;
+class _EditEntryState extends State<EditEntry> {
+  // ====================== HARDCODED VALUES ======================
   Map<String, bool> symptoms = {
     'None': false,
     'Fever (37.8°C and above)': false,
     'Feeling feverish': false,
-    'Muscle or joint pains': false,
+    'Muscle or joint pains': true,
     'Cough': false,
     'Colds': false,
     'Sore throat': false,
     'Difficulty of breathing': false,
     'Diarrhea': false,
-    'Loss of taste': false,
+    'Loss of taste': true,
     'Loss of smell': false,
   };
   int exposureRadioValue = -1;
+  // ==============================================================
 
-  void addEntry()
-  async{
-    symptomCheckList = [];
+  // @TODO: implement getting the values from the database and setting them here
 
-    List<String> symptomKeys = symptoms.keys.toList();
-    
-    for(int i = 0; i < symptomKeys.length; i++)
-    {
-      if(symptoms[symptomKeys[i]] == true && symptomKeys[i] != "None")
-      {
-        symptomCheckList.add(symptomKeys[i]);
-      }
-    }
-    hasContactValue = exposureRadioValue >= 1? true:false;
-    await context.read<EntryProvider>().setEntry(symptomsProvider, hasContactValue, email!);
-    await context.read<EntryProvider>().addEntry(Entry(symptoms: symptomCheckList, closeContact: hasContact, email: email!, date: date));
-  }
   @override
   Widget build(BuildContext context) {
-    symptomsProvider = context.watch<EntryProvider>().symptoms;
-    hasContact = context.watch<EntryProvider>().hasContact;
-    user = context.watch<AuthProvider>().currentUser;
-    date = context.watch<EntryProvider>().date;
-    email = user!.email;
-    
     return AlertDialog(
       insetPadding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
       title: const Text(
@@ -196,7 +165,6 @@ class _AddEntryState extends State<AddEntry> {
         ElevatedButton(
           onPressed: () {
             // @TODO: Handle form submission here including validation
-            addEntry();
             Navigator.pop(context);
           },
           style: ElevatedButton.styleFrom(
