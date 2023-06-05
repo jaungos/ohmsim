@@ -14,8 +14,6 @@ class MonitorListView extends StatefulWidget {
 }
 
 class MonitorListViewState extends State<MonitorListView> {
-  TextEditingController searchController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     Stream<QuerySnapshot> allAdminMonitorStream =

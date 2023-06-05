@@ -6,15 +6,15 @@ import 'package:ohmsim/providers/studentUser_provider.dart';
 import 'package:ohmsim/screens/admin/adminview.dart';
 import 'package:provider/provider.dart';
 
-class UnderMonitorView extends StatefulWidget {
-  static String routeName = '/viewundermonitor';
-  UnderMonitorView({super.key});
+class UnderQuarantineView extends StatefulWidget {
+  static String routeName = '/viewquarantined';
+  UnderQuarantineView({super.key});
 
   @override
-  State<UnderMonitorView> createState() => UnderMonitorViewState();
+  State<UnderQuarantineView> createState() => UnderQuarantineViewState();
 }
 
-class UnderMonitorViewState extends State<UnderMonitorView> {
+class UnderQuarantineViewState extends State<UnderQuarantineView> {
   @override
   Widget build(BuildContext context) {
     Stream<QuerySnapshot> allStudentStream =
@@ -24,7 +24,7 @@ class UnderMonitorViewState extends State<UnderMonitorView> {
       appBar: AppBar(
         title: const Center(
           child: Text(
-            'Under Monitor Students',
+            'Quarantined Students',
           ),
         ),
         backgroundColor: const Color(0xFF6c1915),
@@ -62,7 +62,7 @@ class UnderMonitorViewState extends State<UnderMonitorView> {
                             snapshot.data?.docs[index].data()
                                 as Map<String, dynamic>);
                         student.id = snapshot.data?.docs[index].id;
-                        if (student.status == "Under Monitoring") {
+                        if (student.status == "Under Quarantine") {
                           return Container(
                             decoration: const BoxDecoration(
                               border: Border(
@@ -318,30 +318,10 @@ class UnderMonitorViewState extends State<UnderMonitorView> {
       actions: [
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF21523c),
-          ),
-          child: const Text(
-            'Move to Quarantine',
-            style: TextStyle(
-              color: Color(0xFFf9fefa),
-            ),
-          ),
-          onPressed: () async {
-            final message = await context
-                .read<AdminMonitorProvider>()
-                .moveToQuarantine(student.id!);
-
-            debugPrint(message);
-
-            Navigator.of(context).pop();
-          },
-        ),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xFF6c1915),
           ),
           child: const Text(
-            'End Monitoring',
+            'Remove From Quarantine',
             style: TextStyle(
               color: Color(0xFFf9fefa),
             ),
@@ -349,7 +329,7 @@ class UnderMonitorViewState extends State<UnderMonitorView> {
           onPressed: () async {
             final message = await context
                 .read<AdminMonitorProvider>()
-                .endMonitoring(student.id!);
+                .removeStudentFromQuarantine(student.id!);
 
             debugPrint(message);
 

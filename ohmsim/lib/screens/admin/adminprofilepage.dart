@@ -4,6 +4,7 @@ import 'package:ohmsim/models/adminMonitor.dart';
 import 'package:ohmsim/providers/adminProvider.dart';
 import 'package:ohmsim/providers/authProvider.dart';
 import 'package:ohmsim/screens/admin/viewallmonitors.dart';
+import 'package:ohmsim/screens/admin/viewallquarantined.dart';
 import 'package:ohmsim/screens/admin/viewallundermonitor.dart';
 import 'package:provider/provider.dart';
 
@@ -206,7 +207,8 @@ class AdminProfilePageState extends State<AdminProfilePage> {
                               }
                               if (generalButtonsList[index]['text'] ==
                                   'Quarantined Students') {
-                                // @TODO: go to page for quarantine students
+                                Navigator.pushNamed(
+                                    context, UnderQuarantineView.routeName);
                               }
                               if (generalButtonsList[index]['text'] ==
                                   'Change to User View') {

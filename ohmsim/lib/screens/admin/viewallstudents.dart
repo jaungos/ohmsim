@@ -105,6 +105,7 @@ class StudentListViewState extends State<StudentListView> {
                         StudentUser student = StudentUser.fromJson(
                             snapshot.data?.docs[index].data()
                                 as Map<String, dynamic>);
+                        student.id = snapshot.data?.docs[index].id;
                         if (student.privilege == 'Student' && name.isEmpty) {
                           return Container(
                             decoration: const BoxDecoration(

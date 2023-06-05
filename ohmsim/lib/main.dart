@@ -6,6 +6,7 @@ import 'package:ohmsim/providers/adminProvider.dart';
 import 'package:ohmsim/providers/studentUser_provider.dart';
 import 'package:ohmsim/screens/admin/adminview.dart';
 import 'package:ohmsim/screens/admin/viewallmonitors.dart';
+import 'package:ohmsim/screens/admin/viewallquarantined.dart';
 import 'package:ohmsim/screens/admin/viewallundermonitor.dart';
 import 'package:ohmsim/screens/login.dart';
 import 'package:ohmsim/screens/entrance/monitorview.dart';
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
           MonitorView.routeName: (context) => MonitorView(),
           MonitorListView.routeName: (context) => MonitorListView(),
           UnderMonitorView.routeName: (context) => UnderMonitorView(),
+          UnderQuarantineView.routeName: (context) => UnderQuarantineView(),
         },
       ),
     );
