@@ -30,6 +30,7 @@ class FirebaseStudentUserAPI {
           preexistingIllnesses:
               List<String>.from(studentResult['preexistingIllnesses']),
           hasDailyEntry: studentResult['hasDailyEntry'],
+          status: studentResult['status'],
         );
       } else {
         return null;

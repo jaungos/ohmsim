@@ -4,6 +4,7 @@ import 'package:ohmsim/models/adminMonitor.dart';
 import 'package:ohmsim/providers/adminProvider.dart';
 import 'package:ohmsim/providers/authProvider.dart';
 import 'package:ohmsim/screens/admin/viewallmonitors.dart';
+import 'package:ohmsim/screens/admin/viewallundermonitor.dart';
 import 'package:provider/provider.dart';
 
 class AdminProfilePage extends StatefulWidget {
@@ -200,7 +201,8 @@ class AdminProfilePageState extends State<AdminProfilePage> {
                               }
                               if (generalButtonsList[index]['text'] ==
                                   'Under Monitoring Students') {
-                                // @TODO: go to page for under monitoring students
+                                Navigator.pushNamed(
+                                    context, UnderMonitorView.routeName);
                               }
                               if (generalButtonsList[index]['text'] ==
                                   'Quarantined Students') {

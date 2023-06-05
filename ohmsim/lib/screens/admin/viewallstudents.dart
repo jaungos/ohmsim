@@ -122,7 +122,7 @@ class StudentListViewState extends State<StudentListView> {
                                   builder: (BuildContext context) {
                                     return AlertDialog(
                                       insetPadding: const EdgeInsets.fromLTRB(
-                                          10, 80, 10, 80),
+                                          10, 20, 10, 20),
                                       title: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -312,6 +312,27 @@ class StudentListViewState extends State<StudentListView> {
                                                   student,
                                                   'Admin',
                                                 );
+
+                                            debugPrint(message);
+
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor:
+                                                const Color(0xFF21523c),
+                                          ),
+                                          child: const Text(
+                                            'Move to Quarantine',
+                                            style: TextStyle(
+                                              color: Color(0xFFf9fefa),
+                                            ),
+                                          ),
+                                          onPressed: () async {
+                                            final message = await context
+                                                .read<AdminMonitorProvider>()
+                                                .moveToQuarantine(student.id!);
 
                                             debugPrint(message);
 
@@ -370,7 +391,7 @@ class StudentListViewState extends State<StudentListView> {
                                   builder: (BuildContext context) {
                                     return AlertDialog(
                                       insetPadding: const EdgeInsets.fromLTRB(
-                                          10, 80, 10, 80),
+                                          10, 20, 10, 20),
                                       title: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -560,6 +581,27 @@ class StudentListViewState extends State<StudentListView> {
                                                   student,
                                                   'Admin',
                                                 );
+
+                                            debugPrint(message);
+
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor:
+                                                const Color(0xFF21523c),
+                                          ),
+                                          child: const Text(
+                                            'Move to Quarantine',
+                                            style: TextStyle(
+                                              color: Color(0xFFf9fefa),
+                                            ),
+                                          ),
+                                          onPressed: () async {
+                                            final message = await context
+                                                .read<AdminMonitorProvider>()
+                                                .moveToQuarantine(student.id!);
 
                                             debugPrint(message);
 

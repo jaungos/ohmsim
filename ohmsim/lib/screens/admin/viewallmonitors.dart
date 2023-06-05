@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ohmsim/models/adminMonitor.dart';
-import 'package:ohmsim/models/studentUserModel.dart';
 import 'package:ohmsim/providers/adminProvider.dart';
-import 'package:ohmsim/providers/studentUser_provider.dart';
 import 'package:ohmsim/screens/admin/adminview.dart';
 import 'package:provider/provider.dart';
 
@@ -65,8 +63,6 @@ class MonitorListViewState extends State<MonitorListView> {
                             snapshot.data?.docs[index].data()
                                 as Map<String, dynamic>);
                         adminMonitor.id = snapshot.data?.docs[index].id;
-                        print(snapshot.data?.docs.length);
-                        print(adminMonitor.id);
                         if (adminMonitor.privilege == 'Admin') {
                           return Container();
                         }

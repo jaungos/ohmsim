@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ohmsim/providers/authProvider.dart';
 import 'package:ohmsim/screens/admin/adminhomepage.dart';
 import 'package:ohmsim/screens/admin/adminprofilepage.dart';
 import 'package:ohmsim/screens/admin/viewallstudents.dart';
-import 'package:provider/provider.dart';
 
 class AdminView extends StatefulWidget {
   static String routeName = '/admin';

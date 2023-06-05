@@ -58,6 +58,42 @@ class AdminMonitorProvider with ChangeNotifier {
     // TODO: Implement the update logs functionality here
   }
 
+  Future<String> removeStudentFromQuarantine(
+    String studentId,
+  ) async {
+    try {
+      await firebaseService.removeStudentFromQuarantine(studentId);
+      notifyListeners();
+      return "Successfully removed user from under quarantine";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}";
+    }
+  }
+
+  Future<String> moveToQuarantine(
+    String studentId,
+  ) async {
+    try {
+      await firebaseService.moveToQuarantine(studentId);
+      notifyListeners();
+      return "Successfully added user to under quarantine";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}";
+    }
+  }
+
+  Future<String> endMonitoring(
+    String studentId,
+  ) async {
+    try {
+      await firebaseService.endMonitoring(studentId);
+      notifyListeners();
+      return "Successfully ended monitoring for user";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}";
+    }
+  }
+
   Future<String> elevateUser(
     StudentUser user,
     String newPrivilege,

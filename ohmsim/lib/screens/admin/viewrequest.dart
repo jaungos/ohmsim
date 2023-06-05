@@ -69,7 +69,9 @@ class RequestModalForm extends StatelessWidget {
                           ? const Color(0xFF21523c)
                           : status == 'Under Monitoring'
                               ? const Color(0xFFf65151)
-                              : const Color(0xFFff0000),
+                              : status == 'Under Quarantine'
+                                  ? const Color(0xFFff0000)
+                                  : const Color(0xFF191313),
                     ),
                   ),
                 ],
