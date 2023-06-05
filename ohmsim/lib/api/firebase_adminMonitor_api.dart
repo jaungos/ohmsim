@@ -171,7 +171,7 @@ class FirebaseAdminMonitorAPI {
   Stream<QuerySnapshot> searchStudentLogs(String searchText) {
     return db
         .collection('studentUsers')
-        .where('logs', arrayContains: searchText)
+        .where('entries', arrayContains: searchText)
         .snapshots();
   }
 
