@@ -15,6 +15,7 @@ class StudentUser {
   String privilege;
   String email;
   String password;
+  bool hasDailyEntry;
   String? currentLocation = "";
   List<String> preexistingIllnesses = [];
 
@@ -33,6 +34,7 @@ class StudentUser {
     required this.preexistingIllnesses,
     this.status,
     this.currentLocation,
+    required this.hasDailyEntry,
   });
 
   factory StudentUser.fromJson(Map<String, dynamic> json) {
@@ -52,6 +54,7 @@ class StudentUser {
       currentLocation: json['currentLocation'],
       preexistingIllnesses:
           List<String>.from(json['preexistingIllnesses'] ?? []),
+      hasDailyEntry: json['hasDailyEntry'],
     );
   }
 
@@ -78,6 +81,7 @@ class StudentUser {
       "privilege": privilege,
       "currentLocation": currentLocation,
       "preexistingIllnesses": preexistingIllnesses,
+      "hasDailyEntry": hasDailyEntry,
     };
   }
 }

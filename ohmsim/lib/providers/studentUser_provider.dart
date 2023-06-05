@@ -20,8 +20,8 @@ class StudentUserProvider with ChangeNotifier {
   }
 
   Future<StudentUser> getStudentUser(String email) async {
-    StudentUser user = await firebaseService.searchStudentByEmail(email);
-    return user;
+    StudentUser? user = await firebaseService.searchStudentByEmail(email);
+    return user!;
   }
 
   void addStudentUser(StudentUser user) async {

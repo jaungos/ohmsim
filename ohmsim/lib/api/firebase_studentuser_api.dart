@@ -6,33 +6,36 @@ class FirebaseStudentUserAPI {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
   static final FirebaseAuth auth = FirebaseAuth.instance;
 
-  Future<StudentUser> searchStudentByEmail(String? email) async {
+  Future<StudentUser?> searchStudentByEmail(String? email) async {
     Map<String, dynamic> studentResult = {};
     try {
       final student = await db
           .collection('studentUsers')
           .where('email', isEqualTo: email)
           .get();
+      if (student.docs.isNotEmpty) {
+        studentResult = student.docs[0].data();
 
-      studentResult = student.docs[0].data();
-
-      return StudentUser(
-        email: studentResult['email'],
-        password: studentResult['password'],
-        fname: studentResult['fname'],
-        mname: studentResult['mname'],
-        lname: studentResult['lname'],
-        username: studentResult['username'],
-        studentNo: studentResult['studentNo'],
-        college: studentResult['college'],
-        course: studentResult['course'],
-        privilege: studentResult['privilege'],
-        preexistingIllnesses:
-            List<String>.from(studentResult['preexistingIllnesses']),
-      );
+        return StudentUser(
+          email: studentResult['email'],
+          password: studentResult['password'],
+          fname: studentResult['fname'],
+          mname: studentResult['mname'],
+          lname: studentResult['lname'],
+          username: studentResult['username'],
+          studentNo: studentResult['studentNo'],
+          college: studentResult['college'],
+          course: studentResult['course'],
+          privilege: studentResult['privilege'],
+          preexistingIllnesses:
+              List<String>.from(studentResult['preexistingIllnesses']),
+          hasDailyEntry: studentResult['hasDailyEntry'],
+        );
+      } else {
+        return null;
+      }
     } catch (e) {
       print(e);
-      throw (e);
     }
   }
 

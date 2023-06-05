@@ -202,87 +202,107 @@ class HomePageState extends State<HomePage> {
             width: MediaQuery.of(context).size.width,
             color: const Color(0xFF356c46),
             child: IntrinsicHeight(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Symptom Header
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 40, 20, 10),
-                    child: Row(
-                      children: const [
-                        Text(
-                          'Daily Health Status',
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.normal,
-                            color: Color(0xFFe9ae48),
+              child: studentUser!.hasDailyEntry
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Symptom Header
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 40, 20, 10),
+                          child: Row(
+                            children: const [
+                              Text(
+                                'Daily Health Status',
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.normal,
+                                  color: Color(0xFFe9ae48),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        // Symptoms Itself
+                        // @TODO: implement dynamic method to fetch the symptoms
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 15, 0, 30),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              if (sample['dailyStatus'] == null) ...[
+                                const Text(
+                                  'No Symptom/s',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w300,
+                                    fontStyle: FontStyle.italic,
+                                    color: Color(0xFFf9fefa),
+                                  ),
+                                ),
+                              ]
+                            ],
+                          ),
+                        ),
+                        // Exposure Header
+                        // @TODO: implement dynamic method to fetch the exposure
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 15, 20, 10),
+                          child: Row(
+                            children: const [
+                              Text(
+                                'Exposure to a Confirmed COVID-19 Case',
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.normal,
+                                  color: Color(0xFFe9ae48),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        // Exposure Itself
+                        // @TODO: implement dynamic method to fetch the exposure
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 15, 0, 40),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              if (sample['exposure'] == 'Yes') ...[
+                                Text(
+                                  '${sample['exposure']}. Needs to be quarantined',
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w300,
+                                    fontStyle: FontStyle.italic,
+                                    color: Color(0xFFf9fefa),
+                                  ),
+                                  // textAlign: TextAlign.center,
+                                ),
+                              ]
+                            ],
                           ),
                         ),
                       ],
-                    ),
-                  ),
-                  // Symptoms Itself
-                  // @TODO: implement dynamic method to fetch the symptoms
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 15, 0, 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        if (sample['dailyStatus'] == null) ...[
-                          const Text(
-                            'No Symptom/s',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w300,
-                              fontStyle: FontStyle.italic,
-                              color: Color(0xFFf9fefa),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 30, 0, 30),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (sample['dailyStatus'] == null) ...[
+                            const Text(
+                              'Has not filled up the daily health status yet!',
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.normal,
+                                color: Color(0xFFf9fefa),
+                              ),
                             ),
-                          ),
-                        ]
-                      ],
+                          ]
+                        ],
+                      ),
                     ),
-                  ),
-                  // Exposure Header
-                  // @TODO: implement dynamic method to fetch the exposure
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 15, 20, 10),
-                    child: Row(
-                      children: const [
-                        Text(
-                          'Exposure to a Confirmed COVID-19 Case',
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.normal,
-                            color: Color(0xFFe9ae48),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  // Exposure Itself
-                  // @TODO: implement dynamic method to fetch the exposure
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 15, 0, 40),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        if (sample['exposure'] == 'Yes') ...[
-                          Text(
-                            '${sample['exposure']}. Needs to be quarantined',
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w300,
-                              fontStyle: FontStyle.italic,
-                              color: Color(0xFFf9fefa),
-                            ),
-                            // textAlign: TextAlign.center,
-                          ),
-                        ]
-                      ],
-                    ),
-                  ),
-                ],
-              ),
             ),
           ),
         ),

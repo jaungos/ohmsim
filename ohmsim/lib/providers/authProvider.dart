@@ -1,15 +1,10 @@
 // Define a provider class
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:flutter/material.dart';
 import 'package:ohmsim/api/firebase_adminMonitor_api.dart';
 import 'package:ohmsim/api/firebase_studentuser_api.dart';
-import 'package:ohmsim/main.dart';
 import 'package:ohmsim/models/adminMonitor.dart';
 import 'package:ohmsim/models/studentUserModel.dart';
-import '../models/entryModel.dart';
-
 import '../api/firebase_auth_api.dart';
 
 class AuthProvider with ChangeNotifier {
