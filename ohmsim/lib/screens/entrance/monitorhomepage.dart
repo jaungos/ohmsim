@@ -1,4 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ohmsim/models/adminMonitor.dart';
+import 'package:ohmsim/providers/adminProvider.dart';
+import 'package:ohmsim/providers/authProvider.dart';
+import 'package:provider/provider.dart';
 
 class MonitorHomePage extends StatefulWidget {
   MonitorHomePage({super.key});
@@ -8,6 +13,24 @@ class MonitorHomePage extends StatefulWidget {
 }
 
 class MonitorHomePageState extends State<MonitorHomePage> {
+  AdminMonitor? adminMonitor;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchAdminMonitorUser();
+  }
+
+  Future<void> fetchAdminMonitorUser() async {
+    User? currentUser = context.read<AuthProvider>().currentUser;
+    String email = currentUser!.email!;
+    AdminMonitor user =
+        await context.read<AdminMonitorProvider>().getAdminMonitorUser(email);
+    setState(() {
+      adminMonitor = user;
+    });
+  }
+
   final Map<String, dynamic> sample = {
     'name': 'Jerico',
     'privilege': 'Entrance Monitor',
@@ -15,6 +38,14 @@ class MonitorHomePageState extends State<MonitorHomePage> {
   // ==============================================================
   @override
   Widget build(BuildContext context) {
+    if (adminMonitor == null) {
+      return SizedBox(
+        height: MediaQuery.of(context).size.height,
+        child: const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -37,7 +68,7 @@ class MonitorHomePageState extends State<MonitorHomePage> {
             Row(
               children: [
                 Text(
-                  'Hi, ${sample['name']}',
+                  'Hi, ${adminMonitor!.fname}',
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.normal,
@@ -50,7 +81,7 @@ class MonitorHomePageState extends State<MonitorHomePage> {
             Row(
               children: [
                 Text(
-                  sample['privilege'],
+                  adminMonitor!.privilege,
                   style: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.w700,
