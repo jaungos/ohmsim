@@ -2,11 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ohmsim/models/studentUserModel.dart';
 import 'package:ohmsim/models/entryModel.dart';
+import 'package:ohmsim/providers/authProvider.dart';
+import 'package:ohmsim/providers/studentUser_provider.dart';
 
 class FirebaseStudentUserAPI {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
   static final FirebaseAuth auth = FirebaseAuth.instance;
-
   Future<StudentUser?> searchStudentByEmail(String? email) async {
     Map<String, dynamic> studentResult = {};
     try {
@@ -16,8 +17,9 @@ class FirebaseStudentUserAPI {
           .get();
       if (student.docs.isNotEmpty) {
         studentResult = student.docs[0].data();
-
+        String docId = student.docs[0].id;
         return StudentUser(
+          id: docId,
           email: studentResult['email'],
           password: studentResult['password'],
           fname: studentResult['fname'],
@@ -81,18 +83,21 @@ class FirebaseStudentUserAPI {
 
   Future<String> addEntry(String? id, Entry entry) async {
     try {
-      DocumentSnapshot doc = await db.collection("studentUser").doc(id).get();
+      DocumentSnapshot doc = await db.collection("studentUsers").doc(id).get();
+
       if (doc.exists) {
         Map<String, dynamic>? user = doc.data() as Map<String, dynamic>;
-        if (user != null && user.containsKey('entries')) {
+        if (user.containsKey('entries')) {
           List<dynamic> entries = List.from(user['entries'] as List<dynamic>);
           entries
               .add(entry.toJson()); // Assuming `entry` has a `toJson()` method
 
           await db
-              .collection("studentUser")
+              .collection("studentUsers")
               .doc(id)
               .update({"entries": entries});
+        } else {
+          return "Entries doesn't exist for this document";
         }
         return "Successfully updated student user!";
       } else {

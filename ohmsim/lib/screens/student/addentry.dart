@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ohmsim/models/entryModel.dart';
 import 'package:ohmsim/models/studentUserModel.dart';
@@ -12,7 +13,6 @@ class AddEntry extends StatefulWidget {
 }
 
 class _AddEntryState extends State<AddEntry> {
-  StudentUser? user;
   Map<String, bool> symptoms = {
     'None': false,
     'Fever (37.8°C and above)': false,
@@ -165,7 +165,12 @@ class _AddEntryState extends State<AddEntry> {
           ),
         ),
         ElevatedButton(
-          onPressed: () {
+          onPressed: () async {
+            User? currentUser = context.read<AuthProvider>().currentUser;
+            String email = currentUser!.email!;
+            StudentUser user =
+                await context.read<StudentUserProvider>().getStudentUser(email);
+            print(user.id);
             if (exposureRadioValue == 0) {
               closecontact = true;
             } else {
