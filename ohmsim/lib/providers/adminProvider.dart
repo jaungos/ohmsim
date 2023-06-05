@@ -9,18 +9,28 @@ class AdminMonitorProvider with ChangeNotifier {
   late FirebaseAdminMonitorAPI firebaseService;
   late FirebaseStudentUserAPI studentUserAPI;
   late Stream<QuerySnapshot> _adminMonitorStream;
+  int? underQuarantineStudentCount;
 
   AdminMonitorProvider() {
     firebaseService = FirebaseAdminMonitorAPI();
     studentUserAPI = FirebaseStudentUserAPI();
     fetchAdminMonitors();
+    fetchQuarantinedCount();
   }
 
   Stream<QuerySnapshot> get adminMonitors => _adminMonitorStream;
+  int? get underQuarantineCount => underQuarantineStudentCount;
 
   fetchAdminMonitors() {
     _adminMonitorStream = firebaseService.getAdminMonitors();
     notifyListeners();
+  }
+
+  fetchQuarantinedCount() {
+    studentUserAPI.getUnderQuarantineStudentCount().listen((count) {
+      underQuarantineStudentCount = count;
+      notifyListeners();
+    });
   }
 
   Future<AdminMonitor> getAdminMonitorUser(String email) async {

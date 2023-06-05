@@ -64,6 +64,14 @@ class FirebaseStudentUserAPI {
     }
   }
 
+  Stream<int> getUnderQuarantineStudentCount() {
+    return db
+        .collection("studentUsers")
+        .where('status', isEqualTo: 'Under Quarantine')
+        .snapshots()
+        .map((event) => event.size);
+  }
+
   Future<String> editTodayEntry(Map<String, dynamic> entryData) async {
     try {
       // Implement edit today's entry functionality here

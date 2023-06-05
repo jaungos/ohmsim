@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ohmsim/models/adminMonitor.dart';
 import 'package:ohmsim/providers/adminProvider.dart';
 import 'package:ohmsim/providers/authProvider.dart';
+import 'package:ohmsim/providers/studentUser_provider.dart';
 import 'package:ohmsim/screens/admin/viewrequest.dart';
 import 'package:provider/provider.dart';
 
@@ -27,8 +29,10 @@ class AdminHomePageState extends State<AdminHomePage> {
     String email = currentUser!.email!;
     AdminMonitor user =
         await context.read<AdminMonitorProvider>().getAdminMonitorUser(email);
+    // int?
     setState(() {
       adminMonitor = user;
+      // underQuarantineCount = counter;
     });
   }
 
@@ -62,18 +66,15 @@ class AdminHomePageState extends State<AdminHomePage> {
     ],
   };
 
-  final List<String> quarantinedStudents = [
-    'jaungos@up.edu.ph',
-    'jlaungos@up.edu.ph',
-    'juanmakasalanan@up.edu.ph',
-  ];
   // ==============================================================
 
   // @TODO: have a provider method to get the needed data from the database
 
   @override
   Widget build(BuildContext context) {
-    if (adminMonitor == null) {
+    int? underQuarantineCount =
+        context.watch<AdminMonitorProvider>().underQuarantineCount;
+    if (adminMonitor == null || underQuarantineCount == null) {
       return SizedBox(
         height: MediaQuery.of(context).size.height,
         child: const Center(
@@ -85,7 +86,7 @@ class AdminHomePageState extends State<AdminHomePage> {
         child: Column(
           children: [
             adminHeader(),
-            quarantineCounter(),
+            quarantineCounter(underQuarantineCount),
             editDeleteRequestsHeader(),
             editDeleteRequests(),
           ],
@@ -136,7 +137,7 @@ class AdminHomePageState extends State<AdminHomePage> {
   }
 
   // Widget for the tracker of the number of students in quarantine
-  Widget quarantineCounter() {
+  Widget quarantineCounter(int underQuarantineCount) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
       child: Row(
@@ -181,7 +182,7 @@ class AdminHomePageState extends State<AdminHomePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${quarantinedStudents.length}',
+                          underQuarantineCount.toString(),
                           style: const TextStyle(
                             fontSize: 80,
                             fontWeight: FontWeight.w700,

@@ -49,8 +49,8 @@ class MyApp extends StatelessWidget {
           primaryColor: const Color(0xFF00A65A),
           primarySwatch: Colors.green,
         ),
-        // initialRoute: AdminView.routeName,
-        initialRoute: '/',
+        initialRoute: AdminView.routeName,
+        // initialRoute: '/',
         routes: {
           //TODO: Put routes here
           LoginPage.routeName: (context) => LoginPage(),
