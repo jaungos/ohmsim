@@ -39,22 +39,6 @@ class FirebaseAdminMonitorAPI {
     String newPrivilege,
   ) async {
     try {
-      // Map<String, dynamic> updatedUser = {
-      //   "email": user.email,
-      //   "password": user.password,
-      //   "fname": user.fname,
-      //   "mname": user.mname,
-      //   "lname": user.lname,
-      //   "username": user.username,
-      //   "studentNo": user.studentNo,
-      //   "college": user.college,
-      //   "course": user.course,
-      //   "privilege": newPrivilege,
-      //   "preexistingIllnesses": user.preexistingIllnesses,
-      //   "hasDailyEntry": user.hasDailyEntry,
-      // };
-
-      // await db.collection("adminMonitor").add(updatedUser);
       await db.collection("studentUsers").doc(user.id).update({
         "privilege": newPrivilege,
       });
@@ -182,7 +166,8 @@ class FirebaseAdminMonitorAPI {
         .snapshots();
   }
 
-  Future<String> updateLogs(String location, String studentNo, String status) async {
+  Future<String> updateLogs(
+      String location, String studentNo, String status) async {
     try {
       final snapshot = await db
           .collection('studentUsers')
