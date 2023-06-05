@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:ohmsim/models/entryModel.dart';
+import 'package:ohmsim/models/studentUserModel.dart';
+
+import 'package:ohmsim/providers/studentUser_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:ohmsim/providers/authProvider.dart';
 
 class AddEntry extends StatefulWidget {
   @override
@@ -6,6 +12,7 @@ class AddEntry extends StatefulWidget {
 }
 
 class _AddEntryState extends State<AddEntry> {
+  StudentUser? user;
   Map<String, bool> symptoms = {
     'None': false,
     'Fever (37.8°C and above)': false,
@@ -20,7 +27,7 @@ class _AddEntryState extends State<AddEntry> {
     'Loss of smell': false,
   };
   int exposureRadioValue = -1;
-
+  bool closecontact = false;
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -159,6 +166,22 @@ class _AddEntryState extends State<AddEntry> {
         ),
         ElevatedButton(
           onPressed: () {
+            if (exposureRadioValue == 0) {
+              closecontact = true;
+            } else {
+              closecontact = false;
+            }
+            List<String> symptomss = symptoms.entries
+                .where((entry) => entry.value == true)
+                .map((entry) => entry.key)
+                .toList();
+            final entry = Entry(
+                symptoms: symptomss,
+                closeContact: closecontact,
+                date: DateTime.now());
+            context
+                .read<StudentUserProvider>()
+                .addTodaysEntry(user!.id!, entry);
             // @TODO: Handle form submission here including validation
             Navigator.pop(context);
           },

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ohmsim/models/adminMonitor.dart';
+import 'package:ohmsim/models/entryModel.dart';
 
 class FirebaseAuthAPI {
   static final FirebaseAuth auth = FirebaseAuth.instance;
@@ -35,6 +36,8 @@ class FirebaseAuthAPI {
     String studentNo,
     String privilege,
     List<String> preexistingIllnesses,
+    List<Entry> entries,
+    bool hasDailyEntry,
   ) async {
     try {
       final credential = await auth.createUserWithEmailAndPassword(
@@ -57,6 +60,8 @@ class FirebaseAuthAPI {
         'studentNo': studentNo,
         'privilege': privilege,
         'preexistingIllnesses': preexistingIllnesses,
+        'entries': entries,
+        'hasDailyEntry': hasDailyEntry,
       });
     } on FirebaseAuthException catch (e) {
       throw e.message!;

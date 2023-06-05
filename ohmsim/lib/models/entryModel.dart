@@ -5,14 +5,12 @@ class Entry {
   late List<String> symptoms;
   late bool closeContact;
   bool approvedByAdmin = false;
-  String email;
   DateTime date;
 
   Entry({
     this.id,
     required this.symptoms,
     required this.closeContact,
-    required this.email,
     required this.date,
   });
 
@@ -21,7 +19,6 @@ class Entry {
       id: json['id'],
       symptoms: List<String>.from(json['symptoms'] ?? []),
       closeContact: json['closeContact'],
-      email: json['email'],
       date: json['date'],
     );
   }
@@ -35,7 +32,6 @@ class Entry {
       "id": id,
       "symptoms": symptoms,
       "closeContact": closeContact,
-      "email": email,
       "date": date,
     };
   }

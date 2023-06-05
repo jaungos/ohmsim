@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/studentUserModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../api/firebase_studentuser_api.dart';
+import 'package:ohmsim/models/entryModel.dart';
 
 class StudentUserProvider with ChangeNotifier {
   late FirebaseStudentUserAPI firebaseService;
@@ -33,6 +34,13 @@ class StudentUserProvider with ChangeNotifier {
 
   void deleteStudentUser(String? id) async {
     String message = await firebaseService.deleteStudentUser(id);
+    print(message);
+
+    notifyListeners();
+  }
+
+  void addTodaysEntry(String? id, Entry entry) async {
+    String message = await firebaseService.addEntry(id, entry);
     print(message);
 
     notifyListeners();

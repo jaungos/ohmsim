@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ohmsim/models/studentUserModel.dart';
+import 'package:ohmsim/models/entryModel.dart';
 
 class FirebaseStudentUserAPI {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
@@ -29,6 +30,7 @@ class FirebaseStudentUserAPI {
           privilege: studentResult['privilege'],
           preexistingIllnesses:
               List<String>.from(studentResult['preexistingIllnesses']),
+          entries: List<Entry>.from(studentResult['entries']),
           hasDailyEntry: studentResult['hasDailyEntry'],
           status: studentResult['status'],
         );
@@ -59,6 +61,43 @@ class FirebaseStudentUserAPI {
       await db.collection("studentUsers").doc(id).delete();
 
       return "Successfully deleted student user!";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}";
+    }
+  }
+
+  Future<String> toggleStatus(String? id, bool hasDailyEntry) async {
+    try {
+      await db
+          .collection("studentUser")
+          .doc(id)
+          .update({"hasDailyEntry": hasDailyEntry});
+
+      return "Successfully edited student user!";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}";
+    }
+  }
+
+  Future<String> addEntry(String? id, Entry entry) async {
+    try {
+      DocumentSnapshot doc = await db.collection("studentUser").doc(id).get();
+      if (doc.exists) {
+        Map<String, dynamic>? user = doc.data() as Map<String, dynamic>;
+        if (user != null && user.containsKey('entries')) {
+          List<dynamic> entries = List.from(user['entries'] as List<dynamic>);
+          entries
+              .add(entry.toJson()); // Assuming `entry` has a `toJson()` method
+
+          await db
+              .collection("studentUser")
+              .doc(id)
+              .update({"entries": entries});
+        }
+        return "Successfully updated student user!";
+      } else {
+        return "User doesn't exist!";
+      }
     } on FirebaseException catch (e) {
       return "Failed with error '${e.code}: ${e.message}";
     }
