@@ -39,8 +39,9 @@ class StudentUserProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addTodaysEntry(String? id, Map<String, dynamic> entry) async {
-    String message = await firebaseService.addEntry(id, entry);
+  Future<void> addTodaysEntry(
+      String? id, Map<String, dynamic> entry, bool todayentry) async {
+    String message = await firebaseService.addEntry(id, entry, todayentry);
     print(message);
 
     notifyListeners();

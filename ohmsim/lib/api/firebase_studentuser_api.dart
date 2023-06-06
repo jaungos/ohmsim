@@ -81,7 +81,8 @@ class FirebaseStudentUserAPI {
     }
   }
 
-  Future<String> addEntry(String? id, Map<String, dynamic> entry) async {
+  Future<String> addEntry(
+      String? id, Map<String, dynamic> entry, bool todayentry) async {
     try {
       DocumentSnapshot doc = await db.collection("studentUsers").doc(id).get();
 
@@ -95,7 +96,7 @@ class FirebaseStudentUserAPI {
           await db
               .collection("studentUsers")
               .doc(id)
-              .update({"entries": entries});
+              .update({"entries": entries, "hasDailyEntry": todayentry});
         } else {
           return "Entries doesn't exist for this document";
         }

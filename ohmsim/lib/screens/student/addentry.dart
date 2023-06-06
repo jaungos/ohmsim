@@ -13,6 +13,23 @@ class AddEntry extends StatefulWidget {
 }
 
 class _AddEntryState extends State<AddEntry> {
+  StudentUser? user;
+  @override
+  void initState() {
+    super.initState();
+    fetchStudentUser();
+  }
+
+  Future<void> fetchStudentUser() async {
+    User? currentUser = context.read<AuthProvider>().currentUser;
+    String email = currentUser!.email!;
+    StudentUser student =
+        await context.read<StudentUserProvider>().getStudentUser(email);
+    setState(() {
+      user = student;
+    });
+  }
+
   Map<String, bool> symptoms = {
     'None': false,
     'Fever (37.8°C and above)': false,
@@ -166,11 +183,6 @@ class _AddEntryState extends State<AddEntry> {
         ),
         ElevatedButton(
           onPressed: () async {
-            User? currentUser = context.read<AuthProvider>().currentUser;
-            String email = currentUser!.email!;
-            StudentUser user =
-                await context.read<StudentUserProvider>().getStudentUser(email);
-            print(user.id);
             if (exposureRadioValue == 0) {
               closecontact = true;
             } else {
@@ -191,7 +203,7 @@ class _AddEntryState extends State<AddEntry> {
             // ignore: use_build_context_synchronously
             context
                 .read<StudentUserProvider>()
-                .addTodaysEntry(user!.id!, entry);
+                .addTodaysEntry(user!.id!, entry, todaysEntry);
             // @TODO: Handle form submission here including validation
             // ignore: use_build_context_synchronously
             Navigator.pop(context);
