@@ -176,18 +176,24 @@ class _AddEntryState extends State<AddEntry> {
             } else {
               closecontact = false;
             }
+            bool todaysEntry = true;
             List<String> symptomss = symptoms.entries
                 .where((entry) => entry.value == true)
                 .map((entry) => entry.key)
                 .toList();
-            final entry = Entry(
-                symptoms: symptomss,
-                closeContact: closecontact,
-                date: DateTime.now());
+
+            final Map<String, dynamic> entry = {
+              "symptoms": symptomss,
+              "closeContact": closecontact,
+              "date": DateTime.now()
+            };
+
+            // ignore: use_build_context_synchronously
             context
                 .read<StudentUserProvider>()
                 .addTodaysEntry(user!.id!, entry);
             // @TODO: Handle form submission here including validation
+            // ignore: use_build_context_synchronously
             Navigator.pop(context);
           },
           style: ElevatedButton.styleFrom(

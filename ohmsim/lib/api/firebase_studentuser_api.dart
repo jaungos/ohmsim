@@ -32,7 +32,7 @@ class FirebaseStudentUserAPI {
           privilege: studentResult['privilege'],
           preexistingIllnesses:
               List<String>.from(studentResult['preexistingIllnesses']),
-          entries: List<Entry>.from(studentResult['entries']),
+          entries: List<Map<String, dynamic>>.from(studentResult['entries']),
           hasDailyEntry: studentResult['hasDailyEntry'],
           status: studentResult['status'],
         );
@@ -71,7 +71,7 @@ class FirebaseStudentUserAPI {
   Future<String> toggleStatus(String? id, bool hasDailyEntry) async {
     try {
       await db
-          .collection("studentUser")
+          .collection("studentUsers")
           .doc(id)
           .update({"hasDailyEntry": hasDailyEntry});
 
@@ -81,7 +81,7 @@ class FirebaseStudentUserAPI {
     }
   }
 
-  Future<String> addEntry(String? id, Entry entry) async {
+  Future<String> addEntry(String? id, Map<String, dynamic> entry) async {
     try {
       DocumentSnapshot doc = await db.collection("studentUsers").doc(id).get();
 
@@ -89,8 +89,8 @@ class FirebaseStudentUserAPI {
         Map<String, dynamic>? user = doc.data() as Map<String, dynamic>;
         if (user.containsKey('entries')) {
           List<dynamic> entries = List.from(user['entries'] as List<dynamic>);
-          entries
-              .add(entry.toJson()); // Assuming `entry` has a `toJson()` method
+
+          entries.add(entry);
 
           await db
               .collection("studentUsers")

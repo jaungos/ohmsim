@@ -36,7 +36,7 @@ class FirebaseAuthAPI {
     String studentNo,
     String privilege,
     List<String> preexistingIllnesses,
-    List<Entry> entries,
+    List<Map<String, dynamic>> entries,
     bool hasDailyEntry,
   ) async {
     try {

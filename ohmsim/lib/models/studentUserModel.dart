@@ -19,7 +19,7 @@ class StudentUser {
   bool hasDailyEntry;
   String? currentLocation = "";
   List<String> preexistingIllnesses = [];
-  List<Entry> entries = [];
+  List<Map<String, dynamic>> entries = [];
 
   StudentUser({
     this.id,
@@ -57,7 +57,7 @@ class StudentUser {
       currentLocation: json['currentLocation'],
       preexistingIllnesses:
           List<String>.from(json['preexistingIllnesses'] ?? []),
-      entries: List<Entry>.from(json['entries'] ?? []),
+      entries: List<Map<String, dynamic>>.from(json['entries'] ?? []),
       hasDailyEntry: json['hasDailyEntry'],
     );
   }
