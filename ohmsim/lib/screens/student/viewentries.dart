@@ -1,4 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ohmsim/models/studentUserModel.dart';
+import 'package:ohmsim/providers/authProvider.dart';
+import 'package:ohmsim/providers/studentUser_provider.dart';
+import 'package:provider/provider.dart';
 
 class ViewAllEntries extends StatefulWidget {
   ViewAllEntries({super.key});
@@ -8,35 +13,47 @@ class ViewAllEntries extends StatefulWidget {
 }
 
 class ViewAllEntriesState extends State<ViewAllEntries> {
-  // =================== HARD CODED VALUES ONLY ===================
-  List<List> entries = [
-    ['May 30, 2023', 'Exposed'],
-    ['May 29, 2023', 'Healthy'],
-    ['May 28, 2023', 'Healthy'],
-    ['May 27, 2023', 'Healthy'],
-    ['May 26, 2023', 'Healthy'],
-    ['May 25, 2023', 'Healthy'],
-    ['May 24, 2023', 'Healthy'],
-    ['May 23, 2023', 'Exposed'],
-  ];
-  // ==============================================================
+  StudentUser? studentUser;
 
-  // @TODO: have a provider method to get the needed data from the database
+  @override
+  void initState() {
+    super.initState();
+    fetchStudentUser();
+  }
+
+  Future<void> fetchStudentUser() async {
+    User? currentUser = context.read<AuthProvider>().currentUser;
+    String email = currentUser!.email!;
+    StudentUser user =
+        await context.read<StudentUserProvider>().getStudentUser(email);
+    setState(() {
+      studentUser = user;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        color: const Color(0xFFffbeab),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            titleHeader(),
-            allHealthEntries(entries),
-          ],
+    if (studentUser == null) {
+      return SizedBox(
+        height: MediaQuery.of(context).size.height,
+        child: const Center(
+          child: CircularProgressIndicator(),
         ),
-      ),
-    );
+      );
+    } else {
+      return SingleChildScrollView(
+        child: Container(
+          color: const Color(0xFFffbeab),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              titleHeader(),
+              allHealthEntries(),
+            ],
+          ),
+        ),
+      );
+    }
   }
 
   // Widget for the title header
@@ -56,7 +73,7 @@ class ViewAllEntriesState extends State<ViewAllEntries> {
   }
 
   // Widget for the list of all health entries
-  Widget allHealthEntries(List<List> entries) {
+  Widget allHealthEntries() {
     return Container(
       color: const Color(0xFFf9fefa),
       child: Padding(
@@ -67,41 +84,52 @@ class ViewAllEntriesState extends State<ViewAllEntries> {
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: entries.length,
+              itemCount: studentUser!.entries.length,
               itemBuilder: ((context, index) {
-                return Container(
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Color(0xFFe5e5e5),
+                try {
+                  DateTime curDate =
+                      studentUser!.entries[index]['date'].toDate();
+
+                  return Container(
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Color(0xFFe5e5e5),
+                        ),
                       ),
                     ),
-                  ),
-                  child: ListTile(
-                    title: Text(
-                      entries[index][1],
-                      style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                          fontSize: 18,
-                          color: entries[index][1] == 'Healthy'
-                              ? const Color(0xFF21523c)
-                              : const Color(0xFF6c1915)),
-                    ),
-                    trailing: Text(
-                      entries[index][0],
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w300,
-                        fontSize: 14,
+                    child: ListTile(
+                      title: Text(
+                        studentUser!.entries[index]['closeContact'] == 'false'
+                            ? 'Exposed'
+                            : 'Healthy',
+                        style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 18,
+                            color: studentUser!.entries[index]
+                                        ['closeContact'] ==
+                                    'false'
+                                ? const Color(0xFF21523c)
+                                : const Color(0xFF6c1915)),
+                      ),
+                      trailing: Text(
+                        "${curDate.month.toString()}/${curDate.day.toString()}/${curDate.year.toString()}",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w300,
+                          fontSize: 14,
+                          color: Color(0xFF191313),
+                        ),
+                      ),
+                      leading: const Icon(
+                        Icons.medical_information_outlined,
+                        size: 25,
                         color: Color(0xFF191313),
                       ),
                     ),
-                    leading: const Icon(
-                      Icons.medical_information_outlined,
-                      size: 25,
-                      color: Color(0xFF191313),
-                    ),
-                  ),
-                );
+                  );
+                } catch (e) {
+                  print(e);
+                }
               }),
             ),
           ],
