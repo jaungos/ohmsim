@@ -229,7 +229,9 @@ class HomePageState extends State<HomePage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               if (studentUser!
-                                  .entries[0]['symptoms'].isEmpty) ...[
+                                  .entries[studentUser!.entries.length - 1]
+                                      ['symptoms']
+                                  .isEmpty) ...[
                                 const Text(
                                   'No Symptom/s',
                                   style: TextStyle(
@@ -243,7 +245,10 @@ class HomePageState extends State<HomePage> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: List.generate(
-                                    studentUser!.entries[0]['symptoms'].length,
+                                    studentUser!
+                                        .entries[studentUser!.entries.length -
+                                            1]['symptoms']
+                                        .length,
                                     (index) {
                                       final symptom = studentUser!.entries[0]
                                           ['symptoms'][index];
@@ -291,7 +296,9 @@ class HomePageState extends State<HomePage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              if (studentUser!.entries[0]['closeContact'] ==
+                              if (studentUser!.entries[
+                                          studentUser!.entries.length - 1]
+                                      ['closeContact'] ==
                                   false) ...[
                                 const Text(
                                   'Exposed. Needs to be quarantined',
