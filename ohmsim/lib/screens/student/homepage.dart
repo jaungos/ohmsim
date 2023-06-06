@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ohmsim/models/studentUserModel.dart';
 import 'package:ohmsim/providers/authProvider.dart';
@@ -16,27 +17,6 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  // =================== HARD CODED VALUES ONLY ===================
-  final Map<String, dynamic> sample = {
-    // 'name': 'Juan',
-    // // 'status': 'Cleared',
-    // // 'status': 'Under Monitoring',
-    // 'status': 'Under Quarantine',
-    // 'dailyStatus': null,
-    'exposure': 'Yes',
-    'healthEntries': [
-      ['May 30, 2023', 'Exposed'],
-      ['May 29, 2023', 'Healthy'],
-      ['May 28, 2023', 'Healthy'],
-      ['May 27, 2023', 'Healthy'],
-      ['May 26, 2023', 'Healthy'],
-      ['May 25, 2023', 'Healthy'],
-      ['May 24, 2023', 'Healthy'],
-      ['May 23, 2023', 'Exposed'],
-    ],
-  };
-  // ==============================================================
-  // @TODO: have a provider method to get the needed data from the database
   StudentUser? studentUser;
 
   @override
@@ -248,7 +228,8 @@ class HomePageState extends State<HomePage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              if (sample['dailyStatus'] == null) ...[
+                              if (studentUser!
+                                  .entries[0]['symptoms'].isEmpty) ...[
                                 const Text(
                                   'No Symptom/s',
                                   style: TextStyle(
@@ -256,6 +237,30 @@ class HomePageState extends State<HomePage> {
                                     fontWeight: FontWeight.w300,
                                     fontStyle: FontStyle.italic,
                                     color: Color(0xFFf9fefa),
+                                  ),
+                                ),
+                              ] else ...[
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: List.generate(
+                                    studentUser!.entries[0]['symptoms'].length,
+                                    (index) {
+                                      final symptom = studentUser!.entries[0]
+                                          ['symptoms'][index];
+                                      return Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 16),
+                                        child: Text(
+                                          '${index + 1}. $symptom',
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w300,
+                                            fontStyle: FontStyle.italic,
+                                            color: Color(0xFFf9fefa),
+                                          ),
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
                               ]
@@ -286,10 +291,22 @@ class HomePageState extends State<HomePage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              if (sample['exposure'] == 'Yes') ...[
-                                Text(
-                                  '${sample['exposure']}. Needs to be quarantined',
-                                  style: const TextStyle(
+                              if (studentUser!.entries[0]['closeContact'] ==
+                                  false) ...[
+                                const Text(
+                                  'Exposed. Needs to be quarantined',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w300,
+                                    fontStyle: FontStyle.italic,
+                                    color: Color(0xFFf9fefa),
+                                  ),
+                                  // textAlign: TextAlign.center,
+                                ),
+                              ] else ...[
+                                const Text(
+                                  'Not Exposed',
+                                  style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w300,
                                     fontStyle: FontStyle.italic,
@@ -309,7 +326,7 @@ class HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (sample['dailyStatus'] == null) ...[
+                          if (studentUser!.hasDailyEntry == false) ...[
                             const Text(
                               'Has not filled up the daily health status yet!',
                               style: TextStyle(
@@ -372,49 +389,62 @@ class HomePageState extends State<HomePage> {
               padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
               child: Column(
                 children: [
-                  // @TODO: implement dynamic method to fetch the health entries
                   ListView.separated(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 5,
+                    itemCount: studentUser!.entries.length < 5
+                        ? studentUser!.entries.length
+                        : 5,
                     separatorBuilder: (context, index) {
                       return const Divider(
                         thickness: 2,
                       );
                     },
                     itemBuilder: ((context, index) {
-                      return Center(
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          // @TODO: change the layout gayahin medj 'yung sa google classroom
-                          child: ListTile(
-                            dense: true,
-                            title: Text(
-                              sample['healthEntries'][index][1],
-                              style: TextStyle(
+                      try {
+                        DateTime curDate =
+                            studentUser!.entries[index]['date'].toDate();
+
+                        return Center(
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            // @TODO: change the layout gayahin medj 'yung sa google classroom
+                            child: ListTile(
+                              dense: true,
+                              title: Text(
+                                studentUser!.entries[index]['closeContact'] ==
+                                        'false'
+                                    ? 'Exposed'
+                                    : 'Healthy',
+                                style: TextStyle(
                                   fontWeight: FontWeight.normal,
                                   fontSize: 18,
-                                  color: sample['healthEntries'][index][1] ==
-                                          'Healthy'
+                                  color: studentUser!.entries[index]
+                                              ['closeContact'] ==
+                                          'false'
                                       ? const Color(0xFF21523c)
-                                      : const Color(0xFF6c1915)),
-                            ),
-                            trailing: Text(
-                              sample['healthEntries'][index][0],
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w300,
-                                fontSize: 14,
+                                      : const Color(0xFF6c1915),
+                                ),
+                              ),
+                              trailing: Text(
+                                "${curDate.month.toString()}/${curDate.day.toString()}/${curDate.year.toString()}",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 14,
+                                  color: Color(0xFF191313),
+                                ),
+                              ),
+                              leading: const Icon(
+                                Icons.medical_information_outlined,
+                                size: 25,
                                 color: Color(0xFF191313),
                               ),
                             ),
-                            leading: const Icon(
-                              Icons.medical_information_outlined,
-                              size: 25,
-                              color: Color(0xFF191313),
-                            ),
                           ),
-                        ),
-                      );
+                        );
+                      } catch (e) {
+                        print(e);
+                      }
                     }),
                   ),
                 ],
