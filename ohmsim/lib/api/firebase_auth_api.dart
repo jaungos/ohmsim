@@ -38,6 +38,7 @@ class FirebaseAuthAPI {
     List<String> preexistingIllnesses,
     List<Map<String, dynamic>> entries,
     bool hasDailyEntry,
+    String status,
   ) async {
     try {
       final credential = await auth.createUserWithEmailAndPassword(
@@ -62,6 +63,7 @@ class FirebaseAuthAPI {
         'preexistingIllnesses': preexistingIllnesses,
         'entries': entries,
         'hasDailyEntry': hasDailyEntry,
+        'status': status,
       });
     } on FirebaseAuthException catch (e) {
       throw e.message!;

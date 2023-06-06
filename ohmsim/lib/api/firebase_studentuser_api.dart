@@ -18,6 +18,7 @@ class FirebaseStudentUserAPI {
       if (student.docs.isNotEmpty) {
         studentResult = student.docs[0].data();
         String docId = student.docs[0].id;
+
         return StudentUser(
           id: docId,
           email: studentResult['email'],
@@ -36,8 +37,6 @@ class FirebaseStudentUserAPI {
           hasDailyEntry: studentResult['hasDailyEntry'],
           status: studentResult['status'],
         );
-      } else {
-        return null;
       }
     } catch (e) {
       print(e);

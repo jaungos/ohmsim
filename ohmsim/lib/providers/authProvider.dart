@@ -79,6 +79,7 @@ class AuthProvider with ChangeNotifier {
         signUpData.preexistingIllnesses,
         signUpData.entries,
         signUpData.hasDailyEntry,
+        signUpData.status,
       );
 
       notifyListeners();
@@ -105,6 +106,7 @@ class AuthProvider with ChangeNotifier {
       var currentUser1 = await studentAuthService.searchStudentByEmail(email);
       if (currentUser1 != null) {
         notifyListeners();
+
         return currentUser1.privilege;
       }
 
@@ -112,6 +114,7 @@ class AuthProvider with ChangeNotifier {
           await adminMonitorAuthService.searchAdminMonitorByEmail(email);
       if (currentUser2 != null) {
         notifyListeners();
+        print("d3 ${currentUser2.privilege}");
         return currentUser2.privilege;
       }
     } catch (e) {

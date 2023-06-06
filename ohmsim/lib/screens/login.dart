@@ -211,11 +211,9 @@ class _LoginPageState extends State<LoginPage> {
                             // Navigates to the correct page based on privilege
                             User? currentUser =
                                 context.read<AuthProvider>().currentUser;
-
                             String? currentPrivilege = await context
                                 .read<AuthProvider>()
                                 .searchPrivilegeByEmail(currentUser!.email!);
-
                             if (currentPrivilege == 'Student') {
                               Navigator.pop(context);
                               Navigator.pushNamed(context, '/user');
