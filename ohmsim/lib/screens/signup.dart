@@ -632,6 +632,7 @@ class _SignupFormState extends State<SignupForm> {
                 username: userNameController.text,
                 privilege: privilege,
                 preexistingIllnesses: allPreExistingIllnesses,
+                entries: [],
                 hasDailyEntry: false,
                 status: 'None',
               );

@@ -1,23 +1,41 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ohmsim/models/entryModel.dart';
+import 'package:ohmsim/models/studentUserModel.dart';
+
+import 'package:ohmsim/providers/studentUser_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:ohmsim/providers/authProvider.dart';
-import 'package:ohmsim/providers/entryProvider.dart';
+
 class AddEntry extends StatefulWidget {
   @override
   _AddEntryState createState() => _AddEntryState();
 }
 
 class _AddEntryState extends State<AddEntry> {
-
   String? email;
   List<String> symptomCheckList = [];
   bool hasContactValue = false;
   late List<String> symptomsProvider;
   late bool hasContact;
-  late User? user;
+
   late DateTime date;
+  StudentUser? user;
+  @override
+  void initState() {
+    super.initState();
+    fetchStudentUser();
+  }
+
+  Future<void> fetchStudentUser() async {
+    User? currentUser = context.read<AuthProvider>().currentUser;
+    String email = currentUser!.email!;
+    StudentUser student =
+        await context.read<StudentUserProvider>().getStudentUser(email);
+    setState(() {
+      user = student;
+    });
+  }
+
   Map<String, bool> symptoms = {
     'None': false,
     'Fever (37.8°C and above)': false,
@@ -32,32 +50,9 @@ class _AddEntryState extends State<AddEntry> {
     'Loss of smell': false,
   };
   int exposureRadioValue = -1;
-
-  void addEntry()
-  async{
-    symptomCheckList = [];
-
-    List<String> symptomKeys = symptoms.keys.toList();
-    
-    for(int i = 0; i < symptomKeys.length; i++)
-    {
-      if(symptoms[symptomKeys[i]] == true && symptomKeys[i] != "None")
-      {
-        symptomCheckList.add(symptomKeys[i]);
-      }
-    }
-    hasContactValue = exposureRadioValue >= 1? true:false;
-    await context.read<EntryProvider>().setEntry(symptomsProvider, hasContactValue, email!);
-    await context.read<EntryProvider>().addEntry(Entry(symptoms: symptomCheckList, closeContact: hasContact, email: email!, date: date));
-  }
+  bool closecontact = false;
   @override
   Widget build(BuildContext context) {
-    symptomsProvider = context.watch<EntryProvider>().symptoms;
-    hasContact = context.watch<EntryProvider>().hasContact;
-    user = context.watch<AuthProvider>().currentUser;
-    date = context.watch<EntryProvider>().date;
-    email = user!.email;
-    
     return AlertDialog(
       insetPadding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
       title: const Text(
@@ -194,9 +189,30 @@ class _AddEntryState extends State<AddEntry> {
           ),
         ),
         ElevatedButton(
-          onPressed: () {
+          onPressed: () async {
+            if (exposureRadioValue == 0) {
+              closecontact = true;
+            } else {
+              closecontact = false;
+            }
+            bool todaysEntry = true;
+            List<String> symptomss = symptoms.entries
+                .where((entry) => entry.value == true)
+                .map((entry) => entry.key)
+                .toList();
+
+            final Map<String, dynamic> entry = {
+              "symptoms": symptomss,
+              "closeContact": closecontact,
+              "date": DateTime.now()
+            };
+
+            // ignore: use_build_context_synchronously
+            context
+                .read<StudentUserProvider>()
+                .addTodaysEntry(user!.id!, entry, todaysEntry);
             // @TODO: Handle form submission here including validation
-            addEntry();
+            // ignore: use_build_context_synchronously
             Navigator.pop(context);
           },
           style: ElevatedButton.styleFrom(

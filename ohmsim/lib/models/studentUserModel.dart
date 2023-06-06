@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'entryModel.dart';
 
 class StudentUser {
   String? id;
@@ -18,6 +19,7 @@ class StudentUser {
   bool hasDailyEntry;
   String? currentLocation = "";
   List<String> preexistingIllnesses = [];
+  List<Map<String, dynamic>> entries = [];
 
   StudentUser({
     this.id,
@@ -32,6 +34,7 @@ class StudentUser {
     required this.studentNo,
     required this.privilege,
     required this.preexistingIllnesses,
+    required this.entries,
     required this.status,
     this.currentLocation,
     required this.hasDailyEntry,
@@ -54,6 +57,7 @@ class StudentUser {
       currentLocation: json['currentLocation'],
       preexistingIllnesses:
           List<String>.from(json['preexistingIllnesses'] ?? []),
+      entries: List<Map<String, dynamic>>.from(json['entries'] ?? []),
       hasDailyEntry: json['hasDailyEntry'],
     );
   }
@@ -67,7 +71,6 @@ class StudentUser {
 
   Map<String, dynamic> toJson() {
     return {
-      "id": id,
       "email": email,
       "password": password,
       "fname": fname,
@@ -81,6 +84,7 @@ class StudentUser {
       "privilege": privilege,
       "currentLocation": currentLocation,
       "preexistingIllnesses": preexistingIllnesses,
+      "entries": entries,
       "hasDailyEntry": hasDailyEntry,
     };
   }

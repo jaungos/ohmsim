@@ -77,8 +77,8 @@ class AuthProvider with ChangeNotifier {
         signUpData.studentNo,
         signUpData.privilege,
         signUpData.preexistingIllnesses,
+        signUpData.entries,
         signUpData.hasDailyEntry,
-        signUpData.status,
       );
 
       notifyListeners();
